@@ -3967,3 +3967,242 @@ body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:focus-within {
   outline: 3px solid #83baff !important;
   outline-offset: 2px;
 }
+
+
+/* ===========================================================
+ OPSIX V1.1.0 â€“ SAMLET VISUELL REVISJON (05.11.2026)
+ Bruk eksisterende elementer og JS; ingen pasientdata lagres.
+ =========================================================== */
+body.opsix-test-mode {
+  --opsix-control-h: 42px;
+  --opsix-chip-h: 36px;
+  --opsix-control-gap: 7px;
+}
+body.opsix-test-mode .opsix-columns {
+  grid-template-columns: minmax(0,27fr) minmax(0,43fr) minmax(0,30fr);
+  gap: 12px;
+}
+body.opsix-test-mode .opsix-column {
+  padding: clamp(13px,1.35vw,19px);
+}
+body.opsix-test-mode .opsix-column-title {
+  font-size: 17px !important;
+  margin-bottom: 13px !important;
+  padding-bottom: 11px !important;
+}
+body.opsix-test-mode .opsix-column .minorTitle,
+body.opsix-test-mode .opsix-column .bigSection,
+body.opsix-test-mode .opsix-column .section,
+body.opsix-test-mode .opsix-column .vpTitle {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  margin-top: 14px !important;
+  margin-bottom: 7px !important;
+}
+body.opsix-test-mode .opsix-column .medGroupTitle {
+  font-size: 11px !important;
+  letter-spacing: .045em;
+}
+body.opsix-test-mode .hasteGrid .hasteCard {
+  min-height: 79px !important;
+  padding: 10px 11px !important;
+  border-width: 2px !important;
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+body.opsix-test-mode .hasteGrid .hasteCard.active {
+  outline: 3px solid #80b8f6 !important;
+  outline-offset: 1px;
+  box-shadow: 0 0 0 2px rgba(15,23,42,.32) inset !important;
+}
+body.opsix-test-mode .hasteGrid .hasteCardTitle { font-size: 14px !important; }
+body.opsix-test-mode .hasteGrid .hasteCardText { font-size: 11px !important; line-height: 1.3 !important; }
+
+/* FÃ¸lgebehov: faste to kolonner, ingen utstrakte enkeltknapper */
+body.opsix-test-mode .opsix-operativ .followRow {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 7px !important;
+  align-items: stretch !important;
+  margin-bottom: 10px !important;
+}
+body.opsix-test-mode .opsix-operativ .followRow .followChip {
+  display: flex !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: var(--opsix-chip-h) !important;
+  margin: 0 !important;
+  padding: 7px 9px !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+/* Ved svÃ¦rt smal kolonne prioriteres lesbarhet over to kolonner */
+@media (min-width:800px) and (max-width:1199px) {
+  body.opsix-test-mode .opsix-operativ .followRow { grid-template-columns: 1fr !important; }
+}
+
+/* Vitalparametre: kontrollert rutenett i stedet for tilfeldig wrapping.
+   BT-gruppen beholder egne SYS/DIA/MAP-verdier. */
+body.opsix-test-mode .opsix-medisinsk .inlineVitals {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 7px !important;
+  align-items: stretch !important;
+  overflow: visible !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals > .vpField,
+body.opsix-test-mode .opsix-medisinsk .inlineVitals > .btWrap {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: var(--opsix-control-h) !important;
+  min-height: var(--opsix-control-h) !important;
+  margin: 0 !important;
+  flex: none !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals > .btWrap {
+  grid-column: span 2;
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) 12px minmax(0,1fr) minmax(0,1fr);
+  gap: 5px !important;
+  align-items: center;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .btWrap .btMini,
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .btWrap .vpField {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: var(--opsix-control-h) !important;
+  flex: none !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .btSlash {
+  width: 12px !important;
+  min-width: 12px !important;
+  margin: 0 !important;
+  text-align: center;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpField input,
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .btMini input {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: var(--opsix-control-h) !important;
+  min-height: var(--opsix-control-h) !important;
+  max-height: var(--opsix-control-h) !important;
+  padding-left: 36px !important;
+  padding-right: 7px !important;
+  font-size: 14px !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpField span,
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .btMini span {
+  left: 7px !important;
+  font-size: 11px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpGcsField {
+  grid-column: auto;
+  min-width: 0 !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpGcsField input {
+  padding-left: 36px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals + * {
+  margin-top: 6px !important;
+}
+
+/* Luftveier: lesbare chips uten horisontal skjuling */
+body.opsix-test-mode .opsix-medisinsk .airwayRow {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  gap: 6px !important;
+  margin: 6px 0 7px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt {
+  flex: 0 1 auto !important;
+  min-height: var(--opsix-chip-h) !important;
+  padding: 7px 9px !important;
+  white-space: normal !important;
+  text-align: center;
+}
+body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt span {
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+}
+/* Samme avstand under alle typer luftveisdetaljer */
+body.opsix-test-mode .opsix-medisinsk #spontO2Wrap,
+body.opsix-test-mode .opsix-medisinsk #highFlowWrap,
+body.opsix-test-mode .opsix-medisinsk #nivWrap,
+body.opsix-test-mode .opsix-medisinsk #intubWrap,
+body.opsix-test-mode .opsix-medisinsk #trachWrap {
+  margin: 5px 0 7px !important;
+  padding: 0 !important;
+}
+body.opsix-test-mode .opsix-medisinsk #spontO2Wrap input,
+body.opsix-test-mode .opsix-medisinsk #highFlowWrap input,
+body.opsix-test-mode .opsix-medisinsk #nivWrap input,
+body.opsix-test-mode .opsix-medisinsk #intubWrap input,
+body.opsix-test-mode .opsix-medisinsk #trachWrap input {
+  height: var(--opsix-control-h) !important;
+  min-height: var(--opsix-control-h) !important;
+  max-height: var(--opsix-control-h) !important;
+  border-radius: 8px !important;
+}
+
+/* Smitte og medikamenter: mindre luft, jevnere chips */
+body.opsix-test-mode .opsix-andre .smLine {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  margin: 6px 0 !important;
+}
+body.opsix-test-mode .opsix-andre .smLine .smChip {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: var(--opsix-chip-h) !important;
+  padding: 7px 10px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .medGroup {
+  padding: 9px 11px !important;
+  margin: 6px 0 !important;
+  border-radius: 10px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .medGroup .medChip {
+  min-height: var(--opsix-chip-h) !important;
+}
+body.opsix-test-mode .opsix-medisinsk .medGroup input[type=text],
+body.opsix-test-mode .opsix-andre .accessGroup input[type=text] {
+  min-height: var(--opsix-control-h) !important;
+}
+
+/* Rapport: stabil hÃ¸yrekolonne med synlig handlingshierarki */
+body.opsix-test-mode .opsix-report-layout {
+  grid-template-columns: minmax(0,1fr) 180px !important;
+  gap: 14px !important;
+}
+body.opsix-test-mode .opsix-report-tools { gap: 8px !important; }
+body.opsix-test-mode .opsix-report-tools .copyMsg:empty { display: none !important; }
+body.opsix-test-mode .opsix-report-panel { margin-top: 12px !important; }
+
+/* Tematilpasning: selected states er tydelige ogsÃ¥ i dag/dempet */
+body.theme-light.opsix-test-mode .hasteGrid .hasteCard.active,
+body.theme-dim.opsix-test-mode .hasteGrid .hasteCard.active {
+  outline-color: #205c9a !important;
+}
+body.opsix-test-mode label:has(input:focus-visible),
+body.opsix-test-mode .hasteCard:focus-visible {
+  outline: 3px solid #7eb8fa !important;
+  outline-offset: 2px !important;
+}
+@media(max-width:1199px) {
+  body.opsix-test-mode .opsix-columns { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  body.opsix-test-mode .opsix-medisinsk { grid-column: span 1; }
+}
+@media(max-width:799px) {
+  body.opsix-test-mode .opsix-columns { grid-template-columns: 1fr; }
+  body.opsix-test-mode .opsix-operativ .followRow { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  body.opsix-test-mode .opsix-report-layout { grid-template-columns: 1fr !important; }
+}
