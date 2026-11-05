@@ -1451,6 +1451,21 @@ function bindBinaryOptionEvents() {
     label.addEventListener("pointerdown", () => {
       chk.dataset.wasChecked = chk.checked ? "true" : "false";
     });
+    chk.addEventListener("keydown", e => {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        chk.dataset.wasChecked = chk.checked ? "true" : "false";
+        label.click();
+      } else if (["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(e.key)) {
+        e.preventDefault();
+        const choices = Array.from(document.querySelectorAll('.binOpt[data-group="' + chk.dataset.group + '"]'));
+        const step = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : -1;
+        const next = choices[(choices.indexOf(chk) + step + choices.length) % choices.length];
+        next.focus();
+        next.dataset.wasChecked = "false";
+        next.closest("label").click();
+      }
+    });
     label.addEventListener("click", e => {
       e.preventDefault();
       const g = chk.dataset.group;
@@ -1468,9 +1483,13 @@ function bindBinaryOptionEvents() {
       }
       if (g === "airwayMain") {
         synkroniserLuftveiFra("full");
+        handleAirwayChange();
+        updateAcuteAirwayDetails();
       }
       if (g === "acuteAirway") {
         synkroniserLuftveiFra("acute");
+        updateAcuteAirwayDetails();
+        handleAirwayChange();
       }
       lagRapport();
     });
@@ -3226,3 +3245,10 @@ function buildFollowNeedLine() {
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
+/* OPSIX: fjern kun de tre etterspurte hjelpetekstene. */
+document.addEventListener("DOMContentLoaded", () => {
+  ["vekt","hovedproblem","acuteHovedproblem","tidligere"].forEach(id => {
+    document.getElementById(id)?.removeAttribute("placeholder");
+  });
+});

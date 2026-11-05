@@ -3910,3 +3910,60 @@ body.opsix-test-mode .inlineVitals .btMini { min-width: 82px; }
 body.opsix-test-mode .inlineVitals .vpGcsField { min-width: 130px; }
 body.opsix-test-mode .inlineVitals input { min-width: 0; font-variant-numeric: tabular-nums; }
 @media(max-width: 850px) { body.opsix-test-mode .opsix-report-layout { grid-template-columns: 1fr; } body.opsix-test-mode .opsix-report-tools { flex-direction: row; flex-wrap: wrap; } }
+
+/* OPSIX â€“ konsistent hÃ¸yde pÃ¥ korte tekstfelt, vitale verdier og luftveisdetaljer */
+body.opsix-test-mode { --opsix-input-height: 42px; }
+body.opsix-test-mode .opsix-column input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
+body.opsix-test-mode .opsix-column select,
+body.opsix-test-mode .opsix-column .vpField,
+body.opsix-test-mode .opsix-column .btMini,
+body.opsix-test-mode .opsix-column .unitInputWrap {
+  box-sizing: border-box !important;
+  height: var(--opsix-input-height) !important;
+  min-height: var(--opsix-input-height) !important;
+  max-height: var(--opsix-input-height) !important;
+  border-radius: 8px !important;
+}
+body.opsix-test-mode .opsix-column .vpField input,
+body.opsix-test-mode .opsix-column .btMini input,
+body.opsix-test-mode .opsix-column .unitInputWrap input {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+}
+body.opsix-test-mode .opsix-medisinsk #spontO2Wrap,
+body.opsix-test-mode .opsix-medisinsk #highFlowWrap,
+body.opsix-test-mode .opsix-medisinsk #nivWrap,
+body.opsix-test-mode .opsix-medisinsk #intubWrap,
+body.opsix-test-mode .opsix-medisinsk #trachWrap,
+body.opsix-test-mode .opsix-medisinsk #acuteSpontO2Wrap,
+body.opsix-test-mode .opsix-medisinsk #acuteHighFlowWrap,
+body.opsix-test-mode .opsix-medisinsk #acuteNivWrap,
+body.opsix-test-mode .opsix-medisinsk #acuteIntubWrap,
+body.opsix-test-mode .opsix-medisinsk #acuteTrachWrap {
+  margin: 3px 0 5px !important;
+  padding: 0 !important;
+}
+body.opsix-test-mode .opsix-medisinsk .intubRow,
+body.opsix-test-mode .opsix-medisinsk #highFlowWrap .inlineRow,
+body.opsix-test-mode .opsix-medisinsk #intubWrap .inlineRow,
+body.opsix-test-mode .opsix-medisinsk #nivWrap .inlineRow {
+  margin-top: 3px !important;
+  margin-bottom: 0 !important;
+  gap: 8px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .unitInputWrap { margin-bottom: 0 !important; }
+body.opsix-test-mode .opsix-medisinsk .airwayRow { margin-bottom: 0 !important; }
+body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt input {
+  display: block !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  clip-path: inset(50%) !important;
+}
+body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:focus-within {
+  outline: 3px solid #83baff !important;
+  outline-offset: 2px;
+}
