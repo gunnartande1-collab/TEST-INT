@@ -673,6 +673,14 @@ function updateSpedbarnUI() {
 
   // Transportform vises kun for barn
   setHidden(transportWrap, !viserTransportform);
+  // Barn transporteres på båre, mens kuvøse er et eget valg for nyfødt/spedbarn.
+  const kuvose = $("transport_kuvose");
+  const kuvoseLabel = kuvose?.closest("label");
+  if (kuvose && kuvoseLabel) {
+    kuvose.dataset.value = val === "Barn" ? "Båre" : "Kuvøse";
+    const text = kuvoseLabel.querySelector("span");
+    if (text) text.textContent = kuvose.dataset.value;
+  }
 
   /* ==========================================
      KORREKT VEKTENHET
@@ -686,7 +694,7 @@ function updateSpedbarnUI() {
     vektInput.value = Number.isFinite(nyVekt) && nyVekt >= 0 ? String(Number(nyVekt.toFixed(6))) : "";
   }
   vektLabel.textContent = brukerGram ? "Vekt (gram)" : "Vekt (kg)";
-  vektInput.placeholder = brukerGram ? "gram" : "kg";
+  vektInput.removeAttribute("placeholder");
   vektInput.step = brukerGram ? "1" : "0.1";
   vektInput.inputMode = brukerGram ? "numeric" : "decimal";
   vektInput.dataset.unit = nyEnhet;
@@ -862,7 +870,7 @@ function refreshTrachDeps() {
 function handleAirwayChange() {
   const v = getBinaryValue("airwayMain");
   [spontO2Wrap, highFlowWrap, nivWrap, intubWrap, trachWrap].forEach(el => setHidden(el, true));
-  if (v === "Spontan med O2") setHidden(spontO2Wrap, false);else if (v === "Spontant med high flow") setHidden(highFlowWrap, false);else if (v === "NIV (CPAP/BiPAP)") setHidden(nivWrap, false);else if (v === "Intubert") setHidden(intubWrap, false);else if (v === "Trakeostomi") setHidden(trachWrap, false);
+  if (["Spontan med O2", "Spontan m/O2"].includes(v)) setHidden(spontO2Wrap, false);else if (["Spontant med high flow", "Spontant m/high flow"].includes(v)) setHidden(highFlowWrap, false);else if (v === "NIV (CPAP/BiPAP)") setHidden(nivWrap, false);else if (v === "Intubert") setHidden(intubWrap, false);else if (v === "Trakeostomi") setHidden(trachWrap, false);
   refreshTrachDeps();
 }
 
@@ -877,10 +885,10 @@ function updateAcuteAirwayDetails() {
     acuteTrachO2Wrap,
     acuteTrachVentWrap
   ].forEach(el => setHidden(el, true));
-  if (a === "Spontan med O2") {
+  if (["Spontan med O2", "Spontan m/O2"].includes(a)) {
     setHidden(acuteSpontO2Wrap, false);
   }
-  if (a === "Spontant med high flow") {
+  if (["Spontant med high flow", "Spontant m/high flow"].includes(a)) {
     setHidden(acuteHighFlowWrap, false);
   }
   if (a === "NIV (CPAP/BiPAP)") {
@@ -1167,9 +1175,7 @@ function updateMainVisibility() {
     setHidden($("reportActions"), true);
     setHidden($("rapport"), true);
    setHidden($("feedbackWrap"), false);
-    // Rapporten holdes synlig og oppdateres fortløpende av lagRapport().
-    setHidden($("reportActions"), false);
-    setHidden($("rapport"), false);
+    rapport.value = "";
     return;
   }
 
@@ -1462,13 +1468,9 @@ function bindBinaryOptionEvents() {
       }
       if (g === "airwayMain") {
         synkroniserLuftveiFra("full");
-        handleAirwayChange();
-        updateAcuteAirwayDetails();
       }
       if (g === "acuteAirway") {
         synkroniserLuftveiFra("acute");
-        updateAcuteAirwayDetails();
-        handleAirwayChange();
       }
       lagRapport();
     });
@@ -1934,20 +1936,7 @@ function lagRapport() {
   oppdaterKliniskeFeltvarsler();
   const h = getBinaryValue("hast");
   if (!h) {
-    // Foreløpig rapport, også før hastegrad er valgt. Bruk samme
-    // rapportbyggere som for ikke-akutt transport; ingen pasientdata lagres.
-    const forelopig = [];
-    addHeader(forelopig);
-    forelopig.push("Hastegrad: Ikke valgt");
-    addSpesialtransport(forelopig);
-    const follow = buildFollowNeedLine();
-    if (follow) forelopig.push(follow);
-    const sped = buildSpedbarnLine();
-    if (sped) forelopig.push(sped);
-    if (getSpedbarnValue() && getSpedbarnValue() !== "Nei") addTransportform(forelopig);
-    buildFullReport(forelopig);
-    rapport.value = forelopig.join("\n");
-    autoGrowTextarea(rapport);
+    rapport.value = "";
     return;
   }
   const lines = [];
@@ -2775,37 +2764,38 @@ function buildFollowNeedLine() {
 })();
 
 /* ======================================================
-   OPSIX – VALGFRI NATT / DEMPET / DAG
-   Bygger nedtrekksvalg på eksisterende temaknapp.
-   Ingen pasientdata eller tema lagres.
+   OPSIX – NATT / DEMPET / DAG
+   Natt er standard. Ingen lagring av visningsvalg eller data.
+   Knappen viser neste modus i syklusen.
 ====================================================== */
 (() => {
   "use strict";
-  const initThemeSelect = () => {
-    const oldButton = document.getElementById("themeToggle");
-    if (!oldButton || document.getElementById("opsixThemeSelect")) return;
-    const select = document.createElement("select");
-    select.id = "opsixThemeSelect";
-    select.className = "opsix-theme-select";
-    select.setAttribute("aria-label", "Velg visningsmodus");
-    for (const [value, text] of [["night", "Natt"], ["dim", "Dempet"], ["day", "Dag"]]) {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = text;
-      select.append(option);
+  function initThemeToggle() {
+    const button = document.getElementById("themeToggle");
+    const label = document.getElementById("themeLabel");
+    const icon = document.getElementById("themeIcon");
+    if (!button || !label || !icon) return;
+    const modes = ["night", "dim", "day"];
+    const labels = { night: "Natt", dim: "Dempet", day: "Dag" };
+    const icons = { night: "☾", dim: "◐", day: "☀" };
+    let index = 0;
+    function applyMode() {
+      const current = modes[index];
+      const next = modes[(index + 1) % modes.length];
+      document.body.classList.toggle("theme-light", current === "day");
+      document.body.classList.toggle("theme-dim", current === "dim");
+      document.documentElement.style.colorScheme = current === "day" ? "light" : "dark";
+      label.textContent = labels[next];
+      icon.textContent = icons[next];
+      button.setAttribute("aria-label", `Vis ${labels[next].toLowerCase()} modus. Nå: ${labels[current].toLowerCase()}.`);
+      button.setAttribute("aria-pressed", String(current !== "night"));
+      button.title = `Nå: ${labels[current]}. Klikk for ${labels[next].toLowerCase()}.`;
     }
-    const apply = () => {
-      document.body.classList.toggle("theme-light", select.value === "day");
-      document.body.classList.toggle("theme-dim", select.value === "dim");
-      document.documentElement.style.colorScheme = select.value === "day" ? "light" : "dark";
-    };
-    oldButton.replaceWith(select);
-    select.value = "night";
-    select.addEventListener("change", apply);
-    apply();
-  };
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initThemeSelect);
-  else initThemeSelect();
+    applyMode();
+    button.addEventListener("click", () => { index = (index + 1) % modes.length; applyMode(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initThemeToggle);
+  else initThemeToggle();
 })();
 
 /* ===== OPSIX V1.1.0 TESTFUNKSJONER ===== */
@@ -2905,7 +2895,16 @@ function buildFollowNeedLine() {
     refs.sed, refs.pressor, refs.otherMeds);
   // Alle tre medikamentgrupper hører til under Medisinske opplysninger.
   append(right, refs.equipment, refs.safety, refs.acuteDoctor, refs.doctors);
-  append(reportPanel, refs.report, refs.actions);
+  const reportLayout = document.createElement("div");
+  reportLayout.className = "opsix-report-layout";
+  const reportTools = document.createElement("aside");
+  reportTools.className = "opsix-report-tools";
+  reportTools.setAttribute("aria-label", "Rapporthandlinger");
+  reportLayout.append(refs.report, reportTools);
+  if (refs.actions) reportTools.append(refs.actions);
+  const footerTools = $("opsixFooterActions");
+  if (footerTools) reportTools.append(footerTools);
+  reportPanel.append(reportLayout);
   main.append(columns, reportPanel);
   main.classList.add("opsix-v110");
   document.body.classList.add("opsix-test-mode");
@@ -2978,9 +2977,6 @@ function buildFollowNeedLine() {
       if (values.every(Boolean)) {
         field.value = values.join("+");
         field.dispatchEvent(new Event("input", { bubbles: true }));
-        details.classList.add("hidden");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.textContent = "Beregn med E / V / M";
       }
     }));
     toggle.addEventListener("click", () => {
@@ -2992,47 +2988,6 @@ function buildFollowNeedLine() {
     wrapper.closest(".inlineVitals")?.insertAdjacentElement("afterend", container);
   }
   setupGcs();
-
-  // Umiddelbar, kontekstnær dokumentasjonskontroll ved HLR-/respirator-minus.
-  // Manglende lege vises ved feltet, ikke bare i rapporten.
-  function setupDecisionWarnings() {
-    const cases = [
-      { radio: ".hlrRadio:checked", wrap: "hlrMinusTextWrap", field: "hlrMinusLege", label: "HLR minus" },
-      { radio: ".respRadio:checked", wrap: "respMinusTextWrap", field: "respMinusLege", label: "Respirator minus" }
-    ];
-    const update = () => cases.forEach(({radio, wrap, field, label}) => {
-      const el = $(field);
-      const container = $(wrap);
-      if (!el || !container) return;
-      let note = container.querySelector(".opsix-decision-warning");
-      if (!note) {
-        note = document.createElement("p");
-        note.className = "opsix-decision-warning";
-        note.setAttribute("role", "status");
-        container.append(note);
-      }
-      const selected = document.querySelector(radio)?.value === "Nei";
-      const missing = selected && !el.value.trim();
-      note.textContent = missing ? `${label}: Oppgi ansvarlig lege for dokumentasjon.` : "";
-      note.hidden = !missing;
-      el.setAttribute("aria-invalid", String(missing));
-    });
-    document.addEventListener("change", update);
-    document.addEventListener("input", event => {
-      if (["hlrMinusLege", "respMinusLege"].includes(event.target?.id)) update();
-    });
-    update();
-  }
-  setupDecisionWarnings();
-
-  // Oppdater luftveisdetaljer også ved klikk på chipen.
-  // Originalfunksjonene bestemmer hvilke felter som vises.
-  document.addEventListener("change", event => {
-    if (event.target?.matches('.binOpt[data-group="airwayMain"], .binOpt[data-group="acuteAirway"]')) {
-      handleAirwayChange();
-      updateAcuteAirwayDetails();
-    }
-  });
 
   // Behold den eksisterende algoritmen, men fjern akuttskjuling
   // av ikke-utfylte tilganger og utstyrsvalg.
@@ -3228,26 +3183,46 @@ function buildFollowNeedLine() {
   console.info("OPSIX V1.1.0 – testlayout aktivert. Ingen data lagres.");
 })();
 
-/* OPSIX – merk valgfrie grupper ved akuttoppdrag, uten å deaktivere feltene */
+/* ===========================================================
+   OPSIX – samlet revisjon: tastatur, valgfritt, luftveier, rapport
+   =========================================================== */
 (() => {
-  function updateOptionalLabels() {
-    const acute = document.body.classList.contains("opsix-akutt");
-    document.querySelectorAll(".opsix-optional").forEach(section => {
-      const heading = section.querySelector(":scope > .section, :scope > .minorTitle, :scope > .vpTitle, :scope > label");
-      if (!heading) return;
-      let tag = heading.querySelector(".opsix-optional-tag");
-      if (!tag) {
-        tag = document.createElement("span");
-        tag.className = "opsix-optional-tag";
-        tag.textContent = "Valgfritt ved Akutt";
-        heading.append(tag);
+  const init = () => {
+    // Synlige radio-chips er ekte radioknapper: Tab går til valgt/første
+    // alternativ og piltaster flytter valget etter standard nettleseratferd.
+    document.querySelectorAll('label.medChip input, label.binaryOpt input, label.followChip input, label.spedChip input, label.smChip input').forEach(input => {
+      if (input.type === 'radio' || input.type === 'checkbox') {
+        input.removeAttribute('tabindex');
+        input.setAttribute('aria-label', input.closest('label')?.querySelector('span')?.textContent?.trim() || input.dataset.value || input.id);
       }
-      tag.hidden = !acute;
     });
-  }
-  document.addEventListener("click", event => {
-    if (event.target.closest(".hasteCard")) queueMicrotask(updateOptionalLabels);
-  });
-  document.addEventListener("change", updateOptionalLabels);
-  updateOptionalLabels();
+    // En samlet merking, uten å gjøre kliniske felter utilgjengelige.
+    const optionalIds = ['bevar-full-tidligere','bevar-full-vitalparametre','bevar-full-tilganger','bevar-full-utstyr','bevar-full-mottakende'];
+    function updateOptional() {
+      const acute = document.querySelector('.hasteCard.active')?.dataset.haste === 'Akutt';
+      optionalIds.forEach(id => {
+        const group = document.getElementById(id);
+        if (!group) return;
+        let tag = group.querySelector(':scope > .opsix-optional-label');
+        if (!tag) {
+          tag = document.createElement('div');
+          tag.className = 'opsix-optional-label';
+          tag.textContent = 'Ikke prioritert ved Akutt';
+          group.prepend(tag);
+        }
+        tag.hidden = !acute;
+      });
+    }
+    document.querySelectorAll('.hasteCard').forEach(button => button.addEventListener('click', () => queueMicrotask(updateOptional)));
+    updateOptional();
+    // Luftveisfelter oppdateres også ved tastaturvalg og ved endring av
+    // radioknapp, ikke bare ved museklikk.
+    document.addEventListener('change', event => {
+      const group = event.target?.dataset?.group;
+      if (group === 'airwayMain') window.handleAirwayChange?.();
+      if (group === 'acuteAirway') window.updateAcuteAirwayDetails?.();
+    });
+    ['vekt','hovedproblem','acuteHovedproblem','tidligere'].forEach(id => document.getElementById(id)?.removeAttribute('placeholder'));
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
