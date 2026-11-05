@@ -4206,3 +4206,123 @@ body.opsix-test-mode .hasteCard:focus-visible {
   body.opsix-test-mode .opsix-operativ .followRow { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
   body.opsix-test-mode .opsix-report-layout { grid-template-columns: 1fr !important; }
 }
+
+/* OPSIX â€“ finpuss: GCS, barnetransport, lysnivÃ¥ og kontrast */
+body.opsix-test-mode .opsix-medisinsk .vpGcsField {
+  position: relative !important;
+  min-width: 0 !important;
+}
+body.opsix-test-mode .opsix-medisinsk .vpGcsField input {
+  padding-right: 76px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .vpGcsField .opsix-gcs-toggle {
+  position: absolute !important;
+  top: 50% !important;
+  right: 5px !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  min-height: 29px !important;
+  height: 29px !important;
+  padding: 4px 7px !important;
+  font-size: 11px !important;
+  border-radius: 7px !important;
+  white-space: nowrap;
+  z-index: 2;
+}
+body.opsix-test-mode .opsix-gcs-controls {
+  margin: 4px 0 8px !important;
+}
+body.opsix-test-mode .opsix-gcs-controls:has(.opsix-gcs-details.hidden) {
+  display: none !important;
+}
+body.opsix-test-mode #transportWrap .transportRow {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  overflow: visible !important;
+}
+body.opsix-test-mode #transportWrap .transportRow > label.medChip {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: none !important;
+  padding: 7px 10px !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+body.opsix-test-mode #transportWrap .transportRow > label.medChip span {
+  width: auto !important;
+  padding: 0 !important;
+  line-height: 1.2 !important;
+  font-size: 12px !important;
+}
+body.opsix-test-mode .opsix-theme-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex: 0 0 auto;
+}
+body.opsix-test-mode .opsix-theme-caption {
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--text);
+  opacity: .86;
+}
+body.opsix-test-mode .opsix-theme-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 132px !important;
+  min-height: 38px !important;
+  padding: 7px 34px 7px 13px !important;
+  border: 1px solid #66778a !important;
+  border-radius: 12px !important;
+  color: #f7fafc !important;
+  background-color: #354353 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23e5edf6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 11px center !important;
+  background-size: 14px !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+  cursor: pointer;
+}
+body.theme-light.opsix-test-mode .opsix-theme-select {
+  background-color: #f5f7fa !important;
+  color: #18293c !important;
+  border-color: #8498ac !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23233850' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+}
+body.theme-dim.opsix-test-mode .opsix-theme-select { background-color: #445362 !important; }
+body.opsix-test-mode .opsix-theme-select:focus-visible,
+body.opsix-test-mode .opsix-medisinsk .vpGcsField .opsix-gcs-toggle:focus-visible {
+  outline: 3px solid #86bbff !important;
+  outline-offset: 2px !important;
+}
+body.opsix-test-mode label:has(> input:focus-visible) {
+  outline: 3px solid #86bbff !important;
+  outline-offset: 2px !important;
+}
+body.opsix-test-mode .opsix-column .medChip:has(input:checked),
+body.opsix-test-mode #transportWrap .medChip:has(input:checked) {
+  background-color: #245b9e !important;
+  border-color: #86baff !important;
+  color: #fff !important;
+}
+body.theme-light.opsix-test-mode .opsix-column .medChip:has(input:checked),
+body.theme-light.opsix-test-mode #transportWrap .medChip:has(input:checked) {
+  background-color: #205b9e !important;
+  border-color: #174475 !important;
+  color: #fff !important;
+}
+body.opsix-test-mode .opsix-column .medChip:has(input:checked) span { color: #fff !important; }
+@media (max-width: 550px) {
+  body.opsix-test-mode .opsix-theme-caption { display: none; }
+  body.opsix-test-mode .opsix-theme-select { width: 105px !important; }
+}

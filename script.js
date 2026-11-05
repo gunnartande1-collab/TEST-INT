@@ -2782,39 +2782,22 @@ function buildFollowNeedLine() {
   }
 })();
 
-/* ======================================================
-   OPSIX – NATT / DEMPET / DAG
-   Natt er standard. Ingen lagring av visningsvalg eller data.
-   Knappen viser neste modus i syklusen.
-====================================================== */
+/* OPSIX – tilgjengelig temavelger uten lagring */
 (() => {
-  "use strict";
-  function initThemeToggle() {
-    const button = document.getElementById("themeToggle");
-    const label = document.getElementById("themeLabel");
-    const icon = document.getElementById("themeIcon");
-    if (!button || !label || !icon) return;
-    const modes = ["night", "dim", "day"];
-    const labels = { night: "Natt", dim: "Dempet", day: "Dag" };
-    const icons = { night: "☾", dim: "◐", day: "☀" };
-    let index = 0;
-    function applyMode() {
-      const current = modes[index];
-      const next = modes[(index + 1) % modes.length];
-      document.body.classList.toggle("theme-light", current === "day");
-      document.body.classList.toggle("theme-dim", current === "dim");
-      document.documentElement.style.colorScheme = current === "day" ? "light" : "dark";
-      label.textContent = labels[next];
-      icon.textContent = icons[next];
-      button.setAttribute("aria-label", `Vis ${labels[next].toLowerCase()} modus. Nå: ${labels[current].toLowerCase()}.`);
-      button.setAttribute("aria-pressed", String(current !== "night"));
-      button.title = `Nå: ${labels[current]}. Klikk for ${labels[next].toLowerCase()}.`;
+  function init() {
+    const select = document.getElementById("opsixThemeSelect");
+    if (!select) return;
+    function apply(value) {
+      document.body.classList.toggle("theme-light", value === "day");
+      document.body.classList.toggle("theme-dim", value === "dim");
+      document.documentElement.style.colorScheme = value === "day" ? "light" : "dark";
     }
-    applyMode();
-    button.addEventListener("click", () => { index = (index + 1) % modes.length; applyMode(); });
+    select.value = "night";
+    apply("night");
+    select.addEventListener("change", () => apply(select.value));
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initThemeToggle);
-  else initThemeToggle();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();
 
 /* ===== OPSIX V1.1.0 TESTFUNKSJONER ===== */
@@ -2955,7 +2938,8 @@ function buildFollowNeedLine() {
     const toggle = document.createElement("button");
     toggle.type = "button";
     toggle.className = "opsix-gcs-toggle";
-    toggle.textContent = "Beregn med E / V / M";
+    toggle.textContent = "E / V / M";
+    toggle.setAttribute("aria-label", "Åpne GCS-komponentberegning (øye, verbal, motorisk)");
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-controls", "opsixGcsDetails");
     const details = document.createElement("div");
@@ -3001,9 +2985,10 @@ function buildFollowNeedLine() {
     toggle.addEventListener("click", () => {
       const nowOpen = details.classList.toggle("hidden") === false;
       toggle.setAttribute("aria-expanded", String(nowOpen));
-      toggle.textContent = nowOpen ? "Skjul E / V / M" : "Beregn med E / V / M";
+      toggle.textContent = nowOpen ? "Lukk" : "E / V / M";
     });
-    container.append(toggle, details);
+    wrapper.append(toggle);
+    container.append(details);
     wrapper.closest(".inlineVitals")?.insertAdjacentElement("afterend", container);
   }
   setupGcs();
