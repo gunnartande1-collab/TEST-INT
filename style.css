@@ -1,0 +1,4109 @@
+:root {
+  --bg: #2f3136;
+  --panel: #3a3d43;
+  --text: #f1f1f1;
+  --muted: #cfcfcf;
+  --field: #e2e2e2;
+  --fieldText: #111;
+  --line: #50545c;
+  --green: #35c16a;
+  --greenHover: #2fb45f;
+  --red: #ef4444;
+  --redHover: #e03b3b;
+  --accent: #8fb0ff;
+  --hasteAkutt: #ef4444;
+  --hasteHaster: #facc15;
+  --hasteSamme: #7FAE7E;
+  --hastePlanlagt: #2F6B3B;
+  --hasteText: #111;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: var(--panel);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+}
+
+h1 {
+  text-align: center;
+  margin: 6px 0 28px;
+  letter-spacing: 1px;
+}
+
+label {
+  display: block;
+  font-weight: 900;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #999;
+  background: var(--field);
+  color: var(--fieldText);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  resize: vertical;
+  overflow: auto;
+  min-height: 72px;
+  white-space: pre-wrap;
+}
+
+textarea::-webkit-resizer {
+  background: linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 50%,
+      #222 50%,
+      #222 60%,
+      transparent 60%,
+      transparent 100%
+    );
+}
+
+textarea.report {
+  margin-top: 15px;
+  min-height: 260px;
+  white-space: pre-wrap;
+  font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  resize: vertical;
+  overflow: auto;
+}
+
+.hidden {
+  display: none!important;
+}
+
+#rapport {
+  min-height: 180px;
+  overflow-y: hidden;
+  resize: none;
+}
+
+.chk {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  flex: 0 0 auto;
+}
+
+.binaryRow {
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.binaryOpt,
+.clickableChoice {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-weight: 400;
+  margin: 0 40px 0 0;
+}
+
+.binaryOpt input,
+.clickableChoice input {
+  margin: 0;
+  cursor: pointer;
+}
+
+.clickableChoice span {
+  font-weight: 400;
+}
+
+.toggleCell {
+  cursor: pointer;
+  user-select: none;
+  border-radius: 10px;
+}
+
+.toggleCell:hover {
+  background: rgba(255,255,255,.05);
+}
+
+.toggleInner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  flex-wrap: wrap;
+}
+
+.inlineVitals {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.vpField,
+.btMini,
+.gestField {
+  position: relative;
+  height: 44px;
+}
+
+.vpField {
+  width: 95px;
+  flex: 0 0 95px;
+}
+
+.btMini {
+  width: 82px;
+  flex: 0 0 82px;
+}
+
+.gestField {
+  width: 120px;
+}
+
+.vpField span,
+.btMini span,
+.gestField span {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8c8c8c;
+  font-size: 13px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.vpField input,
+.btMini input,
+.gestField input {
+  height: 44px;
+  line-height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+.vpField input {
+  padding-left: 44px;
+}
+
+.btMini input {
+  padding-left: 42px;
+}
+
+.gestField input {
+  padding-left: 52px;
+}
+
+.btWrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+}
+
+.btSlash {
+  font-weight: 900;
+  color: var(--muted);
+  margin: 11px 0 0;
+  width: 8px;
+  text-align: center;
+}
+
+.gestWrap,
+.inlineRow,
+.dynamicRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.dynamicRow {
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.dynamicRow input[type=text] {
+  flex: 1 1 auto;
+}
+
+.pvkSelect {
+  width: 110px;
+}
+
+.btnbar {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .15s;
+  font-size: 14px;
+}
+
+button:hover {
+  opacity: .97;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.actionBtn {
+  min-height: 52px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .2px;
+  transition: background .18s ease,
+    transform .12s ease,
+    box-shadow .18s ease,
+    border-color .18s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+}
+
+.actionBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+}
+
+.actionBtn:active {
+  transform: translateY(0);
+}
+
+.btn-copy {
+  background: #2f9e5b;
+}
+
+.btn-copy:hover {
+  background: #36ad66;
+}
+
+.btn-red {
+  background: #4a2b2b;
+}
+
+.btn-red:hover {
+  background: #5a3232;
+}
+
+.copyIcon {
+  opacity: .92;
+}
+
+.btn-copy {
+  background: var(--green);
+  color: #0b1a10;
+  min-width: 190px;
+}
+
+.btn-copy:hover {
+  background: var(--greenHover);
+}
+
+.btn-red {
+  background: var(--red);
+  color: #fff;
+  min-width: 140px;
+}
+
+.btn-red:hover {
+  background: var(--redHover);
+}
+
+.push-right {
+  margin-left: auto;
+}
+
+.copyMsg {
+  color: #a7f3c1;
+  font-weight: 700;
+  min-height: 20px;
+  font-size: 13px;
+}
+
+.hasteLabel {
+  display: block;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: .6px;
+  margin-top: 14px;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.haste-akutt {
+  background: #3a3d43;
+  border: 2px solid var(--hasteAkutt);
+}
+
+.haste-haster {
+  background: #3a3d43;
+  border: 2px solid var(--hasteHaster);
+}
+
+.haste-samme {
+  background: #3a3d43;
+  border: 2px solid var(--hasteSamme);
+}
+
+.haste-planlagt {
+  background: #3a3d43;
+  border: 2px solid var(--hastePlanlagt);
+}
+
+.specCell input[type="checkbox"],
+.specCell span {
+  cursor: pointer;
+}
+
+.specLabel {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.specLabel::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateX(10px) translateY(-50%);
+  white-space: normal;
+  max-width: 240px;
+  background: rgba(23,27,34,.96);
+  color: #f8fafc;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity .18s ease,transform .18s ease;
+  transition-delay: 0s;
+}
+
+.specLabel:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(10px) translateY(-50%);
+  transition-delay: .25s;
+}
+
+@media(max-width:980px) {
+  .inlineVitals {
+    flex-wrap: wrap;
+  }
+}
+
+@media(max-width:720px) {
+  .vpField,
+  .btMini {
+    width: 46%;
+    flex: 1 1 46%;
+  }
+
+  .btWrap {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .push-right {
+    margin-left: 0;
+  }
+
+  .actionBtn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .copyMsg {
+    width: 100%;
+  }
+}
+
+.specChoice {
+  cursor: pointer;
+}
+
+/* Holder checkbox + tekstfelt pÃ¥ samme linje */
+
+#andreInfBody td,
+#tilgangerDynamicBody td {
+  width: 100%;
+}
+
+#andreInfBody input[type="text"],
+#tilgangerDynamicBody input[type="text"] {
+  flex: 0 0 420px!important;
+  width: 420px!important;
+  min-width: 0!important;
+}
+
+/* Sedasjon + Pressor dynamiske fritekstlinjer */
+
+#sedDynamicBody .dynamicRow,
+#pressorDynamicBody .dynamicRow,
+#andreInfBody .dynamicRow,
+#tilgangerDynamicBody .dynamicRow {
+  flex-direction: row!important;
+}
+
+#sedDynamicBody .dynamicRow .chk,
+#pressorDynamicBody .dynamicRow .chk,
+#andreInfBody .dynamicRow .chk,
+#tilgangerDynamicBody .dynamicRow .chk {
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
+#sedDynamicBody .dynamicRow input[type="text"],
+#pressorDynamicBody .dynamicRow input[type="text"],
+#andreInfBody .dynamicRow input[type="text"],
+#tilgangerDynamicBody .dynamicRow input[type="text"] {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+}
+
+#sedDynamicBody,
+#pressorDynamicBody,
+#andreInfBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#sedDynamicBody .dynamicRow,
+#pressorDynamicBody .dynamicRow,
+#andreInfBody .dynamicRow {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  gap: 8px !important;
+  margin-top: 0 !important;
+}
+
+#sedDynamicBody .dynamicRow .chk,
+#pressorDynamicBody .dynamicRow .chk,
+#andreInfBody .dynamicRow .chk {
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
+#sedDynamicBody .dynamicRow input[type="text"],
+#pressorDynamicBody .dynamicRow input[type="text"],
+#andreInfBody .dynamicRow input[type="text"] {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+/* Fjern piler i Chrome, Safari, Edge */
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Fjern piler i Firefox */
+
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.spesialtransportRow .specCell {
+  margin: 0;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.spesialtransportRow .specLabel {
+  cursor: pointer;
+}
+
+.copyIcon,
+.trashIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.section {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid #5a5d66;
+  font-weight: 900;
+  font-size: 20px;
+  color: #fff;
+  width: 100%;
+}
+
+.airwayRow {
+  overflow-x: auto;
+}
+
+#hovedproblem,
+#acuteHovedproblem {
+  min-height: 120px;
+  margin-top: 10px;
+  margin-bottom: 26px;
+}
+
+.phoneInput {
+  width: 150px;
+}
+
+.section + .binaryRow {
+  margin-top: 12px;
+}
+
+.minorTitle {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  font-size: 20px;
+  font-weight: 800;
+  color: #f3f4f6;
+}
+
+.vpTitle {
+  margin-bottom: 14px;
+}
+
+/* Felles hÃ¸yrekant for legefelt og fritekstfelt i tilgang/utstyr */
+
+:root {
+  --adminRowWidth: 570px;
+}
+
+.doctorRow {
+  display: grid;
+  grid-template-columns: 420px 145px;
+  gap: 10px;
+  width: var(--adminRowWidth);
+  max-width: 100%;
+  align-items: center;
+}
+
+#tilgangerDynamicBody .dynamicRow {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 10px !important;
+  width: var(--adminRowWidth) !important;
+  max-width: 100% !important;
+}
+
+#tilgangerDynamicBody .dynamicRow input {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.pvkSelect {
+  margin-bottom: 0;
+  align-self: center;
+}
+
+/* ===============================
+MEDIKAMENTER
+================================ */
+
+.medGroup:first-of-type {
+  margin-top: 0;
+}
+
+.medGroupTitle {
+  color: #d8d8d8;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.medDynamic {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 570px;
+}
+
+.medDynamic .dynamicRow {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+
+.medDynamic .dynamicRow .chk {
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
+.medDynamic .dynamicRow input[type="text"] {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+@media(max-width:720px) {
+  .medChip {
+    flex: 1 1 auto;
+  }
+
+  .medDynamic {
+    max-width: 100%;
+  }
+}
+
+/* ===============================
+MODERNE LUFTVEIVALG
+================================ */
+
+.airwayRow {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  overflow: visible;
+}
+
+.airwayRow .binaryOpt {
+  background: #2f3238;
+  border: 1px solid rgba(255,255,255,0.10);
+  display: flex;
+  text-align: center;
+}
+
+.airwayRow .binaryOpt:hover {
+  background: #3a3e46;
+}
+
+.airwayRow .binaryOpt input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.airwayRow .binaryOpt:has(input:checked) {
+  background: #8fb0ff;
+}
+
+@media(max-width:720px) {
+  .airwayRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ===============================
+MODERNE TRACHEOSTOMI-VALG
+================================ */
+
+#trachWrap .table,
+#acuteTrachWrap .table {
+  margin-top: 10px;
+}
+
+#trachWrap table,
+#acuteTrachWrap table {
+  display: block;
+  width: 100%;
+}
+
+#trachWrap tbody,
+#acuteTrachWrap tbody {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+}
+
+#trachWrap tr,
+#acuteTrachWrap tr {
+  display: block;
+}
+
+#trachWrap td,
+#acuteTrachWrap td {
+  display: block;
+  padding: 0;
+}
+
+#trachWrap .toggleCell,
+#acuteTrachWrap .toggleCell {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 14px;
+  background: #2a2d33;
+  border: 1px solid rgba(255,255,255,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #f1f1f1;
+  font-weight: 650;
+  font-size: 13px;
+  cursor: pointer;
+  transition: .15s ease;
+}
+
+#trachWrap .toggleCell:hover,
+#acuteTrachWrap .toggleCell:hover {
+  background: #3a3e46;
+}
+
+#trachWrap .toggleInner,
+#acuteTrachWrap .toggleInner {
+  justify-content: center;
+}
+
+#trachWrap .toggleInner input,
+#acuteTrachWrap .toggleInner input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#trachWrap .toggleCell:has(input:checked),
+#acuteTrachWrap .toggleCell:has(input:checked) {
+  background: #8fb0ff;
+  color: #111;
+  border-color: #8fb0ff;
+  box-shadow: 0 0 0 2px rgba(143,176,255,0.18);
+}
+
+@media(max-width:720px) {
+  #trachWrap tbody,
+  #acuteTrachWrap tbody {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+KOMPAKTE DETALJFELT
+================================ */
+
+#spontO2Wrap,
+#highFlowWrap,
+#nivWrap,
+#intubWrap,
+#trachO2Wrap,
+#trachVentWrap,
+#acuteSpontO2Wrap,
+#acuteHighFlowWrap,
+#acuteNivWrap,
+#acuteIntubWrap,
+#acuteTrachO2Wrap,
+#acuteTrachVentWrap {
+  margin-top: 10px;
+  padding: 8px 0;
+  background: transparent;
+  border: 0;
+  max-width: 560px;
+}
+
+/* Fjern store labels inne i detaljfelt */
+
+#spontO2Wrap label,
+#highFlowWrap label,
+#nivWrap label,
+#intubWrap label,
+#trachO2Wrap label,
+#trachVentWrap label,
+#acuteSpontO2Wrap label,
+#acuteHighFlowWrap label,
+#acuteNivWrap label,
+#acuteIntubWrap label,
+#acuteTrachO2Wrap label,
+#acuteTrachVentWrap label {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #cfcfcf;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Tettere inputs */
+
+#spontO2Wrap input,
+#highFlowWrap input,
+#nivWrap input,
+#intubWrap input,
+#trachO2Wrap input,
+#trachVentWrap input,
+#acuteSpontO2Wrap input,
+#acuteHighFlowWrap input,
+#acuteNivWrap input,
+#acuteIntubWrap input,
+#acuteTrachO2Wrap input,
+#acuteTrachVentWrap input {
+  margin-bottom: 8px;
+}
+
+/* Siste input uten ekstra luft */
+
+#spontO2Wrap input:last-child,
+#highFlowWrap input:last-child,
+#nivWrap input:last-child,
+#intubWrap input:last-child,
+#trachO2Wrap input:last-child,
+#trachVentWrap input:last-child,
+#acuteSpontO2Wrap input:last-child,
+#acuteHighFlowWrap input:last-child,
+#acuteNivWrap input:last-child,
+#acuteIntubWrap input:last-child,
+#acuteTrachO2Wrap input:last-child,
+#acuteTrachVentWrap input:last-child {
+  margin-bottom: 0;
+}
+
+/* Smitte + CAVE som rolige infofelt */
+
+.infoGroup {
+  margin-top: 22px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+}
+
+/* Overskrift */
+
+.infoGroup .section {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Valg inni gruppen */
+
+.infoGroup .binaryRow {
+  gap: 14px;
+  margin-top: 10px;
+}
+
+/* Fritekst */
+
+.infoGroup textarea,
+.infoGroup input {
+  margin-top: 10px;
+}
+
+/* Tilganger â€“ roligere kort/chip-fÃ¸lelse */
+
+.accessGroup {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Tilganger / Utstyr â€“ kompakt kort */
+
+.accessGroup {
+  margin-top: 22px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+}
+
+.accessGroup .minorTitle {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.accessGroup .toggleCell {
+  background: rgba(255,255,255,0.022);
+}
+
+/* Standard chip */
+
+.specialGroup .specCell {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Hover */
+
+.specialGroup .specCell:hover {
+  background: rgba(255,255,255,0.055);
+}
+
+/* Valgt */
+
+.specialGroup .specCell.active {
+  background: rgba(255,255,255,0.12);
+}
+
+.specialGroup .specCell input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.specialGroup .specCell.active {
+  background: var(--accent);
+}
+
+/* Tilganger / Utstyr â€“ mer kompakte valgflater */
+
+.accessGroup .toggleCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  border-radius: 12px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.accessGroup .toggleInner,
+.accessGroup .clickableChoice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.accessGroup input[type="checkbox"] {
+  margin: 0;
+}
+
+.accessGroup select {
+  height: 42px;
+  min-height: 42px;
+  padding: 0 10px;
+  line-height: normal;
+  border-radius: 10px;
+}
+
+/* Roligere input- og tekstfelt */
+
+input,
+textarea,
+select {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.16);
+}
+
+/* Strammere rytme mellom seksjoner */
+
+.bigSection {
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 14px;
+  font-size: 20px;
+  font-weight: 850;
+  letter-spacing: .01em;
+  color: #ffffff;
+}
+
+.binaryRow,
+.smLine,
+.airwayRow {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+/* Mykere global linjestil */
+
+:root {
+  --line: rgba(255,255,255,0.05);
+}
+
+.toggleCell {
+  border-color: rgba(255,255,255,0.04);
+}
+
+/* Mindre aggressive bokser */
+
+input,
+textarea,
+select {
+  box-shadow: none;
+}
+
+/* Tydeligere valgt status uten hard border */
+
+.toggleCell.active,
+.binaryOpt:has(input:checked) {
+  background: rgba(70,130,180,0.85);
+  color: #111;
+  border-color: rgba(70,130,180,0.9);
+}
+
+.toggleCell.active span,
+.binaryOpt:has(input:checked) span,
+.clickableChoice:has(input:checked) span {
+  color: #111;
+}
+
+/* Luftveier som moderne valggruppe */
+
+.airwayRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.airwayRow .binaryOpt {
+  gap: 6px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Medikamenter â€“ mer raffinert chip-layout */
+
+.medGroup {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.medGroupTitle {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.72;
+  margin-bottom: 8px;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.medChip {
+  gap: 6px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* skjul checkbox visuelt */
+
+.medChip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* valgt */
+
+.medChip:has(input:checked) {
+  background: rgba(70,130,180,0.88);
+}
+
+.medChip:has(input:checked) span {
+  color: #111;
+}
+
+/* Fjern blÃ¥ valgtmarkering kun pÃ¥ disse */
+
+.clickableChoice:has(#til_cvk:checked),
+.clickableChoice:has(#til_pvk:checked),
+.clickableChoice:has(#utst_pumper:checked),
+.clickableChoice:has(#acutePumperChk:checked) {
+  background: transparent !important;
+  color: #f1f1f1 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Behold hvit tekst */
+
+.clickableChoice:has(#til_cvk:checked) span,
+.clickableChoice:has(#til_pvk:checked) span,
+.clickableChoice:has(#utst_pumper:checked) span,
+.clickableChoice:has(#acutePumperChk:checked) span {
+  color: #f1f1f1 !important;
+}
+
+.binaryOpt:has(#transport_kuvose:checked),
+.binaryOpt:has(#transport_pedimate:checked),
+.binaryOpt:has(#transport_barnibag:checked),
+.binaryOpt:has(#transport_kengufix:checked) {
+  background: transparent !important;
+  color: #f1f1f1 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.binaryOpt:has(#transport_kuvose:checked) span,
+.binaryOpt:has(#transport_pedimate:checked) span,
+.binaryOpt:has(#transport_barnibag:checked) span,
+.binaryOpt:has(#transport_kengufix:checked) span {
+  color: #f1f1f1 !important;
+}
+
+.feedbackBtn {
+  min-height: 44px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+
+.feedbackBtn:hover {
+  background: rgba(255,255,255,0.035);
+  color: #f3f4f6;
+}
+
+.doctorGroup {
+  margin-top: 22px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+}
+
+.hasteGrid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.hasteCard {
+  min-height: 118px;
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  text-align: left;
+  white-space: normal !important;
+  color: #111;
+}
+
+.hasteCardTitle,
+.hasteCardText {
+  display: block;
+  width: 100%;
+}
+
+.hasteCardTitle {
+  font-size: 17px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.hasteCardText {
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.35;
+  opacity: .88;
+}
+
+.hasteCard.active {
+  filter: brightness(0.92) saturate(1.12);
+  box-shadow: 0 9px 24px rgba(0,0,0,0.35),
+    inset 0 0 0 2px rgba(0,0,0,0.18);
+}
+
+@media(max-width:900px) {
+  .hasteGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width:560px) {
+  .hasteGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hasteCard {
+  position: relative;
+  transition: transform .08s ease,
+    filter .12s ease,
+    box-shadow .12s ease,
+    border-color .12s ease,
+    background .12s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+}
+
+.hasteCard.active {
+  transform: translateY(1px);
+  color: #111;
+}
+
+.haste-akutt.active {
+  background: var(--hasteAkutt);
+}
+
+.haste-haster.active {
+  background: var(--hasteHaster);
+}
+
+.haste-samme.active {
+  background: var(--hasteSamme);
+}
+
+.haste-planlagt.active {
+  background: var(--hastePlanlagt);
+}
+
+.formGroup {
+  margin-top: 22px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+}
+
+.formGroup .section,
+.formGroup .minorTitle,
+.formGroup label:first-child {
+  margin-top: 0;
+}
+
+.feedbackWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0;
+  margin-top: 14px;
+}
+
+.feedbackBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #3f4249;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.15s ease;
+}
+
+.feedbackBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Hastegrad: rolig standard + farget ramme */
+
+.hasteGrid .hasteCard {
+  background: #3a3d43 !important;
+  border: 2px solid transparent !important;
+  color: #f1f1f1 !important;
+}
+
+.hasteGrid .hasteCard.haste-akutt {
+  border-color: var(--hasteAkutt) !important;
+}
+
+.hasteGrid .hasteCard.haste-haster {
+  border-color: var(--hasteHaster) !important;
+}
+
+.hasteGrid .hasteCard.haste-samme {
+  border-color: var(--hasteSamme) !important;
+}
+
+.hasteGrid .hasteCard.haste-planlagt {
+  border-color: var(--hastePlanlagt) !important;
+}
+
+/* NÃ¥r valgt: fyll hele kortet med samme farge */
+
+.hasteGrid .hasteCard.haste-akutt.active {
+  background: var(--hasteAkutt) !important;
+  color: #111 !important;
+}
+
+.hasteGrid .hasteCard.haste-haster.active {
+  background: var(--hasteHaster) !important;
+  color: #111 !important;
+}
+
+.hasteGrid .hasteCard.haste-samme.active {
+  background: var(--hasteSamme) !important;
+  color: #111 !important;
+}
+
+.hasteGrid .hasteCard.haste-planlagt.active {
+  background: var(--hastePlanlagt) !important;
+  color: #111 !important;
+}
+
+.followRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.followChip {
+  background: #2f3238;
+  color: #f1f1f1;
+}
+
+.followChip:hover {
+  background: #3a3e46;
+}
+
+.followChip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.followChip:has(input:checked) {
+  background: #8fb0ff;
+}
+
+.followChip:has(input:checked) span {
+  color: #111;
+}
+
+.smLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.smChip {
+  min-width: 145px;
+}
+
+.smChip:has(input:checked) {
+  background: #1f4f7a;
+}
+
+#smitteSpes {
+  max-width: 100%;
+}
+
+.caveRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.accessChipRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.accessChipRow select {
+  width: 100px;
+  margin: 0;
+}
+
+.accessDynamic {
+  margin-top: 12px;
+  max-width: 570px;
+}
+
+.accessDynamic .dynamicRow {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin-top: 8px !important;
+}
+
+.accessDynamic .dynamicRow .chk {
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
+.accessDynamic .dynamicRow input[type="text"] {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+.utstyrGroup {
+  margin-top: 8px;
+}
+
+.utstyrChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.inlineSelect {
+  width: 90px;
+  min-width: 90px;
+  margin: 0;
+}
+
+#utstyrDynamicBody {
+  margin-top: 12px;
+  max-width: 580px;
+}
+
+#utstyrDynamicBody .dynamicRow {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin-top: 8px !important;
+}
+
+#utstyrDynamicBody .dynamicRow .chk {
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
+#utstyrDynamicBody .dynamicRow input[type="text"] {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+#caveTextWrap {
+  max-width: 580px;
+}
+
+#caveText {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#smitteSpesWrap {
+  max-width: 580px;
+}
+
+#smitteSpes {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ======================================================
+UNIVERSELL CHIP-STANDARD
+====================================================== */
+
+.medChip,
+.followChip,
+.binaryOpt,
+.smChip,
+.spedChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #2f333b;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: 0.15s ease;
+  box-sizing: border-box;
+}
+
+.medChip span,
+.followChip span,
+.binaryOpt span,
+.smChip span,
+.spedChip span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medChip input,
+.followChip input,
+.binaryOpt input,
+.smChip input,
+.spedChip input {
+  display: none;
+}
+
+.medChip:has(input:checked),
+.followChip:has(input:checked),
+.binaryOpt:has(input:checked),
+.smChip:has(input:checked),
+.spedChip:has(input:checked) {
+  background: #2b5cab;
+  border-color: #4f83d1;
+  color: #fff;
+}
+
+.medChip:hover,
+.followChip:hover,
+.binaryOpt:hover,
+.smChip:hover,
+.spedChip:hover {
+  background: #3a404b;
+}
+
+.medicationOtherRow .medChip,
+.medGroup .medChip {
+  min-height: 40px !important;
+  height: 40px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.2 !important;
+}
+
+.medicationOtherRow .medChip span,
+.medGroup .medChip span {
+  line-height: 1.2 !important;
+}
+
+.pumpRow {
+  display: flex;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.unitInputWrap {
+  width: 180px;
+  max-width: 100%;
+}
+
+.unitInputWrap input {
+  width: 100%;
+}
+
+.intubRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap;
+}
+
+.intubRow .unitInputWrap {
+  width: 150px;
+  flex: 0 0 150px;
+}
+
+/* Midtstill benevning inni luftveisfeltene */
+
+.unitInputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.unitInputWrap input {
+  height: 42px;
+  margin: 0 !important;
+  padding-right: 70px;
+}
+
+.unitInputWrap span {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #8c8c8c;
+  font-size: 13px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.spedChip {
+  min-height: 40px !important;
+  height: 40px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  background: #2f333b !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  color: #f1f1f1 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+
+.spedChip input {
+  display: none !important;
+}
+
+.spedChip:has(input:checked) {
+  background: #2b5cab !important;
+  border-color: #4f83d1 !important;
+  color: #fff !important;
+}
+
+.spedChip:has(input:checked) span {
+  color: #fff !important;
+}
+
+/* Luftveier: samme chip-stil som Ã¸vrige valg */
+
+.airwayRow .binaryOpt {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  background: #2f333b !important;
+  color: #f1f1f1 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  cursor: pointer;
+  transition: 0.15s ease;
+  box-sizing: border-box;
+}
+
+.airwayRow .binaryOpt input {
+  display: none !important;
+}
+
+.airwayRow .binaryOpt span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: inherit !important;
+  line-height: 1.2 !important;
+}
+
+.airwayRow .binaryOpt:hover {
+  background: #3a404b !important;
+}
+
+.airwayRow .binaryOpt:has(input:checked) {
+  background: #2b5cab !important;
+  border-color: #4f83d1 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.airwayRow .binaryOpt:has(input:checked) span {
+  color: #fff !important;
+}
+
+/* Spesialtransport: samme chip-stil som Ã¸vrige valg */
+
+.specialGroup .specCell {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  background: #2f333b !important;
+  color: #f1f1f1 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  cursor: pointer;
+  transition: 0.15s ease;
+  box-sizing: border-box;
+}
+
+.specialGroup .specCell input {
+  display: none !important;
+}
+
+.specialGroup .specCell span,
+.specialGroup .specCell .specLabel {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: 1.2 !important;
+}
+
+.specialGroup .specCell:hover {
+  background: #3a404b !important;
+}
+
+.specialGroup .specCell:has(input:checked),
+.specialGroup .specCell.active {
+  background: #2b5cab !important;
+  border-color: #4f83d1 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.specialGroup .specCell:has(input:checked) span,
+.specialGroup .specCell.active span {
+  color: #fff !important;
+}
+
+.spesialtransportRow {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  padding: 0 !important;
+}
+
+/* Fremhev vektfeltet */
+
+#weightWrap {
+  margin-top: 18px;
+  max-width: 240px;
+  padding: 12px 14px;
+  border: 2px solid rgba(239,68,68,0.75);
+  border-radius: 14px;
+  background: rgba(239,68,68,0.06);
+}
+
+#weightWrap label {
+  margin-top: 0;
+  color: #ffd7d7;
+}
+
+#weightWrap #vekt {
+  width: 100%;
+  margin-bottom: 0;
+  border: 2px solid rgba(239,68,68,0.65);
+}
+
+#weightWrap #vekt:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.16);
+}
+
+/* Transportform â€“ tving identisk stÃ¸rrelse */
+
+#transportWrap .transportRow > label {
+  flex: 0 0 125px !important;
+  width: 125px !important;
+  min-width: 125px !important;
+  max-width: 125px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  border-radius: 999px !important;
+}
+
+#transportWrap .transportRow > label span {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* Aldersforklaring for barn-kategorier */
+
+.childTooltip {
+  position: relative;
+}
+
+.childTooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(20,20,20,0.96);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .18s ease, visibility .18s ease;
+  transition-delay: .3s;
+  z-index: 9999;
+}
+
+.childTooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* CVK- og PVK-meny â€“ bedre visning i Edge */
+
+#cvkLumen,
+#pvkAntall {
+  width: 155px !important;
+  min-width: 155px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  padding: 0 38px 0 12px !important;
+  margin: 0 !important;
+  font-size: 15px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+  vertical-align: middle;
+}
+
+/* ======================================================
+POPUP â€“ TILBAKEMELDINGER OG INNSPILL
+====================================================== */
+
+.feedbackDialog {
+  width: min(440px, calc(100% - 32px));
+  max-width: 440px;
+  max-height: calc(100vh - 40px);
+  padding: 0;
+  border: 1px solid var(--line, #50545c);
+  border-radius: 14px;
+  background: var(--panel, #3a3d43);
+  color: var(--text, #f1f1f1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  overflow: auto;
+}
+
+.feedbackDialog:not([open]) {
+  display: none;
+}
+
+.feedbackDialog::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.feedbackDialogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line, #50545c);
+}
+
+.feedbackDialogHeader h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 650;
+  line-height: 1.3;
+  color: inherit;
+}
+
+.feedbackDialogClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.feedbackDialogClose:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+.feedbackDialogBody {
+  padding: 24px;
+}
+
+.feedbackDialogBody p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.feedbackDialogFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24px 20px;
+}
+
+.feedbackDialogOk {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  background: var(--green, #35c16a);
+  color: #111;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.feedbackDialogOk:hover {
+  background: var(--greenHover, #2fb45f);
+}
+
+.feedbackDialogClose:focus-visible,
+.feedbackDialogOk:focus-visible {
+  outline: 2px solid var(--accent, #8fb0ff);
+  outline-offset: 3px;
+}
+
+/* ======================================================
+VERSJONSLOGG â€“ PLASSERING NEDERST
+====================================================== */
+
+#opsixFooterActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.versionInfo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.versionNumber {
+  font-size: 13px;
+  color: var(--muted, #cfcfcf);
+  font-weight: 500;
+}
+
+.versionHistoryBtn {
+  border: none;
+  background: transparent;
+  color: var(--accent, #8fb0ff);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.versionHistoryBtn:hover {
+  color: var(--text, #f1f1f1);
+}
+
+#opsixFooterActions .feedbackBtn {
+  margin-left: auto;
+}
+
+/* ======================================================
+POPUP â€“ VERSJONSHISTORIKK
+====================================================== */
+
+.versionHistoryDialog {
+  width: min(620px, calc(100% - 32px));
+  max-width: 620px;
+  max-height: min(80vh, 760px);
+  padding: 0;
+  border: 1px solid var(--line, #50545c);
+  border-radius: 14px;
+  background: var(--panel, #3a3d43);
+  color: var(--text, #f1f1f1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  overflow: auto;
+}
+
+.versionHistoryDialog:not([open]) {
+  display: none;
+}
+
+.versionHistoryDialog::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.versionHistoryHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--line, #50545c);
+}
+
+.versionHistoryHeader h2 {
+  margin: 0 0 5px;
+  font-size: 21px;
+  font-weight: 650;
+  color: inherit;
+}
+
+.versionHistoryHeader p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted, #cfcfcf);
+}
+
+.versionHistoryClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.versionHistoryClose:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+.versionHistoryBody {
+  padding: 22px 24px;
+}
+
+.versionHistoryIntro {
+  margin-bottom: 20px;
+  color: var(--muted, #cfcfcf);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.versionHistoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.versionHistoryEntry {
+  border: 1px solid var(--line, #50545c);
+  border-radius: 10px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.versionHistoryEntryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.versionHistoryEntryTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.versionHistoryBadge {
+  padding: 4px 9px;
+  border-radius: 20px;
+  background: rgba(53, 193, 106, 0.15);
+  color: var(--green, #35c16a);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.versionHistoryDate {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--muted, #cfcfcf);
+}
+
+.versionHistoryDescription {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.versionHistoryStatus {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted, #cfcfcf);
+}
+
+.versionHistoryFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24px 20px;
+}
+
+.versionHistoryOk {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  background: var(--green, #35c16a);
+  color: #111;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.versionHistoryOk:hover {
+  background: var(--greenHover, #2fb45f);
+}
+
+.versionHistoryBtn:focus-visible,
+.versionHistoryClose:focus-visible,
+.versionHistoryOk:focus-visible {
+  outline: 2px solid var(--accent, #8fb0ff);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  #opsixFooterActions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #opsixFooterActions .feedbackBtn {
+    margin-left: 0;
+  }
+
+  .versionHistoryHeader,
+  .versionHistoryBody {
+    padding: 18px;
+  }
+
+  .versionHistoryFooter {
+    padding: 0 18px 18px;
+  }
+}
+
+@media (max-width: 720px) {
+  .wrap,
+  .card,
+  #mainContent,
+  #sharedBottom,
+  #sharedEquipmentBlock,
+  .accessGroup {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* ==========================================
+  LEGEFELTER
+  ========================================== */
+
+  .doctorRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .doctorRow > input,
+  .doctorRow > .phoneInput {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* ==========================================
+  DYNAMISKE TILGANGSFELTER
+  ========================================== */
+
+  #tilgangerDynamicBody,
+  #tilgangerDynamicBody tr,
+  #tilgangerDynamicBody td,
+  #utstyrDynamicBody {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  #tilgangerDynamicBody .dynamicRow,
+  #utstyrDynamicBody .dynamicRow {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #tilgangerDynamicBody .dynamicRow input[type="text"],
+  #utstyrDynamicBody .dynamicRow input[type="text"] {
+    flex: 1 1 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* ==========================================
+  VALGGRUPPER
+  ========================================== */
+
+  .chipRow,
+  .smLine,
+  .accessChipRow,
+  .binaryRow,
+  .spesialtransportRow {
+    max-width: 100%;
+  }
+
+  /* HLR og respiratorvalg skal brytes ved behov */
+
+  .caveRow {
+    flex-wrap: wrap;
+  }
+
+  /* ==========================================
+  TOOLTIPS OG OVERSKRIFT
+  ========================================== */
+
+  /* Skjul hover-tooltip for spesialtransport
+  pÃ¥ smÃ¥ skjermer */
+
+  .specialGroup .specLabel::after {
+    display: none;
+  }
+
+  h1 {
+    overflow-wrap: anywhere;
+    font-size: clamp(19px, 5vw, 30px);
+  }
+}
+
+/* ======================================================
+KLINISK VALIDERING â€“ GCS OG FiO2
+====================================================== */
+
+input.kliniskUgyldig {
+  color: #b91c1c !important;
+  border: 2px solid #dc2626 !important;
+  background: #fff1f2 !important;
+}
+
+/* ======================================================
+STÃ˜RRE GCS-FELT
+====================================================== */
+
+.vpGcsField {
+  width: 190px;
+  flex: 0 0 190px;
+}
+
+.vpGcsField input {
+  padding-left: 46px;
+}
+
+/* ======================================================
+GCS PÃ… SMÃ… SKJERMER
+====================================================== */
+
+@media (max-width: 720px) {
+  .vpGcsField {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+}
+
+/* ======================================================
+OPSIX â€“ DAG / NATT
+====================================================== */
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.pageHeader #pageTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+  margin: 6px 0 28px;
+}
+
+.themeToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  min-width: 86px;
+  min-height: 38px;
+  padding: 7px 12px;
+  margin: 4px 0 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: #2b2f36;
+  color: #f1f5f9;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.themeToggle:hover {
+  background: #424955;
+}
+
+.themeToggle:focus-visible {
+  outline: 3px solid #8fb0ff;
+  outline-offset: 3px;
+}
+
+.themeIcon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+@media (max-width: 720px) {
+  .pageHeader {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .pageHeader #pageTitle {
+    flex-basis: 100%;
+    order: 2;
+    margin: 4px 0 20px;
+  }
+
+  .themeToggle {
+    order: 1;
+    margin-top: 0;
+  }
+}
+
+/* ======================================================
+LYST FARGETEMA
+====================================================== */
+
+body.theme-light {
+  --panel: #f7f9fb;
+  --text: #1f2a3d;
+  --muted: #5b677a;
+  --field: #fdfdfd;
+  --fieldText: #1f2a3d;
+  --line: #c5cfda;
+  --accent: #2a5fb8;
+}
+
+.theme-light .card {
+  border: 1px solid var(--line);
+}
+
+.theme-light .themeToggle {
+  background: #e3e8ee;
+  border-color: #b8c3cf;
+}
+
+.theme-light .themeToggle:hover {
+  background: #d7dee7;
+}
+
+/* Overskrifter */
+
+/* Registreringsfelter */
+
+/* Behold rÃ¸d markering ved ugyldige verdier */
+
+/* Seksjoner og grupper */
+
+.theme-light .medGroup,
+.theme-light .accessGroup,
+.theme-light .doctorGroup,
+.theme-light .infoGroup {
+  background: #f8fafc;
+}
+
+.theme-light .accessGroup .toggleCell {
+  background: #f1f5f9;
+}
+
+/* Ikke-valgte knapper blir lyse */
+
+.theme-light .medChip:not(:has(input:checked)),
+.theme-light .followChip:not(:has(input:checked)),
+.theme-light .spedChip:not(:has(input:checked)),
+.theme-light .smChip:not(:has(input:checked)),
+.theme-light .binaryOpt:not(:has(input:checked)),
+.theme-light .specialGroup .specCell:not(.active):not(:has(input:checked)),
+.theme-light .airwayRow .binaryOpt:not(:has(input:checked)) {
+  background: #f5f7fa !important;
+  color: #1f2a3d !important;
+  border: 1px solid #bcc8d4 !important;
+}
+
+.theme-light .medChip:not(:has(input:checked)) span,
+.theme-light .followChip:not(:has(input:checked)) span,
+.theme-light .spedChip:not(:has(input:checked)) span,
+.theme-light .binaryOpt:not(:has(input:checked)) span,
+.theme-light .specialGroup .specCell:not(.active):not(:has(input:checked)) span,
+.theme-light .airwayRow .binaryOpt:not(:has(input:checked)) span {
+  color: #233044 !important;
+  font-weight: 500;
+}
+
+.theme-light .medChip:not(:has(input:checked)):hover,
+.theme-light .followChip:not(:has(input:checked)):hover,
+.theme-light .binaryOpt:not(:has(input:checked)):hover,
+.theme-light .specialGroup .specCell:not(:has(input:checked)):hover {
+  background: #e7edf4 !important;
+  border-color: #9fb0c3 !important;
+}
+
+/* Hastegrad: beholder farger ved valg */
+
+.theme-light .hasteGrid .hasteCard:not(.active) {
+  background: #f9fbfc !important;
+}
+
+/* Vektfelt */
+
+.theme-light #weightWrap {
+  background: #fff4f4;
+}
+
+/* Tilbakemelding og versjonshistorikk */
+
+.theme-light .feedbackBtn {
+  background: #e9eef6;
+}
+
+.theme-light .feedbackBtn:hover {
+  background: #dde8f6;
+}
+
+/* ======================================================
+MOBIL â€“ RESPIRATORFELTER
+====================================================== */
+
+/* ======================================================
+OPSIX â€“ FINJUSTERING AV LYS VISNING
+Mattere uttrykk, tydeligere rammer og bedre kontrast
+====================================================== */
+
+/* ======================================================
+OPSIX â€“ DAGMODUS: ROLIG GRÃ…, HVITE CHIPS
+
+Samlet lyst fargetema.
+Nattmodus pÃ¥virkes ikke.
+====================================================== */
+
+body.theme-light {
+  --bg: #dfe5eb;
+  --panel: #eaf0f4;
+  --text: #202b39;
+  --muted: #536172;
+  --field: #ffffff;
+  --fieldText: #202b39;
+  --line: #bdc9d4;
+  --accent: #526a84;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ======================================================
+BAKGRUNN OG HOVEDPANEL
+====================================================== */
+
+.theme-light .card {
+  background: var(--panel);
+  border: 1px solid #c5d0da;
+  box-shadow: 0 2px 9px rgba(32, 43, 57, 0.045);
+}
+
+/* ======================================================
+OVERSKRIFTER
+====================================================== */
+
+.theme-light .pageHeader #pageTitle,
+.theme-light .hasteLabel,
+.theme-light .section,
+.theme-light .bigSection,
+.theme-light .minorTitle,
+.theme-light .vpTitle {
+  color: #202b39;
+}
+
+.theme-light .medGroupTitle {
+  color: #48586b;
+  opacity: 1;
+}
+
+/* ======================================================
+SEKSJONER OG GRUPPER
+====================================================== */
+
+.theme-light .medGroup,
+.theme-light .accessGroup,
+.theme-light .doctorGroup,
+.theme-light .infoGroup {
+  background: transparent;
+  border-color: #c8d2dc;
+}
+
+.theme-light .accessGroup .toggleCell {
+  background: rgba(255,255,255,0.18);
+  border-color: #cbd5df;
+}
+
+/* ======================================================
+REGISTRERINGSFELTER
+====================================================== */
+
+.theme-light input:not([type="checkbox"]):not([type="radio"]):not(.kliniskUgyldig),
+.theme-light textarea,
+.theme-light select {
+  background: #ffffff;
+  color: #202b39;
+  border-color: #aebecb;
+}
+
+.theme-light input::placeholder,
+.theme-light textarea::placeholder {
+  color: #68788a;
+  opacity: 1;
+}
+
+.theme-light input:focus-visible,
+.theme-light textarea:focus-visible,
+.theme-light select:focus-visible {
+  outline: 2px solid #526a84;
+  outline-offset: 1px;
+}
+
+/* ======================================================
+KLINISKE FEILMARKERINGER
+====================================================== */
+
+.theme-light input.kliniskUgyldig {
+  color: #b91c1c !important;
+  background: #fff1f2 !important;
+  border: 2px solid #dc2626 !important;
+}
+
+/* ======================================================
+DAG / NATT-KNAPP
+====================================================== */
+
+.theme-light .themeToggle {
+  background: #dbe4eb;
+  color: #202b39;
+  border: 1px solid #adbcc9;
+  box-shadow: none;
+}
+
+.theme-light .themeToggle:hover {
+  background: #cddbe5;
+}
+
+/* ======================================================
+HASTEGRADER
+
+GrÃ¥ bakgrunn nÃ¥r ikke valgt.
+Farget ramme.
+Farget fyll nÃ¥r hastegrad er valgt.
+====================================================== */
+
+.theme-light .hasteGrid .hasteCard:not(.active) {
+  background: #edf1f4 !important;
+  color: #202b39 !important;
+  box-shadow: 0 2px 6px rgba(32,43,57,0.055);
+}
+
+.theme-light .hasteGrid .hasteCard:not(.active) .hasteCardText {
+  color: #48586b;
+}
+
+.theme-light .hasteGrid .hasteCard {
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+/* Akutt â€“ rÃ¸d ramme */
+
+.theme-light .hasteGrid .hasteCard.haste-akutt {
+  border-color: #de4549 !important;
+}
+
+/* Haster â€“ gul ramme */
+
+.theme-light .hasteGrid .hasteCard.haste-haster {
+  border-color: #c79400 !important;
+}
+
+/* Samme dÃ¸gn â€“ grÃ¸nn ramme */
+
+.theme-light .hasteGrid .hasteCard.haste-samme {
+  border-color: #5c946c !important;
+}
+
+/* Planlagt â€“ mÃ¸rkegrÃ¸nn ramme */
+
+.theme-light .hasteGrid .hasteCard.haste-planlagt {
+  border-color: #27663f !important;
+}
+
+/* Hvit tekst ved valgt Planlagt */
+
+.theme-light .hasteGrid .hasteCard.haste-planlagt.active,
+.theme-light .hasteGrid .hasteCard.haste-planlagt.active .hasteCardTitle,
+.theme-light .hasteGrid .hasteCard.haste-planlagt.active .hasteCardText {
+  color: #ffffff !important;
+}
+
+/* ======================================================
+CHIPS â€“ GENERELL UTFORMING
+
+Hvit bakgrunn.
+MÃ¸rk tekst.
+Rolig grÃ¥ ramme.
+====================================================== */
+
+.theme-light .medChip,
+.theme-light .followChip,
+.theme-light .spedChip,
+.theme-light .smChip,
+.theme-light .binaryOpt,
+.theme-light .airwayRow .binaryOpt,
+.theme-light .specialGroup .specCell,
+.theme-light #trachWrap .toggleCell,
+.theme-light #acuteTrachWrap .toggleCell {
+  background: #ffffff !important;
+  color: #1c2634 !important;
+  border: 1px solid #b2beca !important;
+  box-shadow: none !important;
+}
+
+/* ======================================================
+TEKST INNI CHIPS
+====================================================== */
+
+.theme-light .medChip span,
+.theme-light .followChip span,
+.theme-light .spedChip span,
+.theme-light .smChip span,
+.theme-light .binaryOpt span,
+.theme-light .airwayRow .binaryOpt span,
+.theme-light .specialGroup .specCell span,
+.theme-light #trachWrap .toggleCell span,
+.theme-light #acuteTrachWrap .toggleCell span {
+  color: #1c2634 !important;
+}
+
+/* ======================================================
+AKTIVE CHIPS
+
+Fortsatt hvit bakgrunn.
+Tydeligere mÃ¸rk ramme.
+Svak skygge.
+Fetere tekst.
+====================================================== */
+
+.theme-light .medChip:has(input:checked),
+.theme-light .followChip:has(input:checked),
+.theme-light .spedChip:has(input:checked),
+.theme-light .smChip:has(input:checked),
+.theme-light .binaryOpt:has(input:checked),
+.theme-light .airwayRow .binaryOpt:has(input:checked),
+.theme-light .specialGroup .specCell.active,
+.theme-light .specialGroup .specCell:has(input:checked),
+.theme-light #trachWrap .toggleCell:has(input:checked),
+.theme-light #acuteTrachWrap .toggleCell:has(input:checked) {
+  background: #ffffff !important;
+  color: #1c2634 !important;
+  border: 2px solid #50647a !important;
+  box-shadow: 0 2px 6px rgba(35,51,69,0.12),
+    inset 0 0 0 1px rgba(80,100,122,0.10) !important;
+  font-weight: 750 !important;
+}
+
+/* ======================================================
+TEKST I AKTIVE CHIPS
+====================================================== */
+
+.theme-light .medChip:has(input:checked) span,
+.theme-light .followChip:has(input:checked) span,
+.theme-light .spedChip:has(input:checked) span,
+.theme-light .smChip:has(input:checked) span,
+.theme-light .binaryOpt:has(input:checked) span,
+.theme-light .airwayRow .binaryOpt:has(input:checked) span,
+.theme-light .specialGroup .specCell.active span,
+.theme-light .specialGroup .specCell:has(input:checked) span,
+.theme-light #trachWrap .toggleCell:has(input:checked) span,
+.theme-light #acuteTrachWrap .toggleCell:has(input:checked) span {
+  color: #1c2634 !important;
+  font-weight: 750 !important;
+}
+
+/* ======================================================
+HOVER-EFFEKT
+
+Diskret endring ved musepeker over chip.
+====================================================== */
+
+.theme-light .medChip:hover,
+.theme-light .followChip:hover,
+.theme-light .binaryOpt:hover,
+.theme-light .specialGroup .specCell:hover,
+.theme-light #trachWrap .toggleCell:hover,
+.theme-light #acuteTrachWrap .toggleCell:hover {
+  background: #f1f5f8 !important;
+}
+
+/* Valgt chip forblir hvit ved hover */
+
+.theme-light .medChip:has(input:checked):hover,
+.theme-light .followChip:has(input:checked):hover,
+.theme-light .binaryOpt:has(input:checked):hover,
+.theme-light .specialGroup .specCell.active:hover,
+.theme-light .specialGroup .specCell:has(input:checked):hover {
+  background: #ffffff !important;
+}
+
+/* ======================================================
+VEKT â€“ FORTSATT TYDELIG MARKERT
+====================================================== */
+
+.theme-light #weightWrap {
+  background: rgba(222,69,73,0.055);
+  border-color: #cf777d;
+}
+
+.theme-light #weightWrap label {
+  color: #8f3038;
+}
+
+.theme-light #weightWrap input {
+  background: #ffffff;
+}
+
+/* ======================================================
+TILBAKEMELDINGER OG VERSJONSHISTORIKK
+====================================================== */
+
+.theme-light .feedbackBtn {
+  background: #dee7ee;
+  color: #202b39;
+  border-color: #b2bfcb;
+}
+
+.theme-light .feedbackBtn:hover {
+  background: #d4e0e9;
+  color: #202b39;
+}
+
+.theme-light .versionHistoryBtn {
+  color: #345574;
+}
+
+.theme-light .versionHistoryBtn:hover {
+  color: #233e57;
+}
+
+.theme-light .versionHistoryStatus,
+.theme-light .versionHistoryDate {
+  color: #536172;
+}
+
+.theme-light .versionHistoryEntry {
+  border-color: #c5d0da;
+}
+
+.theme-light .versionHistoryEntryTitle {
+  color: #202b39;
+}
+
+/* ======================================================
+MOBIL â€“ RESPIRATORFELTER
+
+Hindrer horisontal scrolling ved smÃ¥ skjermer.
+Gjelder bÃ¥de dag- og nattmodus.
+====================================================== */
+
+@media (max-width: 720px) {
+  .intubRow {
+    flex-wrap: wrap;
+  }
+
+  .intubRow .unitInputWrap {
+    flex: 1 1 140px;
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+/* ======================================================
+SÃ˜PPELBÃ˜TTE â€“ TÃ˜M SKJEMA
+====================================================== */
+
+#resetBtn .trashIcon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+}
+
+#resetBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ==========================================
+OPSIX â€“ FOOTER
+========================================== */
+
+body .wrap > .opsix-footer {
+  display: block !important;
+  position: relative;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 18px auto 24px !important;
+  padding: 0 12px !important;
+  box-sizing: border-box;
+  text-align: center !important;
+  font-size: 12px !important;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--muted, #aaa);
+  opacity: 0.65;
+}
+
+/* ======================================================
+OPSIX â€“ UTSTYR VED AKUTT
+
+====================================================== */
+
+body.opsix-akutt .pumpRow {
+  display: flex;
+  align-items: center;
+}
+
+body.opsix-akutt #utstyrDynamicBody .dynamicRow.hidden {
+  display: none !important;
+}
+/* Tilbakemeldingslenke pÃ¥ den opprinnelige knappens plass */
+#opsixFooterActions a.feedbackBtn {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+  border: 1px solid var(--line, #50545c);
+  border-radius: 8px;
+
+  background: var(--panel, #3a3d43);
+  color: var(--text, #f1f1f1);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#opsixFooterActions a.feedbackBtn:hover {
+  border-color: var(--accent, #8fb0ff);
+}
+
+#opsixFooterActions a.feedbackBtn:focus-visible {
+  outline: 2px solid var(--accent, #8fb0ff);
+  outline-offset: 3px;
+}
+
+/* Versjon til venstre, tilbakemelding til hÃ¸yre */
+#opsixFooterActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 16px;
+}
+
+#opsixFooterActions .versionInfo {
+  margin-right: auto;
+}
+
+#opsixFooterActions .feedbackBtn {
+  margin-left: auto;
+}
+
+/* ===== OPSIX V1.1.0 TESTDESIGN ===== */
+/* ============================================================
+   OPSIX V1.1.0 â€“ SEPARAT RESPONSIV DESIGNTEST
+   Lastes etter original style.css. Originalen endres ikke.
+   ============================================================ */
+:root {
+  --v110-bg: #222a33;
+  --v110-panel: #303b47;
+  --v110-border: #4c5c6b;
+  --v110-title: #d9e9f5;
+  --v110-choice: #303a46;
+  --v110-selected: #4c6f8d;
+  --v110-muted-panel: #2a333e;
+  --v110-muted-border: #42505f;
+  --v110-focus: #a2cef7;
+  --v110-foreground: #f1f5f9;
+  --v110-subtle-text: #c4d0da;
+}
+body.theme-light {
+  --v110-bg: #dfe5eb;
+  --v110-panel: #edf1f4;
+  --v110-border: #b3c1ce;
+  --v110-title: #233b50;
+  --v110-choice: #ffffff;
+  --v110-selected: #d7e7f3;
+  --v110-muted-panel: #e0e5e9;
+  --v110-muted-border: #c7d0d9;
+  --v110-focus: #2d5684;
+  --v110-foreground: #202c38;
+  --v110-subtle-text: #4b5c6e;
+}
+body.opsix-test-mode {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--v110-bg);
+  color: var(--v110-foreground);
+}
+body.opsix-test-mode .wrap {
+  max-width: 1680px;
+  padding: clamp(10px, 1.75vw, 24px);
+}
+body.opsix-test-mode .card {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+body.opsix-test-mode .pageHeader {
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 6px 2px;
+}
+body.opsix-test-mode #pageTitle {
+  font-size: clamp(21px, 2vw, 30px);
+  letter-spacing: -.02em;
+  margin: 3px 0 10px;
+}
+body.opsix-test-mode .opsix-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 27fr) minmax(0, 46fr) minmax(0, 27fr);
+  gap: 14px;
+  align-items: start;
+}
+body.opsix-test-mode .opsix-column,
+body.opsix-test-mode .opsix-report-panel {
+  background: var(--v110-panel);
+  border: 1px solid var(--v110-border);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  min-width: 0;
+  padding: clamp(14px, 1.6vw, 23px);
+}
+body.opsix-test-mode .opsix-column-title {
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: -.015em;
+  color: var(--v110-title);
+  border-bottom: 1px solid var(--v110-border);
+  margin: 0 0 18px;
+  padding: 0 0 14px;
+}
+body.opsix-test-mode .opsix-operativ > .hasteLabel {
+  color: var(--v110-foreground);
+  font-size: 15px;
+  margin: 6px 0 8px;
+  letter-spacing: 0;
+}
+body.opsix-test-mode .opsix-operativ .hasteGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 9px;
+  margin: 0 0 23px;
+}
+body.opsix-test-mode .opsix-operativ .hasteCard {
+  min-width: 0;
+  min-height: 93px;
+  border-radius: 12px;
+  padding: 11px;
+  box-shadow: none;
+  gap: 7px;
+}
+body.opsix-test-mode .hasteCardTitle { font-size: 14px; }
+body.opsix-test-mode .hasteCardText { font-size: 11px; line-height: 1.3; }
+body.opsix-test-mode .formGroup,
+body.opsix-test-mode .accessGroup,
+body.opsix-test-mode .doctorGroup,
+body.opsix-test-mode .infoGroup { min-width: 0; }
+body.opsix-test-mode .opsix-column .minorTitle,
+body.opsix-test-mode .opsix-column .bigSection,
+body.opsix-test-mode .opsix-column .section {
+  color: var(--v110-foreground);
+  font-size: 16px;
+  font-weight: 700;
+  border-color: var(--v110-border);
+  margin-top: 20px;
+}
+body.opsix-test-mode .opsix-column .section { padding-top: 11px; }
+body.opsix-test-mode .opsix-operativ .formGroup > .section:first-child { margin-top: 0; }
+body.opsix-test-mode .opsix-column input:not([type="radio"]):not([type="checkbox"]),
+body.opsix-test-mode .opsix-column textarea,
+body.opsix-test-mode .opsix-column select {
+  max-width: 100%;
+  min-width: 0;
+  font-family: inherit;
+}
+body.opsix-test-mode input:focus-visible,
+body.opsix-test-mode select:focus-visible,
+body.opsix-test-mode textarea:focus-visible,
+body.opsix-test-mode button:focus-visible,
+body.opsix-test-mode a:focus-visible,
+body.opsix-test-mode label:has(input:focus-visible) {
+  outline: 3px solid var(--v110-focus) !important;
+  outline-offset: 3px !important;
+}
+body.opsix-test-mode .followRow,
+body.opsix-test-mode .chipRow,
+body.opsix-test-mode .smLine,
+body.opsix-test-mode .airwayRow,
+body.opsix-test-mode .accessChipRow,
+body.opsix-test-mode .spesialtransportRow {
+  flex-wrap: wrap !important;
+  overflow: visible;
+}
+body.opsix-test-mode .medChip,
+body.opsix-test-mode .binaryOpt,
+body.opsix-test-mode .followChip,
+body.opsix-test-mode .spedChip,
+body.opsix-test-mode .smChip,
+body.opsix-test-mode .specialGroup .specCell {
+  min-height: 43px !important;
+  font-size: 13px !important;
+  border-radius: 12px !important;
+  margin-right: 0;
+  white-space: normal;
+  text-align: center;
+}
+body.opsix-test-mode .inlineVitals {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+body.opsix-test-mode .vpField,
+body.opsix-test-mode .btMini { min-width: 0; }
+body.opsix-test-mode .vpField { flex: 1 1 84px; max-width: 150px; }
+body.opsix-test-mode .btWrap { flex-wrap: wrap; max-width: 100%; }
+body.opsix-test-mode .btMini { flex: 0 1 82px; }
+body.opsix-test-mode .vpGcsField { flex: 1 1 160px; max-width: 190px; }
+body.opsix-test-mode .doctorRow {
+  width: 100%;
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(90px, 135px);
+}
+body.opsix-test-mode .accessDynamic .dynamicRow,
+body.opsix-test-mode .medDynamic .dynamicRow,
+body.opsix-test-mode #tilgangerDynamicBody .dynamicRow {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+body.opsix-test-mode #tilgangerDynamicBody .dynamicRow input[type="text"] {
+  min-width: 0 !important;
+  width: auto !important;
+  flex: 1 1 0 !important;
+}
+body.opsix-test-mode .inlineSelect,
+body.opsix-test-mode .pvkSelect { max-width: 100%; }
+body.opsix-test-mode .opsix-report-panel {
+  margin-top: 15px;
+}
+body.opsix-test-mode #rapport {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 180px;
+  border: 1px solid var(--v110-border);
+  border-radius: 12px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+body.opsix-test-mode #reportActions { margin-top: 14px; }
+body.opsix-test-mode #copyMsg { min-width: 110px; }
+body.opsix-test-mode #copyMsg:not(:empty) {
+  padding: 9px 12px;
+  border: 1px solid #4fa876;
+  border-radius: 8px;
+  background: rgba(53,193,106,.12);
+  color: var(--v110-foreground);
+}
+body.opsix-test-mode #opsixFooterActions {
+  margin-top: 14px;
+  border-top: 1px solid var(--v110-border);
+  padding: 16px 3px 0;
+}
+body.opsix-test-mode .opsix-optional {
+  background: var(--v110-muted-panel);
+  border: 1px solid var(--v110-muted-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 12px 0;
+}
+body.opsix-test-mode .opsix-optional:not(.opsix-optional-filled) > .section,
+body.opsix-test-mode .opsix-optional:not(.opsix-optional-filled) > .minorTitle,
+body.opsix-test-mode .opsix-optional:not(.opsix-optional-filled) > label {
+  color: var(--v110-subtle-text) !important;
+}
+body.opsix-test-mode .opsix-optional-filled {
+  border-color: var(--v110-border);
+  background: transparent;
+}
+/* Ikke bruk opacity eller pointer-events pÃ¥ de valgfrie feltene.
+   De er fullt tilgjengelige og skal ha god kontrast. */
+body.opsix-test-mode .opsix-gcs-controls { margin: 10px 0 16px; }
+body.opsix-test-mode .opsix-gcs-toggle {
+  min-height: 36px;
+  padding: 7px 12px;
+  background: transparent;
+  color: var(--v110-foreground);
+  border: 1px solid var(--v110-border);
+  border-radius: 9px;
+  font-weight: 600;
+}
+body.opsix-test-mode .opsix-gcs-details {
+  padding: 12px;
+  margin-top: 10px;
+  border: 1px solid var(--v110-border);
+  border-radius: 12px;
+  background: var(--v110-muted-panel);
+}
+body.opsix-test-mode .opsix-gcs-label {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  margin: 9px 0 6px;
+  color: var(--v110-foreground);
+}
+body.opsix-test-mode .opsix-gcs-select {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 6px 0;
+}
+body.opsix-test-mode .opsix-gcs-note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--v110-subtle-text);
+  margin-bottom: 0;
+}
+body.opsix-test-mode .opsix-confirm-reset {
+  max-width: min(440px, calc(100% - 30px));
+  padding: 0;
+  background: var(--v110-panel);
+  color: var(--v110-foreground);
+  border: 1px solid var(--v110-border);
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.4);
+}
+body.opsix-test-mode .opsix-confirm-reset::backdrop { background: rgba(0,0,0,.7); }
+body.opsix-test-mode .opsix-confirm-body { padding: 24px; }
+body.opsix-test-mode .opsix-confirm-body h2 { margin: 0 0 10px; font-size: 20px; }
+body.opsix-test-mode .opsix-confirm-body p { line-height: 1.55; }
+body.opsix-test-mode .opsix-confirm-actions { display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; margin-top:24px; }
+body.opsix-test-mode .opsix-cancel,
+body.opsix-test-mode .opsix-danger { padding: 12px 14px; border-radius: 9px; min-height: 44px; }
+body.opsix-test-mode .opsix-cancel { background: #d6dde4; color: #1e293b; }
+body.opsix-test-mode .opsix-danger { background: #d33d45; color: white; }
+body.opsix-no-haste .opsix-medisinsk,
+body.opsix-no-haste .opsix-andre,
+body.opsix-no-haste .opsix-report-panel {
+  display: none !important;
+}
+body.opsix-no-haste.opsix-test-mode .opsix-columns { grid-template-columns: minmax(0, 540px); }
+body.opsix-no-haste .opsix-operativ > :not(.opsix-column-title):not(.hasteLabel):not(.hasteGrid) {
+  display: none !important;
+}
+/* Dagmodus: samme geometri og betjeningsmÃ¥l; bare fargene skifter. */
+body.theme-light.opsix-test-mode .opsix-column,
+body.theme-light.opsix-test-mode .opsix-report-panel {
+  background: var(--v110-panel);
+  color: var(--v110-foreground);
+}
+body.theme-light.opsix-test-mode .opsix-optional { background: var(--v110-muted-panel); }
+body.theme-light.opsix-test-mode .opsix-optional-filled { background: transparent; }
+/* 3â€“2â€“1; mellomlÃ¸sningen er bevisst enkel Ã¥ endre i testen. */
+@media (max-width: 1199px) and (min-width: 800px) {
+  body.opsix-test-mode .opsix-columns {
+    grid-template-columns: minmax(0,35fr) minmax(0,65fr);
+  }
+  body.opsix-test-mode .opsix-andre { grid-column: 1 / -1; }
+}
+@media (max-width: 799px) {
+  body.opsix-test-mode .opsix-columns { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  body.opsix-test-mode .opsix-column,
+  body.opsix-test-mode .opsix-report-panel { padding: 15px; }
+  body.opsix-test-mode .opsix-operativ .hasteGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  body.opsix-test-mode .doctorRow { grid-template-columns: minmax(0,1fr); }
+  body.opsix-test-mode .vpField { flex: 1 1 98px; }
+  body.opsix-test-mode input:not([type=checkbox]):not([type=radio]),
+  body.opsix-test-mode textarea,
+  body.opsix-test-mode select { font-size: 16px; }
+  body.opsix-test-mode .intubRow { flex-wrap: wrap; }
+  body.opsix-test-mode .intubRow .unitInputWrap { flex: 1 1 130px; }
+  body.opsix-test-mode .binaryRow { flex-wrap: wrap; }
+  body.opsix-test-mode #reportActions .actionBtn { width: 100%; }
+}
+@media (max-width: 390px) {
+  body.opsix-test-mode .opsix-operativ .hasteGrid { grid-template-columns: minmax(0,1fr); }
+  body.opsix-test-mode .opsix-column,
+  body.opsix-test-mode .opsix-report-panel { padding: 12px; }
+}
+
+body.opsix-test-mode #copyMsg.opsix-copy-failed {
+  border-color: #df7373;
+  background: rgba(194, 54, 61, .14);
+  color: var(--v110-foreground);
+}
+
+
+/* =========================================================
+   OPSIX V1.1.0 â€“ KOMPAKT DESKTOP (04.11.2026)
+   Ren visuell justering. Ingen endring i skjemalogikk.
+   ========================================================= */
+@media (min-width: 1200px) {
+  body.opsix-test-mode .wrap {
+    max-width: 1920px;
+    padding: 10px 14px;
+  }
+  body.opsix-test-mode .opsix-columns {
+    grid-template-columns: minmax(0, 26fr) minmax(0, 42fr) minmax(0, 32fr);
+    gap: 10px;
+  }
+}
+body.opsix-test-mode .pageHeader { margin-bottom: 6px; padding: 0 2px; }
+body.opsix-test-mode #pageTitle { margin: 0 0 5px; font-size: clamp(20px, 1.8vw, 27px); }
+body.opsix-test-mode .opsix-column,
+body.opsix-test-mode .opsix-report-panel {
+  padding: clamp(11px, 1.05vw, 16px);
+  border-radius: 12px;
+}
+body.opsix-test-mode .opsix-column-title {
+  font-size: 15px;
+  margin-bottom: 9px;
+  padding-bottom: 8px;
+}
+body.opsix-test-mode .opsix-column .minorTitle,
+body.opsix-test-mode .opsix-column .bigSection,
+body.opsix-test-mode .opsix-column .section {
+  font-size: 14px;
+  margin-top: 11px;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+body.opsix-test-mode .opsix-column .section { padding-top: 6px; }
+body.opsix-test-mode .opsix-operativ > .hasteLabel { margin: 3px 0 6px; font-size: 14px; }
+body.opsix-test-mode .opsix-operativ .hasteGrid { gap: 6px; margin-bottom: 10px; }
+body.opsix-test-mode .opsix-operativ .hasteCard {
+  min-height: 66px;
+  padding: 7px 9px;
+  gap: 3px;
+  border-radius: 9px;
+}
+body.opsix-test-mode .hasteCardTitle { font-size: 12px; }
+body.opsix-test-mode .hasteCardText { font-size: 10px; line-height: 1.18; }
+body.opsix-test-mode .followRow,
+body.opsix-test-mode .chipRow,
+body.opsix-test-mode .smLine,
+body.opsix-test-mode .airwayRow,
+body.opsix-test-mode .accessChipRow,
+body.opsix-test-mode .spesialtransportRow {
+  gap: 5px !important;
+  margin-top: 4px;
+  margin-bottom: 5px;
+}
+body.opsix-test-mode .medChip,
+body.opsix-test-mode .binaryOpt,
+body.opsix-test-mode .followChip,
+body.opsix-test-mode .spedChip,
+body.opsix-test-mode .smChip,
+body.opsix-test-mode .specialGroup .specCell {
+  min-height: 32px !important;
+  padding: 5px 9px !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  border-radius: 8px !important;
+  white-space: normal;
+}
+body.opsix-test-mode .medGroup {
+  padding: 8px 10px;
+  margin-top: 7px;
+  border-radius: 10px;
+}
+body.opsix-test-mode .medGroupTitle { font-size: 11px; margin-bottom: 5px; }
+body.opsix-test-mode .accessGroup .toggleCell {
+  min-height: 30px;
+  padding: 4px 7px;
+  border-radius: 7px;
+}
+body.opsix-test-mode .accessGroup .toggleInner { gap: 5px; min-height: 26px; }
+body.opsix-test-mode .opsix-optional {
+  margin: 6px 0;
+  padding: 7px 9px;
+  border-radius: 9px;
+}
+body.opsix-test-mode .opsix-column textarea {
+  min-height: 62px;
+  padding: 8px 10px;
+  border-radius: 9px;
+}
+body.opsix-test-mode .opsix-column input:not([type=checkbox]):not([type=radio]),
+body.opsix-test-mode .opsix-column select {
+  border-radius: 8px;
+}
+body.opsix-test-mode .inlineVitals { gap: 5px; }
+body.opsix-test-mode .vpField { flex-basis: 73px; max-width: 112px; }
+body.opsix-test-mode .btMini { flex-basis: 66px; }
+body.opsix-test-mode .vpGcsField { flex-basis: 110px; max-width: 150px; }
+body.opsix-test-mode .opsix-gcs-controls { margin: 5px 0 8px; }
+body.opsix-test-mode .opsix-gcs-toggle { min-height: 31px; padding: 5px 9px; font-size: 12px; }
+body.opsix-test-mode .opsix-report-panel { margin-top: 10px; }
+body.opsix-test-mode #rapport { min-height: 115px; }
+body.opsix-test-mode #reportActions { margin-top: 8px; }
+body.opsix-test-mode #opsixFooterActions { margin-top: 8px; padding-top: 9px; }
+
+/* Vekt: fjern tidligere rÃ¸d ramme og varselfarge. */
+body.opsix-test-mode #weightWrap,
+body.theme-light.opsix-test-mode #weightWrap {
+  max-width: none;
+  margin-top: 7px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.opsix-test-mode #weightWrap label,
+body.theme-light.opsix-test-mode #weightWrap label {
+  color: var(--v110-foreground);
+  margin: 0 0 5px;
+}
+body.opsix-test-mode #weightWrap #vekt,
+body.theme-light.opsix-test-mode #weightWrap #vekt {
+  width: min(100%, 150px);
+  margin: 0;
+  border: 1px solid var(--v110-border);
+  box-shadow: none;
+}
+body.opsix-test-mode #weightWrap #vekt:focus {
+  border-color: var(--v110-focus);
+  box-shadow: none;
+}
+/* Begrens kompaktmodus til store skjermer. PÃ¥ smÃ¥ skjermer
+   skal feltene fortsatt vÃ¦re lette Ã¥ trykke pÃ¥. */
+@media (max-width: 799px) {
+  body.opsix-test-mode .medChip,
+  body.opsix-test-mode .binaryOpt,
+  body.opsix-test-mode .followChip,
+  body.opsix-test-mode .spedChip,
+  body.opsix-test-mode .smChip,
+  body.opsix-test-mode .specialGroup .specCell {
+    min-height: 40px !important;
+    padding: 8px 10px !important;
+  }
+  body.opsix-test-mode .opsix-operativ .hasteCard { min-height: 78px; }
+  body.opsix-test-mode .opsix-column textarea { min-height: 78px; }
+}
+
+/* =========================================================
+   OPSIX V1.1.0 â€“ VIS ALLE FELTER FÃ˜R HASTEGRAD
+   Ingen deaktivering eller skjuling av registreringsfelter.
+   ========================================================= */
+body.opsix-no-haste.opsix-test-mode .opsix-columns {
+  grid-template-columns: minmax(0, 26fr) minmax(0, 42fr) minmax(0, 32fr);
+}
+body.opsix-no-haste.opsix-test-mode .opsix-medisinsk,
+body.opsix-no-haste.opsix-test-mode .opsix-andre,
+body.opsix-no-haste.opsix-test-mode .opsix-report-panel,
+body.opsix-no-haste.opsix-test-mode .opsix-operativ > :not(.opsix-column-title):not(.hasteLabel):not(.hasteGrid) {
+  display: revert !important;
+}
+/* Panelene er fortsatt seksjoner, ikke blokker som skal skjules. */
+body.opsix-no-haste.opsix-test-mode .opsix-medisinsk,
+body.opsix-no-haste.opsix-test-mode .opsix-andre,
+body.opsix-no-haste.opsix-test-mode .opsix-report-panel {
+  display: block !important;
+}
+/* Felter er tilgjengelige, men med diskret visuell prioritering. */
+body.opsix-no-haste.opsix-test-mode .opsix-medisinsk,
+body.opsix-no-haste.opsix-test-mode .opsix-andre {
+  border-color: var(--v110-muted-border);
+}
+body.opsix-no-haste.opsix-test-mode .opsix-medisinsk .opsix-column-title,
+body.opsix-no-haste.opsix-test-mode .opsix-andre .opsix-column-title {
+  color: var(--v110-subtle-text);
+}
+/* Ingen hastegrad: rapporten skal ikke gi inntrykk av Ã¥ vÃ¦re ferdig. */
+body.opsix-no-haste.opsix-test-mode #rapport {
+  opacity: .8;
+}
+@media (min-width:800px) and (max-width:1199px) {
+  body.opsix-no-haste.opsix-test-mode .opsix-columns {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:799px) {
+  body.opsix-no-haste.opsix-test-mode .opsix-columns {
+    grid-template-columns: minmax(0,1fr);
+  }
+}
+
+/* =========================================================
+   OPSIX V1.1.0 â€“ KORTE TEKSTFELTER, TETTERE GRUPPER, DEMPET
+   Kun visning. PÃ¥virker ikke skjemadata eller rapportlogikk.
+   ========================================================= */
+body.opsix-test-mode .opsix-column textarea.opsix-four-lines {
+  min-height: 98px !important;
+  line-height: 1.45;
+  resize: vertical;
+  overflow-y: auto;
+}
+body.opsix-test-mode .opsix-column textarea.opsix-one-line {
+  min-height: 36px !important;
+  line-height: 1.35;
+  resize: vertical;
+  overflow-y: hidden;
+}
+/* Tettere sammenheng mellom chips og fritekst, uten Ã¥ gjÃ¸re
+   klikkmÃ¥lene mindre pÃ¥ mobil. */
+body.opsix-test-mode .opsix-andre .accessGroup,
+body.opsix-test-mode .opsix-andre .infoGroup,
+body.opsix-test-mode .opsix-andre .medGroup {
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+body.opsix-test-mode .opsix-andre .chipRow,
+body.opsix-test-mode .opsix-andre .smLine,
+body.opsix-test-mode .opsix-andre .accessChipRow {
+  margin-bottom: 2px !important;
+}
+body.opsix-test-mode .opsix-andre .accessDynamic,
+body.opsix-test-mode .opsix-andre .medDynamic,
+body.opsix-test-mode .opsix-andre .dynamicRow {
+  margin-top: 3px !important;
+  margin-bottom: 4px !important;
+}
+body.opsix-test-mode .opsix-andre input[type="text"] {
+  margin-bottom: 5px;
+}
+/* Tredje fargetema: balansert mellom eksisterende natt og dag. */
+body.theme-dim {
+  --bg: #46535e;
+  --panel: #5b6873;
+  --text: #f7f9fb;
+  --muted: #e1e7ec;
+  --field: #e5e9ed;
+  --fieldText: #202b35;
+  --line: #84939f;
+  --v110-bg: #46535e;
+  --v110-panel: #5b6873;
+  --v110-border: #8394a2;
+  --v110-title: #ffffff;
+  --v110-choice: #45525e;
+  --v110-selected: #237bb9;
+  --v110-muted-panel: #52616d;
+  --v110-muted-border: #8a9aa6;
+  --v110-focus: #d4edff;
+  --v110-foreground: #ffffff;
+  --v110-subtle-text: #f0f4f7;
+}
+body.theme-dim.opsix-test-mode .opsix-column,
+body.theme-dim.opsix-test-mode .opsix-report-panel {
+  background: var(--v110-panel);
+  color: var(--v110-foreground);
+  border-color: var(--v110-border);
+}
+body.theme-dim.opsix-test-mode .opsix-optional {
+  background: var(--v110-muted-panel);
+}
+body.theme-dim.opsix-test-mode input:not([type="checkbox"]):not([type="radio"]),
+body.theme-dim.opsix-test-mode textarea,
+body.theme-dim.opsix-test-mode select {
+  background: #e5e9ed;
+  color: #202b35;
+  border-color: #aab8c3;
+}
+body.theme-dim.opsix-test-mode input::placeholder,
+body.theme-dim.opsix-test-mode textarea::placeholder {
+  color: #586775;
+  opacity: 1;
+}
+body.theme-dim.opsix-test-mode .medGroup,
+body.theme-dim.opsix-test-mode .accessGroup,
+body.theme-dim.opsix-test-mode .infoGroup {
+  border-color: #8495a2;
+}
+body.theme-dim.opsix-test-mode .medGroupTitle {
+  color: #f3f7fa;
+}
+
+
+/* =========================================================
+   OPSIX V1.1.0 â€“ KORRIGERING 04.11.2026
+   1. Aktuelt: 2 linjer (ogsÃ¥ Akutt), automatisk vekst
+   2. Luftveisvalg: Ã©n rad pÃ¥ desktop, uten skjulte alternativer
+   3. Vitalparametre: nok bredde til bÃ¥de etikett og tall
+   4. Andre medikamenter: flyttet tilbake med JS til midten
+   ========================================================= */
+
+/* Begge Aktuelt-feltene og Tidligere har egen minstehÃ¸yde.
+   AutoGrow i script.js Ã¸ker hÃ¸yden nÃ¥r innholdet krever det. */
+body.opsix-test-mode #hovedproblem,
+body.opsix-test-mode #acuteHovedproblem,
+body.opsix-test-mode textarea.opsix-four-lines {
+  min-height: 0 !important;
+  height: auto;
+  line-height: 1.4;
+  margin-top: 5px;
+  margin-bottom: 9px;
+  resize: vertical;
+}
+body.opsix-test-mode #hovedproblem,
+body.opsix-test-mode #acuteHovedproblem {
+  min-height: 61px !important;
+}
+body.opsix-test-mode #tidligere,
+body.opsix-test-mode textarea.opsix-one-line {
+  min-height: 37px !important;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+/* Alle seks luftveisvalg pÃ¥ samme rad nÃ¥r det er plass.
+   PÃ¥ smal skjerm beholdes responsiv bryting. */
+@media (min-width: 1200px) {
+  body.opsix-test-mode .opsix-medisinsk .airwayRow {
+    display: flex;
+    flex-wrap: nowrap !important;
+    align-items: stretch;
+    gap: 4px !important;
+    overflow-x: auto;
+    padding-bottom: 3px;
+    scrollbar-width: thin;
+  }
+  body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt {
+    flex: 0 0 auto;
+    white-space: nowrap !important;
+    min-height: 32px !important;
+    padding: 5px 7px !important;
+    font-size: 11px !important;
+    border-radius: 7px !important;
+    margin: 0 !important;
+  }
+}
+body.opsix-test-mode .opsix-medisinsk .airwaySection ~ .airwayRow + div,
+body.opsix-test-mode .opsix-medisinsk .airwaySection ~ .airwayRow + .inlineRow {
+  margin-top: 5px;
+}
+/* SekundÃ¦rfelter ved valgt luftvei: kortere og tydelig tilknyttet. */
+body.opsix-test-mode .opsix-medisinsk #intubWrap,
+body.opsix-test-mode .opsix-medisinsk #trachWrap,
+body.opsix-test-mode .opsix-medisinsk #nivWrap,
+body.opsix-test-mode .opsix-medisinsk #o2Wrap,
+body.opsix-test-mode .opsix-medisinsk #highFlowWrap,
+body.opsix-test-mode .opsix-medisinsk #acuteIntubWrap,
+body.opsix-test-mode .opsix-medisinsk #acuteTrachWrap {
+  margin-top: 5px;
+  margin-bottom: 6px;
+}
+
+/* Viktige vitale verdier skal ikke klippes. Gi alle feltene
+   en kontrollert minimumsbredde; mindre skjermer kan bryte rad. */
+body.opsix-test-mode .inlineVitals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: center;
+}
+body.opsix-test-mode .inlineVitals .vpField {
+  flex: 0 0 106px;
+  width: 106px;
+  max-width: none;
+  min-width: 106px;
+}
+body.opsix-test-mode .inlineVitals .btWrap {
+  flex: 0 0 auto;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+body.opsix-test-mode .inlineVitals .btMini {
+  flex: 0 0 84px;
+  width: 84px;
+  min-width: 84px;
+  max-width: none;
+}
+body.opsix-test-mode .inlineVitals .vpGcsField {
+  flex: 0 0 156px;
+  width: 156px;
+  min-width: 156px;
+  max-width: none;
+}
+body.opsix-test-mode .inlineVitals .vpField input,
+body.opsix-test-mode .inlineVitals .btMini input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-variant-numeric: tabular-nums;
+  padding-right: 5px;
+  font-size: 14px;
+  text-align: right;
+}
+body.opsix-test-mode .inlineVitals .vpField input { padding-left: 43px; }
+body.opsix-test-mode .inlineVitals .btMini input { padding-left: 40px; }
+body.opsix-test-mode .inlineVitals .vpGcsField input {
+  padding-left: 43px;
+  text-align: right;
+}
+body.opsix-test-mode .inlineVitals .vpField span,
+body.opsix-test-mode .inlineVitals .btMini span {
+  left: 8px;
+  font-size: 12px;
+}
+@media (max-width: 799px) {
+  body.opsix-test-mode .opsix-medisinsk .airwayRow {
+    flex-wrap: wrap !important;
+    overflow: visible;
+  }
+  body.opsix-test-mode .inlineVitals .vpField {
+    flex: 1 1 106px;
+  }
+}
+
+
+/* =========================================================
+   OPSIX V1.1.0 â€“ KOMPAKTE ANTALLSFELT
+   PVK, CVK og sprÃ¸ytepumper. Behold native select og JS.
+   ========================================================= */
+body.opsix-test-mode #pvkAntall,
+body.opsix-test-mode #cvkLumen,
+body.opsix-test-mode .opsix-andre .inlineSelect,
+body.opsix-test-mode .opsix-andre .pvkSelect,
+body.opsix-test-mode .opsix-andre .accessChipRow select,
+body.opsix-test-mode .opsix-andre .utstyrChipRow select {
+  box-sizing: border-box !important;
+  flex: 0 0 auto !important;
+  width: 92px !important;
+  min-width: 92px !important;
+  max-width: 92px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  margin: 0 !important;
+  padding: 3px 22px 3px 9px !important;
+  border: 1px solid var(--v110-border) !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  line-height: 1.2 !important;
+  background-color: var(--v110-field) !important;
+  color: var(--v110-field-text) !important;
+  box-shadow: none !important;
+  vertical-align: middle !important;
+}
+body.opsix-test-mode .opsix-andre .accessChipRow,
+body.opsix-test-mode .opsix-andre .utstyrChipRow {
+  gap: 5px !important;
+  align-items: center !important;
+}
+body.opsix-test-mode .opsix-andre .accessChipRow select,
+body.opsix-test-mode .opsix-andre .utstyrChipRow select {
+  align-self: center;
+}
+@media (max-width: 799px) {
+  body.opsix-test-mode #pvkAntall,
+  body.opsix-test-mode #cvkLumen,
+  body.opsix-test-mode .opsix-andre .inlineSelect,
+  body.opsix-test-mode .opsix-andre .pvkSelect,
+  body.opsix-test-mode .opsix-andre .accessChipRow select,
+  body.opsix-test-mode .opsix-andre .utstyrChipRow select {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* =========================================================
+   OPSIX V1.1.0 â€“ KONTROLLERT KOMPAKT UI, 04.11.2026
+   ========================================================= */
+/* Hastegrad: tydeligere titler, tekst og valgt tilstand. */
+body.opsix-test-mode .opsix-operativ .hasteCard {
+  min-height: 77px;
+  padding: 10px 11px;
+  border-width: 2px !important;
+  background: #333b44;
+  opacity: 1;
+}
+body.opsix-test-mode .opsix-operativ .hasteCardTitle {
+  font-size: 14px;
+  font-weight: 850;
+  color: #fff;
+  line-height: 1.15;
+}
+body.opsix-test-mode .opsix-operativ .hasteCardText {
+  font-size: 11.5px;
+  color: #f1f4f7;
+  line-height: 1.3;
+}
+body.opsix-test-mode .opsix-operativ .hasteCard.active {
+  box-shadow: inset 0 0 0 1px currentColor, 0 0 0 2px rgba(255,255,255,.12);
+}
+body.theme-light.opsix-test-mode .opsix-operativ .hasteCard { background: #f1f3f6; }
+body.theme-light.opsix-test-mode .opsix-operativ .hasteCardTitle,
+body.theme-light.opsix-test-mode .opsix-operativ .hasteCardText { color: #17222c; }
+body.theme-dim.opsix-test-mode .opsix-operativ .hasteCard { background: #43505c; }
+/* FÃ¸lgepersonell: to like kolonner, forutsigbar plassering. */
+body.opsix-test-mode .opsix-operativ .followRow {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 6px !important;
+  align-items: stretch;
+}
+body.opsix-test-mode .opsix-operativ .followRow .followChip {
+  width: 100%;
+  margin: 0 !important;
+  min-height: 34px !important;
+  padding: 7px 8px !important;
+  justify-content: flex-start !important;
+  text-align: left;
+}
+/* Smitte: stabil to-kolonne grid og kompakt spesifikasjon rett under. */
+body.opsix-test-mode .opsix-andre .smLine {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 6px !important;
+  margin: 5px 0 !important;
+}
+body.opsix-test-mode .opsix-andre .smLine .smChip {
+  min-width: 0 !important;
+  width: 100%;
+  min-height: 34px !important;
+  margin: 0 !important;
+  padding: 7px 9px !important;
+  text-align: left;
+  justify-content: flex-start !important;
+}
+body.opsix-test-mode .opsix-andre #smitteSpesWrap {
+  margin: 5px 0 7px !important;
+  padding: 0 !important;
+  max-width: 100%;
+}
+body.opsix-test-mode .opsix-andre #smitteSpes {
+  margin: 0 !important;
+  width: 100% !important;
+  min-height: 36px;
+}
+/* Luftveier: valg i en rad pÃ¥ desktop, kompakt undergruppe. */
+@media (min-width: 1200px) {
+  body.opsix-test-mode .opsix-medisinsk .airwayRow {
+    flex-wrap: nowrap !important;
+    gap: 3px !important;
+    overflow-x: auto;
+  }
+  body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt {
+    padding: 5px 6px !important;
+    font-size: 10.5px !important;
+  }
+}
+body.opsix-test-mode #spontO2Wrap,
+body.opsix-test-mode #highFlowWrap,
+body.opsix-test-mode #nivWrap,
+body.opsix-test-mode #intubWrap,
+body.opsix-test-mode #trachWrap,
+body.opsix-test-mode #acuteSpontO2Wrap,
+body.opsix-test-mode #acuteHighFlowWrap,
+body.opsix-test-mode #acuteNivWrap,
+body.opsix-test-mode #acuteIntubWrap,
+body.opsix-test-mode #acuteTrachWrap {
+  margin: 6px 0 7px !important;
+  padding: 5px 8px !important;
+  max-width: 100%;
+  border-left: 2px solid var(--v110-selected);
+  border-radius: 5px;
+}
+body.opsix-test-mode #spontO2Wrap input,
+body.opsix-test-mode #highFlowWrap input,
+body.opsix-test-mode #acuteSpontO2Wrap input,
+body.opsix-test-mode #acuteHighFlowWrap input {
+  max-width: 120px;
+  margin-bottom: 2px !important;
+}
+/* UnngÃ¥ overdrevent store luftveisfelt. */
+body.opsix-test-mode .opsix-medisinsk .airwayRow + div { margin-top: 5px; }
+/* NÃ¦r varsel pÃ¥ HLR/respirator minus. */
+body.opsix-test-mode .opsix-decision-warning {
+  margin: 5px 0 7px;
+  color: #ffd2a0;
+  font-size: 12px;
+  font-weight: 650;
+}
+body.theme-light.opsix-test-mode .opsix-decision-warning { color: #8c4300; }
+body.opsix-test-mode .opsix-decision-warning[hidden] { display: none !important; }
+/* Tema velges direkte, ikke ved Ã¥ sykle mellom modusene. */
+.opsix-theme-select {
+  appearance: auto;
+  width: 115px;
+  min-width: 115px;
+  min-height: 39px;
+  padding: 7px 10px;
+  border: 1px solid var(--v110-border, #687887);
+  border-radius: 10px;
+  background: var(--v110-panel, #303b46);
+  color: var(--v110-foreground, #fff);
+  font: 650 13px system-ui, sans-serif;
+  cursor: pointer;
+}
+.opsix-theme-select:focus-visible { outline: 3px solid var(--v110-focus, #9dc8ff); outline-offset: 2px; }
+body.theme-light .opsix-theme-select { color: #17222c; background: #f5f6f7; }
+body.theme-dim .opsix-theme-select { color: #fff; background: #45525e; }
+@media (max-width:799px) {
+  body.opsix-test-mode .opsix-operativ .followRow,
+  body.opsix-test-mode .opsix-andre .smLine { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  body.opsix-test-mode .opsix-operativ .followRow .followChip,
+  body.opsix-test-mode .opsix-andre .smLine .smChip { min-height: 42px !important; }
+}
+
+
+/* ==========================================================
+   OPSIX V1.1.0 â€“ VISUELLE RETTELSER 04.11
+   ========================================================== */
+
+/* Smitte: alle alternativer i lik stÃ¸rrelse, ingen stor "Ingen kjente". */
+body.opsix-test-mode .opsix-andre .smLine {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center;
+  gap: 5px !important;
+  margin: 4px 0 !important;
+}
+body.opsix-test-mode .opsix-andre .smLine .smChip {
+  display: inline-flex !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100%;
+  min-height: 34px !important;
+  padding: 5px 9px !important;
+  margin: 0 !important;
+  text-align: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+}
+body.opsix-test-mode .opsix-andre #smitteSpesWrap {
+  margin: 5px 0 8px !important;
+}
+body.opsix-test-mode .opsix-andre #smitteSpes {
+  width: min(100%, 350px) !important;
+  min-height: 36px !important;
+}
+
+/* Antallsvalg ved PVK/CVK/sprÃ¸ytepumper: samme hÃ¸yde, ramme og
+   farger som chips. Selve select-elementet beholdes tilgjengelig. */
+body.opsix-test-mode .opsix-andre #pvkAntall,
+body.opsix-test-mode .opsix-andre #cvkLumen,
+body.opsix-test-mode .opsix-andre #utstPumperAntall,
+body.opsix-test-mode .opsix-andre .inlineSelect,
+body.opsix-test-mode .opsix-andre .pvkSelect,
+body.opsix-test-mode .opsix-andre .accessChipRow select,
+body.opsix-test-mode .opsix-andre .utstyrChipRow select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-block;
+  width: auto !important;
+  min-width: 68px !important;
+  max-width: 104px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  padding: 5px 23px 5px 9px !important;
+  font: 600 12px/1.2 system-ui, sans-serif !important;
+  color: var(--v110-foreground) !important;
+  background-color: var(--v110-chip, #2d3138) !important;
+  border: 1px solid var(--v110-border) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  vertical-align: middle;
+  cursor: pointer;
+}
+body.theme-light.opsix-test-mode .opsix-andre #pvkAntall,
+body.theme-light.opsix-test-mode .opsix-andre #cvkLumen,
+body.theme-light.opsix-test-mode .opsix-andre #utstPumperAntall,
+body.theme-light.opsix-test-mode .opsix-andre .inlineSelect,
+body.theme-light.opsix-test-mode .opsix-andre .pvkSelect,
+body.theme-light.opsix-test-mode .opsix-andre .accessChipRow select,
+body.theme-light.opsix-test-mode .opsix-andre .utstyrChipRow select {
+  color: #223242 !important;
+  background-color: #f3f6f9 !important;
+}
+
+/* Tydeligere valgfritt-merking ved Akutt, uten nedtoning av verdier. */
+body.opsix-test-mode .opsix-optional-tag {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: .01em;
+  border: 1px solid var(--v110-border);
+  border-radius: 999px;
+  color: var(--v110-subtle-text);
+  background: var(--v110-muted-panel);
+  vertical-align: middle;
+}
+body.opsix-test-mode .opsix-optional-tag[hidden] { display: none !important; }
+body.opsix-akutt.opsix-test-mode .opsix-optional {
+  border-left: 3px solid #9aa9b8;
+  padding-left: 9px;
+}
+body.opsix-akutt.opsix-test-mode .opsix-optional-filled {
+  border-left-color: #4e9bdb;
+}
+
+/* Mer behagelig temavelger med egen pil og fokusmarkering. */
+body.opsix-test-mode .opsix-theme-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 135px !important;
+  min-width: 135px !important;
+  min-height: 36px !important;
+  padding: 7px 32px 7px 13px !important;
+  border-radius: 18px !important;
+  border: 1px solid var(--v110-border) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,.10);
+  font-size: 12px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 11px center !important;
+  background-size: 15px 15px !important;
+}
+body.opsix-test-mode .opsix-theme-select:focus-visible {
+  outline: 2px solid var(--v110-focus);
+  outline-offset: 2px;
+}
