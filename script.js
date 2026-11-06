@@ -719,6 +719,10 @@ function updateSpedbarnUI() {
     $("gestasjonsDager").value = "";
   }
   updateTitle();
+  // Samme endringsvei ved musevalg, tastaturvalg og nullstilling.
+  if (typeof window.opsixGcsCategoryChanged === "function") {
+    window.opsixGcsCategoryChanged();
+  }
 }
 
 function updateCaveUI() {
@@ -1897,7 +1901,21 @@ function formatGcsValue(raw) {
   if (!vurdering.tekst) {
     return "";
   }
-  return vurdering.gyldig ? vurdering.tekst : vurdering.tekst + " (KONTROLLER GCS)";
+  const grunntekst = vurdering.gyldig ? vurdering.tekst : vurdering.tekst + " (KONTROLLER GCS)";
+  const kategori = getSpedbarnValue();
+  const barneniva = $("opsixGcsLevel")?.value;
+  // Oppgi vurderingsskala i rapporten slik at delskår forstås korrekt.
+  const gcsVariant = kategori === "Nyfødt" ? " (pGCS – nyfødt)"
+    : kategori === "Spedbarn" ? " (pGCS – spedbarn)"
+    : kategori === "Barn" && barneniva === "preverbal" ? " (pGCS – preverbal)"
+    : kategori === "Barn" && barneniva === "verbal" ? " (GCS – verbal)"
+    : "";
+  const gcsFelt = $("gcs");
+  // Når pasientkategori eller vurderingstype endres, skal gammel totalskår
+  // aldri fremstilles som en bekreftet skår etter den nye skalaen.
+  return gcsFelt?.dataset.recheckRequired === "true"
+    ? grunntekst + gcsVariant + " (KONTROLLER GCS ETTER ENDRING AV PASIENTKATEGORI/VURDERING)"
+    : grunntekst + gcsVariant;
 }
 
 /* ======================================================
@@ -2931,6 +2949,55 @@ function buildFollowNeedLine() {
     const field = $("gcs");
     const wrapper = field?.closest(".vpGcsField");
     if (!field || !wrapper) return;
+
+    // Komponentpoengene er alltid E1–4, V1–5, M1–6. Beskrivelsene
+    // tilpasses pasientens språklige og motoriske utviklingsnivå.
+    // Referanser for formuleringene:
+    // Merck Manual: Modified Glasgow Coma Scale for Infants and Children
+    // RCH Melbourne: Neurological Observations / Altered Conscious State.
+    const E = [
+      ["4", "Spontant"], ["3", "Ved tiltale/lyd"],
+      ["2", "Ved smertestimulus"], ["1", "Ingen øyeåpning"]
+    ];
+    const MOTOR_VERBAL = [
+      ["6", "Følger oppfordring"], ["5", "Lokaliserer smerte"],
+      ["4", "Trekker seg unna smerte"], ["3", "Unormal fleksjon"],
+      ["2", "Unormal ekstensjon"], ["1", "Ingen respons"]
+    ];
+    const MOTOR_PREVERBAL = [
+      ["6", "Spontane, målrettede bevegelser"],
+      ["5", "Trekker seg unna berøring"],
+      ["4", "Trekker seg unna smerte"], ["3", "Unormal fleksjon"],
+      ["2", "Unormal ekstensjon"], ["1", "Ingen respons"]
+    ];
+    const VERBAL = [
+      ["5", "Orientert / aldersadekvat tale"],
+      ["4", "Forvirret"],
+      ["3", "Upassende ord"],
+      ["2", "Uforståelige lyder"],
+      ["1", "Ingen verbal respons"]
+    ];
+    const PREVERBAL = [
+      ["5", "Kurrer/pludrer, aldersadekvat lydrespons"],
+      ["4", "Irritabel gråt"],
+      ["3", "Gråt ved smertestimulus"],
+      ["2", "Stønner/jamrer ved smertestimulus"],
+      ["1", "Ingen lydrespons"]
+    ];
+    const NEWBORN = [
+      ["5", "Våken, aldersadekvate lyder/gråt"],
+      ["4", "Irritabel gråt"],
+      ["3", "Gråt ved smertestimulus"],
+      ["2", "Stønner/jamrer ved smertestimulus"],
+      ["1", "Ingen lydrespons"]
+    ];
+    const definitions = {
+      adult: [E, VERBAL, MOTOR_VERBAL],
+      newborn: [E, NEWBORN, MOTOR_PREVERBAL],
+      preverbal: [E, PREVERBAL, MOTOR_PREVERBAL],
+      verbal: [E, VERBAL, MOTOR_VERBAL]
+    };
+
     const container = document.createElement("div");
     container.className = "opsix-gcs-controls";
     const toggle = document.createElement("button");
@@ -2940,55 +3007,179 @@ function buildFollowNeedLine() {
     toggle.setAttribute("aria-label", "Åpne GCS-komponentberegning (øye, verbal, motorisk)");
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-controls", "opsixGcsDetails");
+
     const details = document.createElement("div");
     details.id = "opsixGcsDetails";
     details.className = "opsix-gcs-details hidden";
     details.hidden = true;
-    const definitions = [
-      ["Øyeåpning (E)", ["4 – Spontant", "3 – Ved tiltale", "2 – Ved smertestimulus", "1 – Ingen respons"]],
-      ["Verbal respons (V)", ["5 – Orientert", "4 – Forvirret", "3 – Ord", "2 – Lyder", "1 – Ingen respons"]],
-      ["Motorisk respons (M)", ["6 – Følger kommando", "5 – Lokaliserer smerte", "4 – Normal fleksjon", "3 – Unormal fleksjon", "2 – Ekstensjon", "1 – Ingen respons"]]
-    ];
-    const selects = definitions.map(([heading, choices], i) => {
+
+    const scaleTitle = document.createElement("p");
+    scaleTitle.className = "opsix-gcs-scale-title";
+    details.append(scaleTitle);
+
+    // Kategorien Barn kan bety alt fra en preverbal ettåring til en ungdom.
+    // Derfor må operatøren eksplisitt velge vurderingsnivå.
+    const levelLabel = document.createElement("label");
+    levelLabel.className = "opsix-gcs-label opsix-gcs-level-label";
+    levelLabel.textContent = "Vurdering etter språk-/utviklingsnivå";
+    const levelSelect = document.createElement("select");
+    levelSelect.id = "opsixGcsLevel";
+    levelSelect.className = "opsix-gcs-select";
+    levelSelect.setAttribute("aria-label", "Velg GCS-vurdering for barn");
+    for (const [value, label] of [
+      ["", "Velg vurdering"],
+      ["preverbal", "Preverbal / ikke aldersadekvat tale"],
+      ["verbal", "Verbal / aldersadekvat tale"]
+    ]) {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      levelSelect.append(option);
+    }
+    levelLabel.append(levelSelect);
+    details.append(levelLabel);
+
+    const headings = ["Øyeåpning (E)", "Verbal respons (V)", "Motorisk respons (M)"];
+    const selects = headings.map((heading, i) => {
       const label = document.createElement("label");
       label.className = "opsix-gcs-label";
       label.textContent = heading;
       const select = document.createElement("select");
       select.className = "opsix-gcs-select";
       select.id = ["opsixGcsE", "opsixGcsV", "opsixGcsM"][i];
-      const empty = document.createElement("option");
-      empty.value = "";
-      empty.textContent = "Velg respons";
-      select.append(empty);
-      choices.forEach(choice => {
-        const option = document.createElement("option");
-        option.value = choice.split(" ")[0];
-        option.textContent = choice;
-        select.append(option);
-      });
       label.append(select);
       details.append(label);
       return select;
     });
+
+    const note = document.createElement("p");
+    note.className = "opsix-gcs-note";
+    details.append(note);
+
+    const warning = document.createElement("p");
+    warning.id = "opsixGcsRecheckWarning";
+    warning.className = "opsix-gcs-recheck hidden";
+    warning.hidden = true;
+    warning.setAttribute("role", "status");
+    warning.textContent = "GCS ble registrert før endringen. Kontroller og bekreft skåren på nytt.";
+
+    const currentCategory = () => getSpedbarnValue() || "Nei";
+    let previousCategory = currentCategory();
+    let previousLevel = "";
+
+    function markForRecheck() {
+      if (!clean(field.value)) return;
+      field.dataset.recheckRequired = "true";
+      refreshWarning();
+    }
+    function refreshWarning() {
+      const show = field.dataset.recheckRequired === "true" && !!clean(field.value);
+      warning.hidden = !show;
+      warning.classList.toggle("hidden", !show);
+      if (show) field.setAttribute("aria-describedby", warning.id);
+      else if (field.getAttribute("aria-describedby") === warning.id) field.removeAttribute("aria-describedby");
+    }
+    function confirmRecheck() {
+      field.dataset.recheckRequired = "false";
+      refreshWarning();
+    }
+
+    function mode() {
+      const category = currentCategory();
+      if (category === "Nyfødt") return "newborn";
+      if (category === "Spedbarn") return "preverbal";
+      if (category === "Barn") return levelSelect.value;
+      return "adult";
+    }
+    function fillSelect(select, options) {
+      select.replaceChildren();
+      const empty = document.createElement("option");
+      empty.value = "";
+      empty.textContent = "Velg respons";
+      select.append(empty);
+      for (const [value, description] of options) {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = `${value} – ${description}`;
+        select.append(option);
+      }
+    }
+    function refreshDescriptions() {
+      const category = currentCategory();
+      const selectedMode = mode();
+      const isChild = category === "Barn";
+      levelLabel.hidden = !isChild;
+      levelLabel.classList.toggle("hidden", !isChild);
+      scaleTitle.textContent = category === "Nyfødt" ? "Pediatrisk GCS – nyfødt" :
+        category === "Spedbarn" ? "Pediatrisk GCS – spedbarn" :
+        isChild ? "GCS – barn (velg utviklingsnivå)" : "GCS – voksen";
+      const currentDefinitions = definitions[selectedMode] || definitions.adult;
+      selects.forEach((select, index) => {
+        fillSelect(select, currentDefinitions[index]);
+        // Barn: velg utviklingsnivå før E/V/M kan registreres.
+        select.disabled = isChild && !selectedMode;
+      });
+      note.textContent = category === "Nyfødt"
+        ? "Nyfødte, særlig premature: vurder beskrivelsene med klinisk skjønn og etter lokal prosedyre."
+        : isChild
+          ? "Velg vurderingsnivå etter faktisk språk-/utviklingsnivå, ikke alder alene."
+          : "Registrer E, V og M hver for seg. En ikke-testbar komponent må ikke gis poeng 1.";
+      refreshWarning();
+    }
+    function resetSelections() {
+      selects.forEach(select => { select.value = ""; });
+    }
+    function categoryChanged() {
+      const category = currentCategory();
+      if (category === previousCategory) return;
+      previousCategory = category;
+      previousLevel = "";
+      levelSelect.value = "";
+      markForRecheck();
+      refreshDescriptions();
+      // Behold eventuell eksisterende totalskår, men aldri gamle delvalg.
+      lagRapport();
+    }
+    window.opsixGcsCategoryChanged = categoryChanged;
+    levelSelect.addEventListener("change", () => {
+      if (currentCategory() !== "Barn") return;
+      if (levelSelect.value !== previousLevel) {
+        markForRecheck();
+        previousLevel = levelSelect.value;
+      }
+      refreshDescriptions();
+      lagRapport();
+    });
     selects.forEach(select => select.addEventListener("change", () => {
       const values = selects.map(s => s.value);
-      if (values.every(Boolean)) {
-        field.value = values.join("+");
-        field.dispatchEvent(new Event("input", { bubbles: true }));
-        // Alle tre komponenter er valgt: lukk E/V/M-panelet automatisk.
-        details.classList.add("hidden");
-        details.hidden = true;
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.textContent = "E / V / M";
-        toggle.focus();
-      }
+      if (!values.every(Boolean) || (currentCategory() === "Barn" && !levelSelect.value)) return;
+      field.value = values.join("+");
+      confirmRecheck();
+      field.dispatchEvent(new Event("input", { bubbles: true }));
+      // Alle tre komponenter er registrert. Tilbakefør fokus til knappen.
+      details.classList.add("hidden");
+      details.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.textContent = "E / V / M";
+      toggle.focus();
     }));
+    // Manuell endring er en ny registrering, ikke en automatisk bekreftelse.
+    // Bare reell brukerinput kan oppheve kontrollmarkeringen.
+    field.addEventListener("input", event => {
+      if (event.isTrusted) {
+        confirmRecheck();
+        resetSelections();
+      }
+    });
     toggle.addEventListener("click", () => {
+      categoryChanged();
       const nowOpen = details.classList.toggle("hidden") === false;
       details.hidden = !nowOpen;
       toggle.setAttribute("aria-expanded", String(nowOpen));
       toggle.textContent = nowOpen ? "Lukk" : "E / V / M";
+      if (nowOpen && currentCategory() === "Barn" && !levelSelect.value) levelSelect.focus();
     });
+
     const row = wrapper.closest(".opsix-vitals-secondary");
     if (row) {
       const action = document.createElement("div");
@@ -3000,6 +3191,8 @@ function buildFollowNeedLine() {
     }
     container.append(details);
     wrapper.closest(".inlineVitals")?.insertAdjacentElement("afterend", container);
+    container.insertAdjacentElement("afterend", warning);
+    refreshDescriptions();
   }
   setupGcs();
 

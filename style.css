@@ -4754,3 +4754,117 @@ body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area .pumpRow {
 body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area .pumpRow > label {
   margin: 0 !important;
 }
+
+/* ==============================================================
+   OPSIX V1.1.0 â€“ LIKE KOLONNER FOR VITALPARAMETRE
+   RF  SpO2  Puls  SYS / DIA
+   MAP Tmp   GCS   E/V/M
+
+   De to radene bruker samme seks-spors grid: 5 like feltspor
+   og ett smalt spor for skrÃ¥streken mellom SYS og DIA.
+   Ingen endringer i registrering, GCS-logikk eller rapport.
+   ============================================================= */
+@media (min-width: 601px) {
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary,
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr)) 10px minmax(0, 1fr) !important;
+    column-gap: 7px !important;
+  }
+
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
+    grid-column: 4 / 7 !important;
+    grid-template-columns: minmax(0, 1fr) 10px minmax(0, 1fr) !important;
+    gap: 7px !important;
+  }
+
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpField:first-child {
+    grid-column: 1 !important; /* MAP under RF */
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpField:nth-child(2) {
+    grid-column: 2 !important; /* Tmp under SpO2 */
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpGcsField {
+    grid-column: 3 !important; /* GCS under Puls */
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .opsix-gcs-action {
+    grid-column: 4 !important; /* E/V/M under SYS */
+    width: 100% !important;
+    min-width: 0 !important;
+    justify-content: stretch !important;
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .opsix-gcs-action .opsix-gcs-toggle {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 6px 3px !important;
+    font-size: 11px !important;
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
+    padding-left: 29px !important;
+    padding-right: 4px !important;
+    font-size: clamp(11px, 0.95vw, 14px) !important;
+  }
+}
+
+/* ==========================================================
+   OPSIX V1.1.0 â€“ PEDIATRISK E/V/M, tydelig kategori og kontroll
+   Gjelder alle tre visningsmodus. Vitalparametrenes grid beholdes.
+   ========================================================== */
+body.opsix-test-mode .opsix-gcs-scale-title {
+  margin: 0 0 9px;
+  font-size: 14px;
+  font-weight: 750;
+  color: var(--v110-foreground, var(--text));
+}
+body.opsix-test-mode .opsix-gcs-level-label {
+  display: block;
+  padding: 8px 10px 10px;
+  border: 1px solid var(--v110-border, var(--line));
+  border-radius: 10px;
+  margin: 0 0 12px;
+}
+body.opsix-test-mode .opsix-gcs-level-label[hidden],
+body.opsix-test-mode .opsix-gcs-level-label.hidden {display:none !important;}
+body.opsix-test-mode .opsix-gcs-select:disabled {
+  opacity: .56;
+  cursor: not-allowed;
+}
+body.opsix-test-mode .opsix-gcs-recheck {
+  padding: 9px 12px;
+  margin: 8px 0 12px;
+  border: 1px solid #d6a449;
+  border-radius: 10px;
+  background: rgba(178,118,24,.13);
+  color: var(--v110-foreground, var(--text));
+  font-size: 13px;
+  line-height: 1.45;
+}
+body.opsix-test-mode .opsix-gcs-recheck[hidden],
+body.opsix-test-mode .opsix-gcs-recheck.hidden {display:none !important;}
+body.opsix-test-mode .opsix-gcs-select:focus-visible,
+body.opsix-test-mode .opsix-gcs-toggle:focus-visible {
+  outline: 3px solid #7eb8fa !important;
+  outline-offset: 2px !important;
+}
+
+
+/* ==========================================================
+   OPSIX V1.1.0 â€“ FOOTER PLASSERT INNENFOR .wrap
+   Felles og rolig typografi i natt/dempet/dag.
+   ========================================================== */
+body.opsix-test-mode .wrap > .opsix-footer {
+  display: block !important;
+  position: static !important;
+  width: 100% !important;
+  margin: 18px auto 22px !important;
+  padding: 0 12px !important;
+  text-align: center !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0 !important;
+  color: var(--v110-subtle-text, var(--muted)) !important;
+  opacity: .88 !important;
+}

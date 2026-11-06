@@ -46,12 +46,12 @@
           </button>
 
           <button type="button" class="hasteCard haste-samme" data-haste="Samme døgn (V1)">
-            <span class="hasteCardTitle">Samme døgn</span>
+            <span class="hasteCardTitle">Samme døgn (V1)</span>
             <span class="hasteCardText">Transport bør gjennomføres samme dag.</span>
           </button>
 
           <button type="button" class="hasteCard haste-planlagt" data-haste="Planlagt transport (V2)">
-            <span class="hasteCardTitle">Planlagt</span>
+            <span class="hasteCardTitle">Planlagt (V2)</span>
             <span class="hasteCardText">Transport som kan planlegges frem i tid.</span>
           </button>
 
@@ -275,13 +275,13 @@
             <div class="binaryRow airwayRow">
 
               <label class="binaryOpt">
-                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Spontan u/O2" id="acute_air_spont_uten">
-                <span>Spontan u/O2</span>
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Spontan u/O₂" id="acute_air_spont_uten">
+                <span>Spontan u/O₂</span>
               </label>
 
               <label class="binaryOpt">
-                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Spontan m/O2" id="acute_air_spont_med">
-                <span>Spontan m/O2</span>
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Spontan m/O₂" id="acute_air_spont_med">
+                <span>Spontan m/O₂</span>
               </label>
 
               <label class="binaryOpt">
@@ -306,12 +306,12 @@
 
             </div>
 
-            <div id="acuteSpontO2Wrap" class="hidden">
+            <div id="acuteSpontO₂Wrap" class="hidden">
 
               <div class="inlineRow" style="margin-top:10px;">
 
                 <div class="unitInputWrap">
-                  <input id="acuteSpontO2Liter" type="text" inputmode="decimal">
+                  <input id="acuteSpontO₂Liter" type="text" inputmode="decimal">
                   <span>l/min</span>
                 </div>
 
@@ -325,11 +325,11 @@
 
                 <div class="unitInputWrap">
                   <input
-                    id="acuteHighFlowFio2"
+                    id="acuteHighFlowFiO₂"
                     type="text"
                     inputmode="decimal"
                   >
-                  <span>% FiO2</span>
+                  <span>% FiO₂</span>
                 </div>
 
                 <div class="unitInputWrap">
@@ -350,11 +350,11 @@
               <div class="inlineRow" style="margin-top:10px;">
                 <div class="unitInputWrap">
                   <input
-                    id="acuteNivFio2"
+                    id="acuteNivFiO₂"
                     type="text"
                     inputmode="decimal"
                   >
-                  <span>% FiO2</span>
+                  <span>% FiO₂</span>
                 </div>
               </div>
 
@@ -366,11 +366,11 @@
 
                 <div class="unitInputWrap">
                   <input
-                    id="acuteIntubFio2"
+                    id="acuteIntubFiO₂"
                     type="text"
                     inputmode="decimal"
                   >
-                  <span>% FiO2</span>
+                  <span>% FiO₂</span>
                 </div>
 
                 <div class="unitInputWrap">
@@ -410,10 +410,10 @@
                   </tr>
 
                   <tr>
-                    <td class="toggleCell" data-toggle="acute_tr_o2">
+                    <td class="toggleCell" data-toggle="acute_tr_O₂">
                       <div class="toggleInner">
-                        <input id="acute_tr_o2" name="acuteTrach" class="chk acuteTrachOpt" type="radio" data-name="O2 via trakeostomi">
-                        <span>O2 via trakeostomi</span>
+                        <input id="acute_tr_O₂" name="acuteTrach" class="chk acuteTrachOpt" type="radio" data-name="O₂ via trakeostomi">
+                        <span>O₂ via trakeostomi</span>
                       </div>
                     </td>
                   </tr>
@@ -430,13 +430,13 @@
                 </tbody>
               </table>
 
-              <div id="acuteTrachO2Wrap" class="hidden">
+              <div id="acuteTrachO₂Wrap" class="hidden">
 
                 <div class="inlineRow" style="margin-top:10px;">
 
                   <div class="unitInputWrap">
                     <input
-                      id="acuteTrachO2Liter"
+                      id="acuteTrachO₂Liter"
                       type="text"
                       inputmode="numeric"
                     >
@@ -453,11 +453,11 @@
 
                   <div class="unitInputWrap">
                     <input
-                      id="acuteTrachVentFio2"
+                      id="acuteTrachVentFiO₂"
                       type="text"
                       inputmode="decimal"
                     >
-                    <span>% FiO2</span>
+                    <span>% FiO₂</span>
                   </div>
 
                   <div class="unitInputWrap">
@@ -499,19 +499,19 @@
             <div class="section airwaySection">Luftveier</div>
 
             <div class="binaryRow airwayRow">
-              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan u/O2" id="air_spont_uten"><span>Spontan u/O2</span></label>
-              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan m/O2" id="air_spont_med"><span>Spontan m/O2</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan u/O₂" id="air_spont_uten"><span>Spontan u/O₂</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan m/O₂" id="air_spont_med"><span>Spontan m/O₂</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontant m/high flow" id="air_highflow"><span>Spontant m/high flow</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="NIV (CPAP/BiPAP)" id="air_niv"><span>NIV (CPAP/BiPAP)</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Intubert" id="air_intubert"><span>Intubert</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Trakeostomi" id="air_trach"><span>Trakeostomi</span></label>
             </div>
 
-            <div id="spontO2Wrap" class="hidden">
+            <div id="spontO₂Wrap" class="hidden">
               <div class="intubRow" style="margin-top:10px;">
-                <span>Antall liter O2</span>
+                <span>Antall liter O₂</span>
                 <div class="unitInputWrap">
-                  <input id="spontO2Liter" type="text" inputmode="decimal" placeholder=" ">
+                  <input id="spontO₂Liter" type="text" inputmode="decimal" placeholder=" ">
                   <span>l/min</span>
                 </div>
               </div>
@@ -523,11 +523,11 @@
 
                 <div class="unitInputWrap">
                   <input
-                    id="highFlowFio2"
+                    id="highFlowFiO₂"
                     type="text"
                     inputmode="decimal"
                   >
-                  <span>% FiO2</span>
+                  <span>% FiO₂</span>
                 </div>
 
                 <div class="unitInputWrap">
@@ -547,11 +547,11 @@
               <div class="inlineRow" style="margin-top:10px;">
                 <div class="unitInputWrap">
                   <input
-                    id="nivFio2"
+                    id="nivFiO₂"
                     type="text"
                     inputmode="decimal"
                   >
-                  <span>% FiO2</span>
+                  <span>% FiO₂</span>
                 </div>
               </div>
             </div>
@@ -561,11 +561,11 @@
               <div class="intubRow" style="margin-top:10px;">
                 <div class="unitInputWrap">
                   <input
-                    id="intubFio2"
+                    id="intubFiO₂"
                     type="text"
                     inputmode="decimal"
                   >
-                  <span>% FiO2</span>
+                  <span>% FiO₂</span>
                 </div>
 
                 <div class="unitInputWrap">
@@ -607,13 +607,13 @@
 
                 <label class="medChip">
                   <input
-                    id="tr_o2"
+                    id="tr_O₂"
                     name="trachType"
                     class="chk trachOpt"
                     type="radio"
-                    data-name="O2 via trakeostomi"
+                    data-name="O₂ via trakeostomi"
                   >
-                  <span>O2 via trakeostomi</span>
+                  <span>O₂ via trakeostomi</span>
                 </label>
 
                 <label class="medChip">
@@ -629,13 +629,13 @@
 
               </div>
 
-              <div id="trachO2Wrap" class="hidden">
+              <div id="trachO₂Wrap" class="hidden">
 
                 <div class="inlineRow" style="margin-top:10px;">
 
                   <div class="unitInputWrap">
                     <input
-                      id="trachO2Liter"
+                      id="trachO₂Liter"
                       type="text"
                       inputmode="numeric"
                     >
@@ -652,11 +652,11 @@
 
                   <div class="unitInputWrap">
                     <input
-                      id="trachVentFio2"
+                      id="trachVentFiO₂"
                       type="text"
                       inputmode="decimal"
                     >
-                    <span>% FiO2</span>
+                    <span>% FiO₂</span>
                   </div>
 
                   <div class="unitInputWrap">
@@ -687,7 +687,7 @@
             <div class="inlineVitals" aria-label="Vitalparametre">
               <div class="opsix-vitals-row opsix-vitals-primary">
                 <div class="vpField"><span>RF</span><input id="rf" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
-                <div class="vpField"><span>SpO₂</span><input id="spo2" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
+                <div class="vpField"><span>SpO₂</span><input id="spO₂" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
                 <div class="vpField"><span>Puls</span><input id="puls" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
                 <div class="btWrap" aria-label="Blodtrykk">
                   <div class="btMini"><span>SYS</span><input id="btSys" maxlength="3" inputmode="numeric" aria-label="Systolisk blodtrykk"></div>
@@ -704,7 +704,6 @@
                     aria-label="GCS. Totalskår 3 til 15 eller tre siffer for øye, verbal og motorisk respons.">
                 </div>
               </div>
-            </div>
             </div>
           </div> <!-- fullTop -->
 
