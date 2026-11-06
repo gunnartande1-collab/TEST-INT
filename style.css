@@ -4868,3 +4868,72 @@ body.opsix-test-mode .wrap > .opsix-footer {
   color: var(--v110-subtle-text, var(--muted)) !important;
   opacity: .88 !important;
 }
+
+
+/* =============================================================
+   OPSIX V1.1.0 TEST â€“ TYPOGRAFISK HIERARKI 06.11.2026
+   NivÃ¥ 1: tre kolonneoverskrifter, fremtredende.
+   NivÃ¥ 2: alle oppgitte underoverskrifter, konsekvent typografi.
+   Skjemafunksjoner og innrapporterte data pÃ¥virkes ikke.
+   ============================================================= */
+body.opsix-test-mode {
+  --opsix-heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --opsix-subheading-size: 14px;
+  --opsix-subheading-weight: 700;
+}
+
+/* Tre overordnede kolonneoverskrifter */
+body.opsix-test-mode .opsix-columns > .opsix-column > .opsix-column-title {
+  font-family: var(--opsix-heading-font) !important;
+  font-size: clamp(18px, 1.2vw, 20px) !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+  color: var(--v110-title, var(--text)) !important;
+  opacity: 1 !important;
+  margin: 0 0 16px !important;
+  padding: 0 0 12px !important;
+  border-bottom: 2px solid var(--v110-border, var(--line)) !important;
+}
+
+/* Felles stil for de ordinÃ¦re underoverskriftene i alle tre kolonner */
+body.opsix-test-mode .opsix-columns .opsix-column .hasteLabel,
+body.opsix-test-mode .opsix-columns .opsix-column .minorTitle,
+body.opsix-test-mode .opsix-columns .opsix-column .bigSection,
+body.opsix-test-mode .opsix-columns .opsix-column .section,
+body.opsix-test-mode .opsix-columns .opsix-column .vpTitle,
+body.opsix-test-mode .opsix-columns .opsix-column #vektLabel,
+body.opsix-test-mode .opsix-columns .opsix-column .weightLabel,
+body.opsix-test-mode .opsix-columns .opsix-column #spedbarnExtraWrap > .specLabel,
+body.opsix-test-mode .opsix-columns .opsix-column .opsix-acute-heading,
+body.opsix-test-mode .opsix-columns .opsix-column .opsix-acute-pump-heading {
+  font-family: var(--opsix-heading-font) !important;
+  font-size: var(--opsix-subheading-size) !important;
+  font-weight: var(--opsix-subheading-weight) !important;
+  font-style: normal !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--v110-foreground, var(--text)) !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+/* Underoverskrifter skal ikke ha egne skillelinjer eller ekstra intern padding. */
+body.opsix-test-mode .opsix-columns .opsix-column .section,
+body.opsix-test-mode .opsix-columns .opsix-column .vpTitle {
+  padding-top: 0 !important;
+  border-top: none !important;
+}
+
+/* GA og vekt er samme overskriftsnivÃ¥, selv om de er label-elementer. */
+body.opsix-test-mode .opsix-columns .opsix-column #spedbarnExtraWrap > .specLabel {
+  display: inline-flex;
+  margin: 14px 0 7px !important;
+}
+body.opsix-test-mode .opsix-columns .opsix-column #weightWrap #vektLabel {
+  display: block;
+  margin: 0 0 7px !important;
+}
+
+/* Natt, dempet og dag arver riktig kontrast fra eksisterende tema. */

@@ -3661,4 +3661,4 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.hasteCard').forEach(input => {
     if (!input.hasAttribute('aria-pressed')) input.setAttribute('aria-pressed', String(input.classList.contains('active')));
   });
-})();
+})(); 
