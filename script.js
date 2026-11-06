@@ -2812,7 +2812,7 @@ function buildFollowNeedLine() {
   const $ = id => document.getElementById(id);
   const main = $("mainContent");
   const card = document.querySelector(".wrap > .card");
-  if (!main || !card || !$('acuteTop') || !$('fullTop') || typeof window.lagRapport !== 'function') {
+  if (!main || !card || !$('acuteTop') || !$('fullTop')) {
     console.error("OPSIX V1.1.0: Mangler elementer eller original script.js er ikke lastet.");
     return;
   }
@@ -2866,7 +2866,7 @@ function buildFollowNeedLine() {
 
   // Noen nth-of-type-selektorer matcher ikke når andre div-er ligger mellom.
   // Bruk den entydige direkte-rekkefølgen i stedet.
-  const medGroups = Array.from(main.children).filter(n => n.classList.contains("medGroup"));
+  const medGroups = Array.from(document.querySelectorAll(".medGroup"));
   if (medGroups.length !== 3) {
     console.error("OPSIX V1.1.0: Forventet tre medikamentgrupper, fant", medGroups.length);
     return;
@@ -3027,7 +3027,7 @@ function buildFollowNeedLine() {
     const acute = typeof window.isAcute === "function" && window.isAcute();
     const hasUrgency = !!document.querySelector(".hasteCard.active");
     main.classList.remove("hidden");
-    document.body.classList.toggle("opsix-no-haste", !hasUrgency);
+    document.body.classList.remove("opsix-no-haste");
     document.body.classList.toggle("opsix-has-haste", hasUrgency);
     // Før hastegrad velges: vis alle ordinære registreringsfelter.
     // Ingen felt deaktiveres, og ingen registrerte verdier slettes.
@@ -3090,6 +3090,7 @@ function buildFollowNeedLine() {
   function hasValues(root) {
     return root && [...root.querySelectorAll("input,textarea,select")].some(el => {
       if (el.type === "checkbox" || el.type === "radio") return el.checked;
+      if (el.tagName === "SELECT" && el.selectedIndex === 0) return false;
       return String(el.value || "").trim().length > 0;
     });
   }
@@ -3120,6 +3121,92 @@ function buildFollowNeedLine() {
     };
   }
   applyVisibility();
+
+  // Seksjoner som tidligere var merket «Ikke prioritert ved Akutt».
+  // Behold de samme input-nodene: bare visningen skjules, aldri verdiene.
+  const acuteAccordions = optionalIds.map(id => {
+    const section = $(id);
+    if (!section) return null;
+    section.querySelector(":scope > .opsix-optional-label")?.remove();
+    const children = [...section.childNodes];
+    const originalHeading = [...section.children].find(el =>
+      el.matches(".section, .minorTitle, label, .bigSection") ||
+      el.querySelector(":scope > .minorTitle")
+    );
+    const heading = originalHeading?.matches(".section,.minorTitle,label,.bigSection")
+      ? originalHeading.textContent.trim()
+      : originalHeading?.querySelector(".minorTitle")?.textContent.trim();
+    const names = {
+      "bevar-full-tidligere": "Tidligere",
+      "bevar-full-vitalparametre": "Vitalparametre",
+      "bevar-full-tilganger": "Tilganger",
+      "bevar-full-utstyr": "Utstyr",
+      "bevar-full-mottakende": "Mottakende lege"
+    };
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "opsix-acute-heading";
+    toggle.textContent = heading || names[id];
+    toggle.setAttribute("aria-controls", id + "-content");
+    const note = document.createElement("span");
+    note.className = "opsix-acute-note";
+    note.textContent = "Ikke prioritert ved Akutt";
+    note.hidden = true;
+    const indicator = document.createElement("span");
+    indicator.className = "opsix-acute-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    indicator.textContent = "▾";
+    toggle.append(note, indicator);
+    const content = document.createElement("div");
+    content.id = id + "-content";
+    content.className = "opsix-acute-content";
+    children.forEach(node => {
+      // Fjern den gamle overskriften visuelt, men bevar alle felt.
+      if (node === originalHeading && originalHeading?.matches(".section,.minorTitle,label,.bigSection")) { node.remove(); return; }
+      content.append(node);
+    });
+    section.append(toggle, content);
+    section.classList.add("opsix-acute-section");
+    toggle.addEventListener("click", () => {
+      if (!document.body.classList.contains("opsix-akutt")) return;
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      content.hidden = expanded;
+      section.dataset.userToggled = "true";
+    });
+    return {section,toggle,content,note};
+  }).filter(Boolean);
+  let wasAcute = false;
+  function refreshAcuteAccordions() {
+    const acute = document.body.classList.contains("opsix-akutt");
+    for (const {section,toggle,content,note} of acuteAccordions) {
+      note.hidden = !acute;
+      section.classList.toggle("opsix-acute-collapsible", acute);
+      if (!acute) {
+        content.hidden = false;
+        toggle.setAttribute("aria-expanded", "true");
+        section.dataset.userToggled = "false";
+      } else if (!wasAcute) {
+        // Ved overgang til Akutt: behold registrerte seksjoner åpne.
+        const filled = hasValues(content);
+        content.hidden = !filled;
+        toggle.setAttribute("aria-expanded", String(filled));
+        section.dataset.userToggled = "false";
+      }
+      // En sammenlagt seksjon åpnes automatisk hvis den får registrerte verdier.
+      if (acute && content.hidden && section.dataset.userToggled !== "true" && hasValues(content)) {
+        content.hidden = false;
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    }
+    wasAcute = acute;
+  }
+  document.querySelectorAll(".hasteCard").forEach(card => {
+    card.addEventListener("click", () => queueMicrotask(refreshAcuteAccordions));
+  });
+  refreshAcuteAccordions();
+  document.addEventListener("input", refreshAcuteAccordions);
+  document.addEventListener("change", refreshAcuteAccordions);
   document.addEventListener("input", () => markOptionalGroups(document.body.classList.contains("opsix-akutt")));
   document.addEventListener("change", () => markOptionalGroups(document.body.classList.contains("opsix-akutt")));
 
@@ -3212,25 +3299,8 @@ function buildFollowNeedLine() {
         input.setAttribute('aria-label', input.closest('label')?.querySelector('span')?.textContent?.trim() || input.dataset.value || input.id);
       }
     });
-    // En samlet merking, uten å gjøre kliniske felter utilgjengelige.
-    const optionalIds = ['bevar-full-tidligere','bevar-full-vitalparametre','bevar-full-tilganger','bevar-full-utstyr','bevar-full-mottakende'];
-    function updateOptional() {
-      const acute = document.querySelector('.hasteCard.active')?.dataset.haste === 'Akutt';
-      optionalIds.forEach(id => {
-        const group = document.getElementById(id);
-        if (!group) return;
-        let tag = group.querySelector(':scope > .opsix-optional-label');
-        if (!tag) {
-          tag = document.createElement('div');
-          tag.className = 'opsix-optional-label';
-          tag.textContent = 'Ikke prioritert ved Akutt';
-          group.prepend(tag);
-        }
-        tag.hidden = !acute;
-      });
-    }
-    document.querySelectorAll('.hasteCard').forEach(button => button.addEventListener('click', () => queueMicrotask(updateOptional)));
-    updateOptional();
+    // Akutt-visning styres av én felles tilgjengelig accordion-komponent
+    // (opprettes i hovedmodulen). Ikke legg inn dupliserte etiketter her.
     // Luftveisfelter oppdateres også ved tastaturvalg og ved endring av
     // radioknapp, ikke bare ved museklikk.
     document.addEventListener('change', event => {

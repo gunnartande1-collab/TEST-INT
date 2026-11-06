@@ -4540,3 +4540,91 @@ body.opsix-test-mode .opsix-operativ .weightLabel {
  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField {grid-column:auto !important;}
  body.opsix-test-mode .opsix-gcs-action {grid-column:1 / -1;}
 }
+
+/* OPSIX â€“ korrigert stabil 3-kolonners visning. Overstyrer gamle no-haste- og 2-kolonne-regler. */
+@media (min-width: 1000px) {
+ body.opsix-test-mode .opsix-columns,
+ body.opsix-no-haste.opsix-test-mode .opsix-columns {
+   display:grid !important;
+   grid-template-columns:minmax(0,27fr) minmax(0,43fr) minmax(0,30fr) !important;
+   gap:12px !important;
+ }
+ body.opsix-test-mode .opsix-columns > .opsix-column,
+ body.opsix-no-haste.opsix-test-mode .opsix-columns > .opsix-column {
+   display:block !important;
+   grid-column:auto !important;
+   min-width:0 !important;
+ }
+}
+@media (max-width:999px) {
+ body.opsix-test-mode .opsix-columns,
+ body.opsix-no-haste.opsix-test-mode .opsix-columns {
+   display:grid !important;
+   grid-template-columns:minmax(0,1fr) !important;
+ }
+ body.opsix-test-mode .opsix-columns > .opsix-column {grid-column:auto !important;display:block !important;}
+}
+body.opsix-test-mode .opsix-report-panel,
+body.opsix-no-haste.opsix-test-mode .opsix-report-panel {display:block !important;}
+body.opsix-test-mode .opsix-operativ > .formGroup,
+body.opsix-test-mode .opsix-operativ > #weightWrap,
+body.opsix-test-mode .opsix-operativ > .followRow,
+body.opsix-test-mode .opsix-operativ > .minorTitle,
+body.opsix-test-mode .opsix-operativ > .specialGroup {display:revert !important;}
+/* To rader: RF, SpO2, puls, SYS/DIA | MAP, temperatur, GCS, E/V/M */
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,2.3fr) !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.5fr) auto !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField {
+  grid-column:auto !important;
+}
+body.opsix-test-mode .opsix-gcs-action {grid-column:auto !important;}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
+  padding:0 8px 0 37px !important;
+}
+@media(max-width:600px) {
+ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary {grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {grid-column:1 / -1;}
+ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+ body.opsix-test-mode .opsix-gcs-action {grid-column:auto !important;}
+}
+
+/* OPSIX â€“ tilgjengelige sammenleggbare seksjoner ved Akutt */
+body.opsix-test-mode .opsix-acute-section > .opsix-acute-heading {
+  display: flex; align-items: center; gap: 9px; width: 100%;
+  margin: 10px 0 7px; padding: 0; border: 0; background: transparent;
+  color: var(--text); font: inherit; font-size: 14px; font-weight: 700;
+  text-align: left; cursor: default;
+}
+body.opsix-test-mode .opsix-acute-section .opsix-acute-note {
+  font-size: 11px; font-weight: 500; opacity: .75; margin-left: auto;
+}
+body.opsix-test-mode .opsix-acute-section .opsix-acute-note[hidden],
+body.opsix-test-mode .opsix-acute-section .opsix-acute-content[hidden] {display:none !important;}
+body.opsix-test-mode .opsix-acute-section .opsix-acute-indicator {display:none;}
+body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-heading {
+  cursor: pointer; padding: 9px 10px; border: 1px solid var(--line);
+  border-radius: 8px; background: transparent; margin-bottom: 7px;
+}
+body.opsix-test-mode .opsix-acute-collapsible .opsix-acute-indicator {
+  display: inline; font-size: 15px; opacity: .85;
+  transition: transform .15s ease;
+}
+body.opsix-test-mode .opsix-acute-collapsible .opsix-acute-heading[aria-expanded="false"] .opsix-acute-indicator {transform:rotate(-90deg);}
+body.opsix-test-mode .opsix-acute-heading:focus-visible {outline:3px solid #84baff;outline-offset:2px;}
+/* Samme overskriftsnivÃ¥ for Barn, Vekt, Transportform og FÃ¸lgebehov */
+body.opsix-test-mode .opsix-operativ #vektLabel,
+body.opsix-test-mode .opsix-operativ .section,
+body.opsix-test-mode .opsix-operativ .minorTitle,
+body.opsix-test-mode .opsix-operativ .weightLabel,
+body.opsix-test-mode .opsix-acute-heading {
+  font-size: 14px !important; font-weight: 700 !important; line-height: 1.35 !important;
+}
+/* Fjern dekorative pseudo-elementer som kolliderer med valgt hastegrad */
+body.opsix-test-mode .hasteCard::before,
+body.opsix-test-mode .hasteCard::after,
+body.opsix-test-mode .hasteCard.active::before,
+body.opsix-test-mode .hasteCard.active::after {content:none !important;display:none !important;}
