@@ -2782,35 +2782,22 @@ function buildFollowNeedLine() {
   }
 })();
 
-/* OPSIX – fungerende tretrinns temaknapp, kun visningsvalg */
+/* OPSIX – eksplisitt temavelger med alle tre alternativer */
 (() => {
-  function init() {
-    const button = document.getElementById("themeToggle");
-    const label = document.getElementById("themeLabel");
-    const icon = document.getElementById("themeIcon");
-    if (!button || !label || !icon) return;
-    const modes = [
-      {key:"night", text:"Dempet", icon:"◐", next:"Bytt til dempet visning"},
-      {key:"dim", text:"Dag", icon:"☀", next:"Bytt til dagvisning"},
-      {key:"day", text:"Natt", icon:"☾", next:"Bytt til nattvisning"}
-    ];
-    let index = 0;
-    function apply() {
-      const mode = modes[index];
-      document.body.classList.toggle("theme-light",mode.key === "day");
-      document.body.classList.toggle("theme-dim",mode.key === "dim");
-      document.documentElement.style.colorScheme = mode.key === "day" ? "light" : "dark";
-      label.textContent = mode.text;
-      icon.textContent = mode.icon;
-      button.title = mode.next;
-      button.setAttribute("aria-label",mode.next);
-      button.setAttribute("data-current-theme",mode.key);
+  function initThemeSelect() {
+    const select = document.getElementById("opsixThemeSelect");
+    if (!select) return;
+    function applyTheme(mode) {
+      document.body.classList.toggle("theme-light", mode === "day");
+      document.body.classList.toggle("theme-dim", mode === "dim");
+      document.documentElement.style.colorScheme = mode === "day" ? "light" : "dark";
+      select.value = mode;
     }
-    button.addEventListener("click", () => { index=(index+1)%modes.length;apply(); });
-    apply();
+    select.addEventListener("change", () => applyTheme(select.value));
+    applyTheme("night");
   }
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded",init);
-  else init();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initThemeSelect);
+  else initThemeSelect();
 })();
 
 /* ===== OPSIX V1.1.0 TESTFUNKSJONER ===== */
@@ -3174,11 +3161,7 @@ function buildFollowNeedLine() {
     content.id = id + "-content";
     content.className = "opsix-acute-content";
     children.forEach(node => {
-      // Fjern bare den opprinnelige tittelen, aldri hele feltgruppen.
-      if (node === originalHeading && originalHeading?.matches(".section,.minorTitle,label,.bigSection")) { node.remove(); return; }
-      if (node.nodeType === 1 && originalHeading && node.contains(originalHeading)) {
-        originalHeading.remove();
-      }
+      // Behold originaloverskriften for normal visning. CSS skjuler den kun ved Akutt.
       content.append(node);
     });
     section.append(toggle, content);
@@ -3221,6 +3204,17 @@ function buildFollowNeedLine() {
   function refreshAcuteAccordions() {
     const acute = document.body.classList.contains("opsix-akutt");
     positionPump(acute);
+    // Antall følger avhuking også når sprøytepumpene er flyttet til Akutt.
+    // Bruk eksisterende input og endre kun synlighet.
+    if (acute && pumpRow) {
+      const count = document.getElementById("utstPumpeAntall");
+      const checked = document.getElementById("utst_pumper")?.checked;
+      if (count) {
+        count.classList.toggle("hidden", !checked);
+        count.hidden = !checked;
+        count.disabled = false;
+      }
+    }
     for (const {section,toggle,content,note} of acuteAccordions) {
       note.hidden = !acute;
       section.classList.toggle("opsix-acute-collapsible", acute);

@@ -21,22 +21,14 @@
             Intensiv- og helikoptertransport
           </h1>
 
-          <button
-            id="themeToggle"
-            class="themeToggle"
-            type="button"
-            aria-label="Bytt til dagvisning"
-            aria-pressed="false"
-            title="Bytt til dagvisning"
-          >
-            <span
-              id="themeIcon"
-              class="themeIcon"
-              aria-hidden="true"
-            >☀</span>
-
-            <span id="themeLabel">Dag</span>
-          </button>
+          <label class="opsix-theme-picker" for="opsixThemeSelect">
+            <span class="opsix-visually-hidden">Visningsmodus</span>
+            <select id="opsixThemeSelect" aria-label="Velg visningsmodus">
+              <option value="night">☾ Natt</option>
+              <option value="dim">◐ Dempet</option>
+              <option value="day">☀ Dag</option>
+            </select>
+          </label>
 
         </div>
         <div class="hasteLabel">Rekvirert hastegrad</div>

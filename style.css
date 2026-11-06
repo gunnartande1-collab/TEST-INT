@@ -4639,3 +4639,34 @@ body.opsix-test-mode .opsix-acute-pump-heading {font-size:14px;font-weight:700;m
 body.opsix-test-mode .opsix-acute-pump-area .pumpRow {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
 body.opsix-test-mode .opsix-acute-pump-area .inlineSelect {min-width:82px;}
 @media(max-width:420px){body.opsix-test-mode .opsix-operativ .followRow {grid-template-columns:1fr !important;}}
+
+/* OPSIX: Ã©n overskrift per seksjon. OrdinÃ¦r tittel vises utenfor Akutt,
+   sammenleggbar knapp vises kun ved Akutt. Ingen felter fjernes. */
+body.opsix-test-mode .opsix-acute-section:not(.opsix-acute-collapsible) > .opsix-acute-heading {display:none !important;}
+body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .accessGroup > .minorTitle {display:none !important;}
+body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .minorTitle,
+body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .section,
+body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .bigSection {display:none !important;}
+
+/* OPSIX 06.11 â€“ temavelger med synlige valgalternativer */
+.opsix-theme-picker {display:inline-flex;align-items:center;flex:0 0 auto;}
+.opsix-theme-picker select {appearance:auto;-webkit-appearance:menulist;min-height:40px;padding:7px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--text);font:inherit;font-size:14px;font-weight:650;cursor:pointer;color-scheme:dark;}
+body.theme-light .opsix-theme-picker select {background:#fff;color:#172333;color-scheme:light;}
+body.theme-dim .opsix-theme-picker select {background:#46535e;color:#fff;color-scheme:dark;}
+.opsix-theme-picker select:focus-visible {outline:3px solid #86baff;outline-offset:2px;}
+.opsix-visually-hidden {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+/* Samme avstand mellom chips pÃ¥ alle seksjoner som i Luftveier. */
+body.opsix-test-mode .opsix-andre .smLine,
+body.opsix-test-mode .opsix-andre .chipRow,
+body.opsix-test-mode .opsix-andre .accessChipRow,
+body.opsix-test-mode .opsix-medisinsk .chipRow,
+body.opsix-test-mode .opsix-operativ .smLine,
+body.opsix-test-mode .opsix-operativ .chipRow {
+  display:flex !important;flex-wrap:wrap !important;
+  column-gap:10px !important;row-gap:10px !important;
+  margin-top:9px !important;margin-bottom:9px !important;
+}
+body.opsix-test-mode .opsix-andre .smLine .smChip {min-height:var(--opsix-chip-h) !important;}
+/* SprÃ¸ytepumper: antall skal vÃ¦re synlig etter avhuking ved Akutt. */
+body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area #utstPumpeAntall:not(.hidden) {display:inline-block !important;visibility:visible !important;opacity:1 !important;min-width:90px !important;}
+body.opsix-test-mode .opsix-acute-pump-area .pumpRow {display:flex !important;gap:10px !important;align-items:center !important;flex-wrap:wrap !important;}
