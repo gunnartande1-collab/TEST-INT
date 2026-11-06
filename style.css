@@ -4326,3 +4326,217 @@ body.opsix-test-mode .opsix-column .medChip:has(input:checked) span { color: #ff
   body.opsix-test-mode .opsix-theme-caption { display: none; }
   body.opsix-test-mode .opsix-theme-select { width: 105px !important; }
 }
+
+
+/* OPSIX 05.11 â€“ TO PRESISE RADER MED VITALPARAMETRE */
+body.opsix-test-mode .opsix-medisinsk .inlineVitals {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 7px !important;
+  overflow: visible !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row {
+  display: grid !important;
+  align-items: center !important;
+  gap: 7px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,2.3fr) !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(160px,2.15fr) !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row > .vpField,
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row > .btWrap {
+  display: flex !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  flex: none !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) 10px minmax(0,1fr) !important;
+  gap: 3px !important;
+  align-items: center !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary .btMini {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 42px !important;
+  margin: 0 !important;
+  flex: none !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary .btSlash {
+  width: 10px !important;
+  min-width: 10px !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .vpField input,
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .btMini input {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+  padding: 0 7px 0 31px !important;
+  font-size: 14px !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .vpField > span,
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .btMini > span {
+  left: 6px !important;
+  font-size: 10px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
+  padding-right: 82px !important;
+  padding-left: 38px !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField .opsix-gcs-toggle {
+  position: absolute !important;
+  right: 5px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  width: auto !important;
+  min-width: 66px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  padding: 4px 7px !important;
+  font-size: 11px !important;
+  z-index: 3;
+}
+/* Smalere skjerm: ikke kutt bort SYS/DIA eller EVM. */
+@media(max-width: 540px) {
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
+    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
+    grid-column: 1 / -1;
+    max-width: 230px !important;
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpGcsField {
+    grid-column: 1 / -1;
+    max-width: 250px !important;
+  }
+}
+/* Transportform skal bruke samme utseende og flyt som Barn-valgene. */
+body.opsix-test-mode #transportWrap .transportRow {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  align-items: center !important;
+}
+body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: none !important;
+  padding: 7px 10px !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip span {
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  width: auto !important;
+  padding: 0 !important;
+}
+/* Samme kontrast pÃ¥ nedtrekksvalg i alle visningsmoduser. */
+body.opsix-test-mode #cvkLumen,
+body.opsix-test-mode #pvkAntall,
+body.opsix-test-mode #utstPumperAntall,
+body.opsix-test-mode .pvkSelect {
+  color: #f7fafc !important;
+  background-color: #334355 !important;
+  border: 1px solid #718296 !important;
+  color-scheme: dark;
+}
+body.opsix-test-mode #cvkLumen option,
+body.opsix-test-mode #pvkAntall option,
+body.opsix-test-mode #utstPumperAntall option,
+body.opsix-test-mode .pvkSelect option {
+  color: #ffffff !important;
+  background-color: #243342 !important;
+}
+body.theme-light.opsix-test-mode #cvkLumen,
+body.theme-light.opsix-test-mode #pvkAntall,
+body.theme-light.opsix-test-mode #utstPumperAntall,
+body.theme-light.opsix-test-mode .pvkSelect {
+  color: #1b2a3c !important;
+  background-color: #f7f9fc !important;
+  border-color: #92a3b5 !important;
+  color-scheme: light;
+}
+body.theme-light.opsix-test-mode #cvkLumen option,
+body.theme-light.opsix-test-mode #pvkAntall option,
+body.theme-light.opsix-test-mode #utstPumperAntall option,
+body.theme-light.opsix-test-mode .pvkSelect option {
+  color: #1b2a3c !important;
+  background-color: #ffffff !important;
+}
+
+/* OPSIX 06.11 â€“ synlige, stabile tilstander uten overlapp */
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1.25fr) auto !important;
+}
+body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
+  padding: 0 8px 0 37px !important;
+}
+body.opsix-test-mode .opsix-gcs-action {
+  display:flex; align-items:center; justify-content:flex-start;
+  min-width:0; height:42px;
+}
+body.opsix-test-mode .opsix-gcs-action .opsix-gcs-toggle {
+  position:static !important; transform:none !important;
+  display:inline-flex !important; align-items:center; justify-content:center;
+  box-sizing:border-box; min-height:42px !important; height:42px !important;
+  min-width:85px !important; padding:7px 10px !important;
+  font-size:12px !important; white-space:nowrap;
+}
+body.opsix-test-mode .opsix-gcs-details[hidden],
+body.opsix-test-mode .opsix-gcs-details.hidden { display:none !important; }
+body.opsix-test-mode .hasteGrid .hasteCard.active::after { content:none !important; display:none !important; }
+body.opsix-test-mode .hasteGrid .hasteCard.active::before { content:none !important; }
+body.opsix-test-mode .opsix-column .followChip:has(input:checked),
+body.opsix-test-mode .opsix-column .followChip:has(input:checked) span,
+body.theme-light.opsix-test-mode .opsix-column .followChip:has(input:checked),
+body.theme-light.opsix-test-mode .opsix-column .followChip:has(input:checked) span {
+  color:#fff !important;
+}
+body.opsix-test-mode .opsix-column .followChip:has(input:checked) {
+  background:#245b9e !important; border-color:#86baff !important;
+}
+/* Ensartet typografisk hierarki i venstre kolonne */
+body.opsix-test-mode .opsix-operativ .section,
+body.opsix-test-mode .opsix-operativ .minorTitle,
+body.opsix-test-mode .opsix-operativ #vektLabel,
+body.opsix-test-mode .opsix-operativ .weightLabel {
+  font-size:14px !important; font-weight:700 !important; line-height:1.35 !important;
+}
+@media(max-width:540px) {
+ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
+   grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+ }
+ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField {grid-column:auto !important;}
+ body.opsix-test-mode .opsix-gcs-action {grid-column:1 / -1;}
+}

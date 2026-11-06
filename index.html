@@ -21,14 +21,22 @@
             Intensiv- og helikoptertransport
           </h1>
 
-          <label class="opsix-theme-control">
-            <span class="opsix-theme-caption">Visning</span>
-            <select id="opsixThemeSelect" class="opsix-theme-select" aria-label="Velg visningsmodus">
-              <option value="night">Natt</option>
-              <option value="dim">Dempet</option>
-              <option value="day">Dag</option>
-            </select>
-          </label>
+          <button
+            id="themeToggle"
+            class="themeToggle"
+            type="button"
+            aria-label="Bytt til dagvisning"
+            aria-pressed="false"
+            title="Bytt til dagvisning"
+          >
+            <span
+              id="themeIcon"
+              class="themeIcon"
+              aria-hidden="true"
+            >☀</span>
+
+            <span id="themeLabel">Dag</span>
+          </button>
 
         </div>
         <div class="hasteLabel">Rekvirert hastegrad</div>
@@ -197,9 +205,9 @@
 
               <div class="section">Transportform</div>
 
-              <div class="chipRow transportRow">
+              <div class="smLine transportRow">
 
-                <label class="medChip">
+                <label class="medChip spedChip">
                   <input
                     type="radio"
                     name="transport"
@@ -211,7 +219,7 @@
                   <span>Kuvøse</span>
                 </label>
 
-                <label class="medChip">
+                <label class="medChip spedChip">
                   <input
                     type="radio"
                     name="transport"
@@ -223,7 +231,7 @@
                   <span>Pedimate</span>
                 </label>
 
-                <label class="medChip">
+                <label class="medChip spedChip">
                   <input
                     type="radio"
                     name="transport"
@@ -235,7 +243,7 @@
                   <span>Barn i bag</span>
                 </label>
 
-                <label class="medChip">
+                <label class="medChip spedChip">
                   <input
                     type="radio"
                     name="transport"
@@ -684,31 +692,27 @@
             </div>
 
             <div class="section vpTitle">Vitalparametre</div>
-            <div class="inlineVitals">
-              <div class="vpField"><span>RF</span><input id="rf" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
-              <div class="vpField"><span>SpO2</span><input id="spo2" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
-              <div class="vpField"><span>Puls</span><input id="puls" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
-              <div class="btWrap"><div class="btMini"><span>SYS</span><input id="btSys" maxlength="3" inputmode="numeric"></div><div class="btSlash">/</div><div class="btMini"><span>DIA</span><input id="btDia" maxlength="3" inputmode="numeric"></div><div class="vpField"><span>MAP</span><input id="map" maxlength="3" inputmode="numeric"></div></div>
-              <div class="vpField"><span>Tmp</span><input id="temp" type="text" maxlength="4" autocomplete="off"></div>
-
-              <div class="vpField vpGcsField">
-
-                <span
-                  title="GCS: Skriv totalskår 3–15 eller tast tre siffer for Øye + Verbal + Motorisk. Eksempel: 456 blir 4+5+6."
-                >
-                  GCS
-                </span>
-
-                <input
-                  id="gcs"
-                  type="text"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  aria-label="GCS. Skriv totalskår 3 til 15 eller tre siffer for øye, verbal og motorisk respons."
-                  title="Skriv 15 direkte, eller tast 456 for 4+5+6."
-                >
-
+            <div class="inlineVitals" aria-label="Vitalparametre">
+              <div class="opsix-vitals-row opsix-vitals-primary">
+                <div class="vpField"><span>RF</span><input id="rf" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
+                <div class="vpField"><span>SpO₂</span><input id="spo2" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
+                <div class="vpField"><span>Puls</span><input id="puls" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
+                <div class="btWrap" aria-label="Blodtrykk">
+                  <div class="btMini"><span>SYS</span><input id="btSys" maxlength="3" inputmode="numeric" aria-label="Systolisk blodtrykk"></div>
+                  <div class="btSlash" aria-hidden="true">/</div>
+                  <div class="btMini"><span>DIA</span><input id="btDia" maxlength="3" inputmode="numeric" aria-label="Diastolisk blodtrykk"></div>
+                </div>
               </div>
+              <div class="opsix-vitals-row opsix-vitals-secondary">
+                <div class="vpField"><span>MAP</span><input id="map" maxlength="3" inputmode="numeric"></div>
+                <div class="vpField"><span>Tmp</span><input id="temp" type="text" maxlength="4" autocomplete="off"></div>
+                <div class="vpField vpGcsField">
+                  <span title="GCS: totalskår 3–15 eller tre siffer for øye, verbal og motorisk respons">GCS</span>
+                  <input id="gcs" type="text" inputmode="numeric" autocomplete="off"
+                    aria-label="GCS. Totalskår 3 til 15 eller tre siffer for øye, verbal og motorisk respons.">
+                </div>
+              </div>
+            </div>
             </div>
           </div> <!-- fullTop -->
 

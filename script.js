@@ -1470,7 +1470,7 @@ function bindBinaryOptionEvents() {
       e.preventDefault();
       const g = chk.dataset.group;
       const wasChecked = chk.dataset.wasChecked === "true";
-      const canToggleOff = g === "airwayMain" || g === "acuteAirway";
+      const canToggleOff = g === "airwayMain" || g === "acuteAirway" || g === "transport";
       document.querySelectorAll('.binOpt[data-group="' + g + '"]').forEach(o => {
         o.checked = false;
         o.dataset.wasChecked = "false";
@@ -2945,6 +2945,7 @@ function buildFollowNeedLine() {
     const details = document.createElement("div");
     details.id = "opsixGcsDetails";
     details.className = "opsix-gcs-details hidden";
+    details.hidden = true;
     const definitions = [
       ["Øyeåpning (E)", ["4 – Spontant", "3 – Ved tiltale", "2 – Ved smertestimulus", "1 – Ingen respons"]],
       ["Verbal respons (V)", ["5 – Orientert", "4 – Forvirret", "3 – Ord", "2 – Lyder", "1 – Ingen respons"]],
@@ -2971,23 +2972,34 @@ function buildFollowNeedLine() {
       details.append(label);
       return select;
     });
-    const info = document.createElement("p");
-    info.className = "opsix-gcs-note";
-    info.textContent = "Totalskåren beregnes først når E, V og M er valgt. Ved ikke-testbar komponent skal totalskår ikke beregnes. Beskriv aktuell GCS-vurdering i Aktuelt inntil egen komponentregistrering er godkjent.";
-    details.append(info);
     selects.forEach(select => select.addEventListener("change", () => {
       const values = selects.map(s => s.value);
       if (values.every(Boolean)) {
         field.value = values.join("+");
         field.dispatchEvent(new Event("input", { bubbles: true }));
+        // Alle tre komponenter er valgt: lukk E/V/M-panelet automatisk.
+        details.classList.add("hidden");
+        details.hidden = true;
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.textContent = "E / V / M";
+        toggle.focus();
       }
     }));
     toggle.addEventListener("click", () => {
       const nowOpen = details.classList.toggle("hidden") === false;
+      details.hidden = !nowOpen;
       toggle.setAttribute("aria-expanded", String(nowOpen));
       toggle.textContent = nowOpen ? "Lukk" : "E / V / M";
     });
-    wrapper.append(toggle);
+    const row = wrapper.closest(".opsix-vitals-secondary");
+    if (row) {
+      const action = document.createElement("div");
+      action.className = "opsix-gcs-action";
+      action.append(toggle);
+      row.append(action);
+    } else {
+      wrapper.insertAdjacentElement("afterend", toggle);
+    }
     container.append(details);
     wrapper.closest(".inlineVitals")?.insertAdjacentElement("afterend", container);
   }
