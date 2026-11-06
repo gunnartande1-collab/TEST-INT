@@ -1455,21 +1455,6 @@ function bindBinaryOptionEvents() {
     label.addEventListener("pointerdown", () => {
       chk.dataset.wasChecked = chk.checked ? "true" : "false";
     });
-    chk.addEventListener("keydown", e => {
-      if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
-        chk.dataset.wasChecked = chk.checked ? "true" : "false";
-        label.click();
-      } else if (["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(e.key)) {
-        e.preventDefault();
-        const choices = Array.from(document.querySelectorAll('.binOpt[data-group="' + chk.dataset.group + '"]'));
-        const step = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : -1;
-        const next = choices[(choices.indexOf(chk) + step + choices.length) % choices.length];
-        next.focus();
-        next.dataset.wasChecked = "false";
-        next.closest("label").click();
-      }
-    });
     label.addEventListener("click", e => {
       e.preventDefault();
       const g = chk.dataset.group;
@@ -3661,4 +3646,4 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.hasteCard').forEach(input => {
     if (!input.hasAttribute('aria-pressed')) input.setAttribute('aria-pressed', String(input.classList.contains('active')));
   });
-})(); 
+})();
