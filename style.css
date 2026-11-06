@@ -4738,3 +4738,19 @@ body.opsix-test-mode .opsix-operativ .followRow > label:has(input[value="Anestes
     grid-column:auto;
   }
 }
+
+/* OPSIX 06.11 â€“ sprÃ¸ytepumper pÃ¥ egen rad RETT UNDER Utstyr ved Akutt.
+   Samme chip og antallsvelger, bare riktig plassering i hÃ¸yre kolonne. */
+body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area {
+  display: block;
+  margin: 18px 0 22px !important;
+  padding: 0 !important;
+}
+body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area .pumpRow {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area .pumpRow > label {
+  margin: 0 !important;
+}

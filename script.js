@@ -3183,7 +3183,9 @@ function buildFollowNeedLine() {
   acutePumpArea.className = "opsix-acute-pump-area";
   acutePumpArea.hidden = true;
   // Chip-etiketten «Sprøytepumper» er allerede synlig; ikke legg til en duplikatoverskrift.
-  if (equipmentAccordion && pumpRow) equipmentAccordion.section.parentElement.insertBefore(acutePumpArea,equipmentAccordion.section);
+  // Akutt: legg pumpene ETTER hele den sammenleggbare Utstyr-seksjonen,
+  // som en egen rad utenfor boksen. Normal hastegrad beholder original plassering.
+  if (equipmentAccordion && pumpRow) equipmentAccordion.section.insertAdjacentElement("afterend", acutePumpArea);
   function positionPump(acute) {
     if (!pumpRow || !pumpOriginalParent || !equipmentAccordion) return;
     if (acute) {
