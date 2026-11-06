@@ -181,10 +181,9 @@ function oppdaterSeksjonsvisning() {
     setHidden(acuteDoctorBlock, false);
     setHidden(rekFull, true);
 
-    // Behold mottakende lege dersom feltet er fylt ut.
-    const harMottakende = seksjonHarInnhold(mottFull);
-    setHidden(mottFull, !harMottakende);
-    setHidden(sharedBottom, !harMottakende);
+    // Mottakende lege er alltid synlig, også ved Akutt.
+    setHidden(mottFull, false);
+    setHidden(sharedBottom, false);
   } else {
     // Øvrige hastegrader: vis ordinært legefelt.
     setHidden(acuteDoctorBlock, true);
@@ -639,8 +638,8 @@ function buildHlrRespLines() {
   if (hlrVal === "Nei") {
     const lege = clean($("hlrMinusLege")?.value);
     const dato = clean($("hlrMinusDato")?.value);
-    const dok = lege || dato ? "satt av " + (lege || "lege ikke oppgitt") + (dato ? " den " + dato : "") : "mangler dokumentasjon";
-    out.push("HLR minus " + dok);
+    const dok = lege || dato ? " satt av " + (lege || "lege ikke oppgitt") + (dato ? " den " + dato : "") : "";
+    out.push("HLR minus" + dok);
   }
   if (respVal === "Ja") {
     out.push("Respirator pluss");
@@ -648,8 +647,8 @@ function buildHlrRespLines() {
   if (respVal === "Nei") {
     const lege = clean($("respMinusLege")?.value);
     const dato = clean($("respMinusDato")?.value);
-    const dok = lege || dato ? "satt av " + (lege || "lege ikke oppgitt") + (dato ? " den " + dato : "") : "mangler dokumentasjon";
-    out.push("Respirator minus " + dok);
+    const dok = lege || dato ? " satt av " + (lege || "lege ikke oppgitt") + (dato ? " den " + dato : "") : "";
+    out.push("Respirator minus" + dok);
   }
   return out;
 }
@@ -1123,7 +1122,7 @@ function oppdaterAkuttTilgangerVisning() {
   });
 
   // Behold allerede registrerte friteksttilganger.
-  document.querySelectorAll("#tilgangerDynamicBody tr").forEach(rad => {
+  document.querySelectorAll("#tilgangerDynamicBody .opsix-custom-chip-row").forEach(rad => {
     const tekst = rad.querySelector(".tilgangText");
     const avkrysset = rad.querySelector(".tilgangDynChk");
     const registrert = !!avkrysset?.checked || !!clean(tekst?.value);
@@ -1690,22 +1689,78 @@ function cleanupDynamicTextRows(container, textClass, checkboxClass) {
   });
 }
 
+// OPSIX: redigerbare medikamentchips – én ledig chip per gruppe.
+// Samme CSS-klasser/checkboxer som før, slik at rapport og nullstilling
+// fortsatt bruker eksisterende medikamentkategorier.
+const opsixChipMeasureCanvas = document.createElement("canvas");
+const opsixChipMeasureContext = opsixChipMeasureCanvas.getContext("2d");
+
+function resizeMedicationChip(field) {
+  if (!field || !field.isConnected) return;
+  const container = field.closest(".medDynamic, .accessDynamic");
+  const available = Math.max(140, Math.floor(container?.clientWidth || 300));
+  const minWidth = Math.min(160, available);
+  const style = getComputedStyle(field);
+  const text = field.value || "";
+  const longestLine = (text.split("\n").sort((a,b) => b.length-a.length)[0] || field.placeholder || "");
+  if (opsixChipMeasureContext) opsixChipMeasureContext.font = style.font;
+  const measured = opsixChipMeasureContext ? opsixChipMeasureContext.measureText(longestLine).width : longestLine.length * 9;
+  const horizontal = parseFloat(style.paddingLeft || 0) + parseFloat(style.paddingRight || 0) + 6;
+  field.style.width = Math.min(available, Math.max(minWidth, Math.ceil(measured + horizontal))) + "px";
+  field.style.height = "40px";
+  field.style.height = Math.max(40, field.scrollHeight) + "px";
+}
+
+
 function addDynamicTextRow(container, placeholder, checkboxClass, textClass) {
+  container.dataset.medPlaceholder = placeholder;
   const row = document.createElement("div");
-  row.className = "dynamicRow";
-  row.innerHTML = '<input type="checkbox" class="chk ' + checkboxClass + '"><input type="text" class="' + textClass + '" placeholder="' + placeholder + '">';
+  row.className = "dynamicRow opsix-medication-chip-row";
+  const chk = document.createElement("input");
+  chk.type = "checkbox";
+  chk.className = "chk " + checkboxClass;
+  chk.tabIndex = -1;
+  chk.setAttribute("aria-hidden", "true");
+  const txt = document.createElement("textarea");
+  txt.className = textClass + " opsix-medication-chip-input";
+  txt.rows = 1;
+  txt.placeholder = placeholder;
+  txt.setAttribute("aria-label", placeholder);
+  txt.setAttribute("autocomplete", "off");
+  txt.setAttribute("spellcheck", "false");
+  row.append(chk, txt);
   container.appendChild(row);
-  const chk = row.querySelector("." + checkboxClass),
-    txt = row.querySelector("." + textClass);
+  txt.addEventListener("keydown", event => {
+    // Enter flytter til neste tilgjengelige chip, ikke et linjeskift i rapporten.
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      const next = row.nextElementSibling?.querySelector(".opsix-medication-chip-input");
+      if (next) next.focus();
+    }
+  });
   txt.addEventListener("input", () => {
+    // Formatering i rapporten forblir én medikamentlinje per chip.
+    if (txt.value.includes("\n")) {
+      const cursor = txt.selectionStart;
+      txt.value = txt.value.replace(/\s*\n\s*/g, " ");
+      txt.setSelectionRange(Math.min(cursor,txt.value.length),Math.min(cursor,txt.value.length));
+    }
     chk.checked = !!clean(txt.value);
-    cleanupDynamicTextRows(container, textClass, checkboxClass);
     if (textClass === "sedText") ensureSedBlankRow();
     if (textClass === "pressorText") ensurePressorBlankRow();
     if (textClass === "andreInfText") ensureAndreInfBlankRow();
+    resizeMedicationChip(txt);
+    // En tom chip midt i listen fjernes. Brukerens fokus flyttes til den ledige.
+    const empty = !clean(txt.value);
+    if (empty && row.nextElementSibling) {
+      row.remove();
+      const last = Array.from(container.querySelectorAll(".opsix-medication-chip-input")).at(-1);
+      last?.focus();
+    }
     lagRapport();
   });
-  chk.addEventListener("change", lagRapport);
+  txt.addEventListener("change", () => { chk.checked = !!clean(txt.value); lagRapport(); });
+  requestAnimationFrame(() => resizeMedicationChip(txt));
 }
 
 function ensureBlankByClass(textClass, addFn) {
@@ -1752,27 +1807,47 @@ function resetAndreInfRows() {
   addAndreInfRow();
 }
 
-function addTilgangRow() {
-  const row = document.createElement("tr");
-  row.innerHTML = '<td class="dynamicTableCell"><div class="dynamicRow"><input type="checkbox" class="chk tilgangDynChk"><input type="text" class="tilgangText" placeholder="Annen tilgang"></div></td>';
-  tilgangerDynamicBody.appendChild(row);
-  const chk = row.querySelector(".tilgangDynChk");
-  const txt = row.querySelector(".tilgangText");
+function bindCustomChip(txt, chk, row, container, ensureBlank, noneId) {
+  const resize = () => resizeMedicationChip(txt);
+  txt.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      row.nextElementSibling?.querySelector(".opsix-custom-chip-input")?.focus();
+    }
+  });
   txt.addEventListener("input", () => {
-    chk.checked = !!clean(txt.value);
-    if (chk.checked) {
-      $("til_ingen").checked = false;
-    }
-    cleanupDynamicTextRows(tilgangerDynamicBody, "tilgangText", "tilgangDynChk");
-    ensureTilgangBlankRow();
-    lagRapport();
-  });
-  chk.addEventListener("change", () => {
-    if (chk.checked) {
-      $("til_ingen").checked = false;
+    txt.value = txt.value.replace(/\s*\n\s*/g, " ");
+    chk.checked = Boolean(clean(txt.value));
+    if (chk.checked && $(noneId)) $(noneId).checked = false;
+    ensureBlank();
+    resize();
+    if (!clean(txt.value) && row.nextElementSibling) {
+      row.remove();
+      container.querySelector(".opsix-custom-chip-row:last-child textarea")?.focus();
     }
     lagRapport();
   });
+  requestAnimationFrame(resize);
+}
+
+function addTilgangRow() {
+  // Samme kompakte chip-inndata som medikamenter, uten ekstra meny/klikk.
+  const row = document.createElement("div");
+  row.className = "dynamicRow opsix-custom-chip-row";
+  const chk = document.createElement("input");
+  chk.type = "checkbox";
+  chk.className = "chk tilgangDynChk";
+  chk.tabIndex = -1;
+  chk.setAttribute("aria-hidden", "true");
+  const txt = document.createElement("textarea");
+  txt.className = "tilgangText opsix-custom-chip-input";
+  txt.placeholder = "Annen tilgang";
+  txt.setAttribute("aria-label", "Annen tilgang");
+  txt.rows = 1;
+  txt.spellcheck = false;
+  row.append(chk, txt);
+  tilgangerDynamicBody.appendChild(row);
+  bindCustomChip(txt, chk, row, tilgangerDynamicBody, ensureTilgangBlankRow, "til_ingen");
 }
 
 function ensureTilgangBlankRow() {
@@ -1787,26 +1862,21 @@ function resetTilgangRows() {
 
 function addDrenAnnetField() {
   const row = document.createElement("div");
-  row.className = "dynamicRow";
-  row.innerHTML = '<input type="checkbox" class="chk drenAnnetChk"><input type="text" class="drenAnnetText" placeholder="Beskriv utstyr">';
-  const cb = row.querySelector(".drenAnnetChk"),
-    txt = row.querySelector(".drenAnnetText");
-  txt.addEventListener("input", () => {
-    cb.checked = !!clean(txt.value);
-    if (cb.checked) {
-      $("utst_ingen").checked = false;
-    }
-    cleanupDynamicTextRows(drenAnnetContainer, "drenAnnetText", "drenAnnetChk");
-    ensureDrenAnnetBlankField();
-    lagRapport();
-  });
-  cb.addEventListener("change", () => {
-    if (cb.checked) {
-      $("utst_ingen").checked = false;
-    }
-    lagRapport();
-  });
+  row.className = "dynamicRow opsix-custom-chip-row";
+  const chk = document.createElement("input");
+  chk.type = "checkbox";
+  chk.className = "chk drenAnnetChk";
+  chk.tabIndex = -1;
+  chk.setAttribute("aria-hidden", "true");
+  const txt = document.createElement("textarea");
+  txt.className = "drenAnnetText opsix-custom-chip-input";
+  txt.placeholder = "Annet utstyr";
+  txt.setAttribute("aria-label", "Annet utstyr");
+  txt.rows = 1;
+  txt.spellcheck = false;
+  row.append(chk, txt);
   drenAnnetContainer.appendChild(row);
+  bindCustomChip(txt, chk, row, drenAnnetContainer, ensureDrenAnnetBlankField, "utst_ingen");
 }
 
 function ensureDrenAnnetBlankField() {
@@ -1928,6 +1998,46 @@ function oppdaterKliniskeFeltvarsler() {
     spo2.title = feil ? "Kontroller SpO₂ – over 100 %" : "";
   }
 
+  // OPSIX interne, konfigurerte kontrollgrenser. Dette er ikke
+  // aldersjusterte kliniske normalverdier og erstatter ikke faglig vurdering.
+  const kategori = getSpedbarnValue() || "Nei";
+  const rfGrenser = {
+    "Nei": [3, 60], "Nyfødt": [10, 120],
+    "Spedbarn": [8, 100], "Barn": [3, 60]
+  };
+  const pulsGrenser = {
+    "Nei": [25, 240], "Nyfødt": [50, 260],
+    "Spedbarn": [45, 240], "Barn": [30, 220]
+  };
+  const sysOvre = {"Nei": 260, "Nyfødt": 130, "Spedbarn": 140, "Barn": 220};
+  const vurderFelt = (id, feil, melding) => {
+    const el = $(id);
+    if (!el) return;
+    // Bare etter blur. Mens man redigerer fjernes gammel markering.
+    const marker = el.dataset.opsixBlurValidated === "true" && document.activeElement !== el && feil;
+    el.classList.toggle("kliniskUgyldig", Boolean(marker));
+    el.setAttribute("aria-invalid", String(Boolean(marker)));
+    el.title = marker ? melding : "";
+  };
+  const tall = id => {
+    const raw = clean($(id)?.value).replace(",", ".");
+    return raw === "" ? null : Number(raw);
+  };
+  const rf = tall("rf"), puls = tall("puls"), temp = tall("temp");
+  const sys = tall("btSys"), dia = tall("btDia");
+  const [rfMin, rfMax] = rfGrenser[kategori];
+  const [pulsMin, pulsMax] = pulsGrenser[kategori];
+  const intFeil = value => value !== null && (!Number.isFinite(value) || value < 0 || !Number.isInteger(value));
+  vurderFelt("rf", rf !== null && (intFeil(rf) || rf < rfMin || rf > rfMax), `RF utenfor ${rfMin}–${rfMax}/min`);
+  vurderFelt("puls", puls !== null && (intFeil(puls) || puls < pulsMin || puls > pulsMax), `Puls utenfor ${pulsMin}–${pulsMax}/min`);
+  vurderFelt("temp", temp !== null && (!Number.isFinite(temp) || temp < 0 || temp > 49.9), "Temperatur utenfor 0–49,9 °C");
+  const sysForHoy = sys !== null && (intFeil(sys) || (kategori === "Nei" ? sys > 260 : sys >= sysOvre[kategori]));
+  const btRekkefolgeFeil = sys !== null && dia !== null && Number.isFinite(sys) && Number.isFinite(dia) && dia >= sys;
+  vurderFelt("btSys", sysForHoy || btRekkefolgeFeil,
+    sysForHoy ? "Systolisk blodtrykk over angitt kontrollgrense" : "Diastolisk er lik eller høyere enn systolisk");
+  vurderFelt("btDia", (dia !== null && intFeil(dia)) || btRekkefolgeFeil,
+    "Diastolisk må være lavere enn systolisk");
+
   // FiO2 – samtlige relevante felt
 
   [
@@ -1961,6 +2071,21 @@ function oppdaterKliniskeFeltvarsler() {
 function formaterRapportForNettbrett(tekst) {
   return String(tekst ?? "").replace(/\u2082/g, "2");
 }
+
+// Marker feil først når operatøren forlater feltet.
+// Ved nytt fokus oppheves markeringen under redigering.
+["rf", "puls", "temp", "btSys", "btDia"].forEach(id => {
+  const field = document.getElementById(id);
+  if (!field) return;
+  field.addEventListener("focus", () => {
+    field.classList.remove("kliniskUgyldig");
+    field.setAttribute("aria-invalid", "false");
+  });
+  field.addEventListener("blur", () => {
+    field.dataset.opsixBlurValidated = "true";
+    oppdaterKliniskeFeltvarsler();
+  });
+});
 
 function lagRapport() {
   syncSpecMirrors();
@@ -2253,6 +2378,9 @@ function nullstillSkjema() {
   document.querySelectorAll("input").forEach(el => {
     el.dataset.active = "false";
     el.dataset.wasChecked = "false";
+    el.dataset.opsixBlurValidated = "false";
+    el.classList.remove("kliniskUgyldig");
+    el.removeAttribute("aria-invalid");
     if (el.type === "checkbox" || el.type === "radio") {
       el.checked = false;
     } else {
@@ -2529,7 +2657,7 @@ function bindMedicationNeiLogic(groupSelector, neiSelector, dynamicBody, textCla
   });
   if (dynamicBody) {
     dynamicBody.addEventListener("input", () => {
-      const harTekst = Array.from(dynamicBody.querySelectorAll("input[type='text']")).some(txt => clean(txt.value));
+      const harTekst = Array.from(dynamicBody.querySelectorAll(".opsix-medication-chip-input")).some(txt => clean(txt.value));
       if (harTekst) {
         nei.checked = false;
       }
@@ -2905,6 +3033,9 @@ function buildFollowNeedLine() {
   // valgte verdier, ID-er og JS-hendelser må følge de samme nodene.
   append(left, refs.hasteLabel, refs.hasteGrid, refs.child, refs.weight,
     refs.followTitle, refs.followRow, refs.special);
+  // Transportform er en del av barneseksjonen, men vises under Vekt.
+  const transportNode = document.getElementById("transportWrap");
+  if (transportNode) refs.weight.insertAdjacentElement("afterend", transportNode);
   append(middle, refs.acute, refs.full, refs.medsTitle,
     refs.sed, refs.pressor, refs.otherMeds);
   // Alle tre medikamentgrupper hører til under Medisinske opplysninger.
@@ -3272,7 +3403,7 @@ function buildFollowNeedLine() {
   }
   const optionalIds = [
     "bevar-full-tidligere", "bevar-full-vitalparametre",
-    "bevar-full-tilganger", "bevar-full-mottakende", "bevar-full-utstyr"
+    "bevar-full-tilganger", "bevar-full-utstyr"
   ];
   function hasValues(root) {
     return root && [...root.querySelectorAll("input,textarea,select")].some(el => {
