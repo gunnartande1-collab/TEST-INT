@@ -1966,6 +1966,17 @@ function oppdaterKliniskeFeltvarsler() {
   });
 }
 
+/* ======================================================
+   RAPPORTKOMPATIBILITET – NETTBRETT
+   UI kan vise O₂, SpO₂ og FiO₂, men mottakende
+   nettbrett støtter ikke nedsenket ₂ i rapportteksten.
+   Gjør derfor all slik rapporttekst om til vanlig 2.
+   Registrerte felt og verdier endres ikke.
+====================================================== */
+function formaterRapportForNettbrett(tekst) {
+  return String(tekst ?? "").replace(/\u2082/g, "2");
+}
+
 function lagRapport() {
   syncSpecMirrors();
   updateTitle();
@@ -2073,11 +2084,11 @@ function lagRapport() {
     const treff = linje.match(/\bFiO2\s+(-?\d+(?:[.,]\d+)?)\s*%/i);
     if (treff) {
       const value = Number(treff[1].replace(",", "."));
-      if (value < 0 || value > 100) return linje + " (KONTROLLER FiO₂ – ugyldig prosentverdi)";
+      if (value < 0 || value > 100) return linje + " (KONTROLLER FiO2 – ugyldig prosentverdi)";
     }
     return linje;
   });
-  rapport.value = kontrollerteLinjer.join("\n");
+  rapport.value = formaterRapportForNettbrett(kontrollerteLinjer.join("\n"));
   autoGrowTextarea(rapport);
 }
 
@@ -2220,7 +2231,7 @@ function addFullDoctors(lines) {
   }
 }
 async function kopierRapport() {
-  const tekst = rapport.value;
+  const tekst = formaterRapportForNettbrett(rapport.value);
   const requestVersion = ++copyVersion;
   clearTimeout(copyTimer);
   try {
