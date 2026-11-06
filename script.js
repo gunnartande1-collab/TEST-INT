@@ -407,14 +407,14 @@ function linesTilganger() {
 function buildFullAirwayLine() {
   const main = getBinaryValue("airwayMain");
   if (!main) return "";
-  if (main === "Spontan uten O2") {
+  if (["Spontan uten O2", "Spontan u/O2"].includes(main)) {
     return "Luftveier: Spontan uten O2";
   }
-  if (main === "Spontan med O2") {
+  if (["Spontan med O2", "Spontan m/O2"].includes(main)) {
     const l = clean($("spontO2Liter").value);
     return l ? "Luftveier: Spontan med " + l + " l/min O2" : "Luftveier: Spontan med O2";
   }
-  if (main === "Spontant med high flow") {
+  if (["Spontant med high flow", "Spontant m/high flow"].includes(main)) {
     const f = clean($("highFlowFio2").value);
     const fl = clean($("highFlowFlow").value);
     let tekst = "Luftveier: Spontant med high flow";
@@ -475,10 +475,10 @@ function buildAcuteAirwayLines() {
   if (!airway) {
     return [];
   }
-  if (airway === "Spontan uten O2") {
+  if (["Spontan uten O2", "Spontan u/O2"].includes(airway)) {
     return ["Luftveier: Spontan uten O2"];
   }
-  if (airway === "Spontan med O2") {
+  if (["Spontan med O2", "Spontan m/O2"].includes(airway)) {
     const l = clean($("acuteSpontO2Liter").value) || clean($("spontO2Liter").value);
     return [l ? "Luftveier: Spontan med " + l + " l/min O2" : "Luftveier: Spontan med O2"];
   }
@@ -1940,10 +1940,11 @@ function oppdaterKliniskeFeltvarsler() {
     const el = $(id);
     if (!el) return;
     const tekst = clean(el.value).replace(",", ".");
-    const feil = tekst !== "" && Number.isFinite(Number(tekst)) && Number(tekst) > 100;
+    const tall = Number(tekst);
+    const feil = tekst !== "" && (!Number.isFinite(tall) || tall < 0 || tall > 100);
     el.classList.toggle("kliniskUgyldig", feil);
     el.setAttribute("aria-invalid", String(feil));
-    el.title = feil ? "FiO₂ kan ikke være over 100 %" : "";
+    el.title = feil ? "Kontroller FiO₂ – må være mellom 0 og 100 %" : "";
   });
 }
 
@@ -1954,14 +1955,11 @@ function lagRapport() {
   oppdaterAkuttUtstyrVisning();
   oppdaterKliniskeFeltvarsler();
   const h = getBinaryValue("hast");
-  if (!h) {
-    rapport.value = "";
-    return;
-  }
+  // Rapporten kan fylles ut også før operatøren velger hastegrad.
   const lines = [];
   addHeader(lines);
   addSpesialtransport(lines);
-  addHastegrad(lines);
+  if (h) addHastegrad(lines);
 
   /* ==========================================
      FØLGEBEHOV OG BARN
@@ -1983,21 +1981,10 @@ function lagRapport() {
      BYGG RAPPORT ETTER HASTEGRAD
   ========================================== */
 
-  if (isAcute()) {
-    buildAcuteReport(lines);
-    if (harBeholdteSeksjoner("full-")) {
-      const supplerende = [];
-      buildFullReport(supplerende);
-      leggTilUnikeRapportlinjer(lines, supplerende);
-    }
-  } else {
-    buildFullReport(lines);
-    if (harBeholdteSeksjoner("acute-") || ["acuteDoctorBlock"].some(id => beholdteFeltgrupper.has(id))) {
-      const supplerende = [];
-      buildAcuteReport(supplerende);
-      leggTilUnikeRapportlinjer(lines, supplerende);
-    }
-  }
+  // Én entydig rapportkilde per hastegrad. Delte opplysninger inngår i begge.
+  // Dette hindrer at gamle rapportlinjer flettes inn på nytt ved hastegradskifte.
+  if (isAcute()) buildAcuteReport(lines);
+  else buildFullReport(lines);
 
   /* ==========================================
      SISTE LUFTVEISSTATUS
@@ -2065,9 +2052,10 @@ function lagRapport() {
     if (!linje.startsWith("Luftveier:")) {
       return linje;
     }
-    const treff = linje.match(/\bFiO2\s+(\d+(?:[.,]\d+)?)\s*%/i);
-    if (treff && Number(treff[1].replace(",", ".")) > 100) {
-      return linje + " (KONTROLLER FiO₂ – over 100 %)";
+    const treff = linje.match(/\bFiO2\s+(-?\d+(?:[.,]\d+)?)\s*%/i);
+    if (treff) {
+      const value = Number(treff[1].replace(",", "."));
+      if (value < 0 || value > 100) return linje + " (KONTROLLER FiO₂ – ugyldig prosentverdi)";
     }
     return linje;
   });
@@ -2128,6 +2116,9 @@ function buildAcuteReport(lines) {
   if (hp) {
     lines.push("Aktuelt: " + hp);
   }
+  // Også ved Akutt skal tidligere opplysninger som operatøren har fylt ut rapporteres.
+  const tidligere = clean($("tidligere").value);
+  if (tidligere) lines.push("T: " + tidligere);
   if (clean($("vekt").value) && !["Nyfødt", "Spedbarn"].includes(getSpedbarnValue())) {
     const vekt = clean($("vekt").value);
     lines.push(Number(vekt) === 0 ? "Vekt: Ikke oppgitt" : "Vekt: " + vekt + " kg");
@@ -2135,7 +2126,11 @@ function buildAcuteReport(lines) {
   buildAcuteAirwayLines().forEach(l => {
     lines.push(l);
   });
+  const vitale = buildVitalsLine();
+  if (vitale) lines.push(vitale);
   addMedicationSections(lines);
+  const tilganger = linesTilganger();
+  if (tilganger.length) lines.push("Tilganger: " + tilganger.join(", "));
 
   // En felles utstyrskilde også ved Akutt.
   const utstyr = buildUtstyrList();
@@ -2144,6 +2139,10 @@ function buildAcuteReport(lines) {
   buildCaveLines().forEach(l => lines.push(l));
   buildHlrRespLines().forEach(l => lines.push(l));
   addAcuteDoctor(lines);
+  // Mottakende lege er også relevant dersom opplysninger allerede er registrert.
+  const mn = clean($("mottNavn").value);
+  const mt = clean($("mottTlf").value);
+  if (mn || mt) lines.push("Mottakende lege: " + (mn && mt ? mn + " - " + formatPhone(mt) : mn || formatPhone(mt)));
 }
 
 function buildFullReport(lines) {
@@ -2255,7 +2254,7 @@ function nullstillSkjema() {
   $("map").dataset.auto = "";
 
   // Nullstill alle nedtrekksmenyer
-  document.querySelectorAll("select").forEach(el => {
+  document.querySelectorAll('select:not(#opsixThemeSelect)').forEach(el => {
     el.selectedIndex = 0;
   });
   valgtHastegrad = "";
@@ -2470,12 +2469,11 @@ function bindHighFlowNumberOnly() {
       lagRapport();
     });
   });
+  // FiO₂ er et fritekst-tallfelt: bevar faktisk inntasting.
+  // Feilverdier markeres av oppdaterKliniskeFeltvarsler, men omskrives aldri.
   [$("highFlowFio2"), $("acuteHighFlowFio2")].forEach(el => {
     if (!el) return;
-    el.addEventListener("input", () => {
-      el.value = el.value.replace(/[^0-9.,]/g, "").replace(",", ".");
-      lagRapport();
-    });
+    el.addEventListener("input", lagRapport);
   });
 }
 
@@ -3184,19 +3182,19 @@ function buildFollowNeedLine() {
   const acutePumpArea = document.createElement("div");
   acutePumpArea.className = "opsix-acute-pump-area";
   acutePumpArea.hidden = true;
-  const acutePumpHeading = document.createElement("div");
-  acutePumpHeading.className = "opsix-acute-pump-heading";
-  acutePumpHeading.textContent = "Sprøytepumper";
-  acutePumpArea.append(acutePumpHeading);
+  // Chip-etiketten «Sprøytepumper» er allerede synlig; ikke legg til en duplikatoverskrift.
   if (equipmentAccordion && pumpRow) equipmentAccordion.section.parentElement.insertBefore(acutePumpArea,equipmentAccordion.section);
   function positionPump(acute) {
     if (!pumpRow || !pumpOriginalParent || !equipmentAccordion) return;
     if (acute) {
-      acutePumpArea.append(pumpRow);
+      // Bevar fokus og valgt antall: flytt kun når hastegraden faktisk skifter.
+      if (pumpRow.parentElement !== acutePumpArea) acutePumpArea.append(pumpRow);
       acutePumpArea.hidden = false;
     } else {
-      if (pumpOriginalNext?.parentNode === pumpOriginalParent) pumpOriginalParent.insertBefore(pumpRow,pumpOriginalNext);
-      else pumpOriginalParent.append(pumpRow);
+      if (pumpRow.parentElement !== pumpOriginalParent) {
+        if (pumpOriginalNext?.parentNode === pumpOriginalParent) pumpOriginalParent.insertBefore(pumpRow,pumpOriginalNext);
+        else pumpOriginalParent.append(pumpRow);
+      }
       acutePumpArea.hidden = true;
     }
   }
@@ -3355,3 +3353,106 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(id)?.removeAttribute("placeholder");
   });
 });
+
+
+/* =============================================================
+   OPSIX V1.1.0 – TASTATURBETJENING
+
+   Ekte radioknapper/checkboxer beholdes i DOM og tab-rekkefølge.
+   Radio: Tab inn i gruppe, piltaster velger, mellomrom velger,
+   Enter støttes i tillegg. Multivalg: Tab/mellomrom; piler flytter
+   fokus innen samme chiprad uten å endre avkrysning.
+   ============================================================= */
+(() => {
+  const radioSelector = '.binOpt[type="radio"], .spedRadio, .caveRadio, .trachOpt, .acuteTrachOpt, .smitteBase, .hlrRadio, .respRadio';
+  const arrows = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+  function visible(input) {
+    const visual = input.closest('label, .toggleCell, .specCell') || input;
+    return visual.getClientRects().length > 0 && !visual.closest('[hidden], .hidden');
+  }
+  function chosenControl(input) {
+    return input.closest('.toggleCell') && input.classList.contains('acuteTrachOpt')
+      ? input.closest('.toggleCell')
+      : input.closest('label');
+  }
+  function activateRadio(input, byArrow) {
+    const control = chosenControl(input);
+    if (!control) return;
+    if (input.classList.contains('smitteBase')) {
+      // Ingen kjente/øvrige smittetyper har egen eksklusivitetslogikk.
+      if (byArrow && input.checked) return;
+    } else {
+      // Dagens museklikk-logikk leser denne verdien for å kunne velge bort.
+      input.dataset.wasChecked = byArrow ? 'false' : String(input.checked);
+    }
+    control.click();
+    // Radiogrupper med custom click sender ellers ikke change-hendelse.
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+  function sameGroup(input) {
+    if (input.classList.contains('binOpt')) {
+      return [...document.querySelectorAll('.binOpt[data-group="' + input.dataset.group + '"]')].filter(visible);
+    }
+    return [...document.querySelectorAll('input[type="radio"][name="' + input.name + '"]')].filter(visible);
+  }
+  function sameCheckboxRow(input) {
+    const row = input.closest('.chipRow, .followRow, .accessChipRow, .smLine, .spesialtransportRow');
+    return row ? [...row.querySelectorAll('input[type="checkbox"]')].filter(visible) : [];
+  }
+  document.addEventListener('keydown', event => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) return;
+    const isRadio = input.matches(radioSelector);
+    const isSpecial = input.matches('.specChoice');
+    const isCheckbox = input.type === 'checkbox';
+    const isArrow = Object.prototype.hasOwnProperty.call(arrows, event.key);
+    if (!isRadio && !isSpecial && !isCheckbox) return;
+    // La normale tastaturgenveier og andre inputfelter være i fred.
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (isArrow) {
+      const options = isRadio ? sameGroup(input) : sameCheckboxRow(input);
+      if (options.length < 2) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const index = options.indexOf(input);
+      if (index < 0) return;
+      const next = options[(index + arrows[event.key] + options.length) % options.length];
+      next.focus();
+      if (isRadio) activateRadio(next, true);
+      return;
+    }
+    if (event.key === ' ' || event.key === 'Enter') {
+      if (isSpecial) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        input.closest('.specCell')?.click();
+        return;
+      }
+      if (isRadio) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        activateRadio(input, false);
+        return;
+      }
+      // Enter som ekstra snarvei for checkbox; mellomrom bruker
+      // native input-click og dermed eksisterende change-lytter.
+      if (event.key === 'Enter' && isCheckbox) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        input.click();
+      }
+    }
+  }, true);
+  document.querySelectorAll('.specChoice').forEach(input => {
+    if (!input.hasAttribute('aria-label')) {
+      const label = input.closest('.specCell')?.querySelector('.specLabel')?.textContent?.trim();
+      if (label) input.setAttribute('aria-label', label);
+    }
+  });
+  document.querySelectorAll('.acuteTrachOpt').forEach(input => {
+    if (!input.hasAttribute('aria-label')) input.setAttribute('aria-label', input.dataset.name || 'Trakeostomivalg');
+  });
+  document.querySelectorAll('.hasteCard').forEach(input => {
+    if (!input.hasAttribute('aria-pressed')) input.setAttribute('aria-pressed', String(input.classList.contains('active')));
+  });
+})();
