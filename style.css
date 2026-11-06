@@ -4536,7 +4536,7 @@ body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) text
   padding: 10px 14px !important;
   box-sizing: border-box !important;
   border: 1px solid var(--v110-muted-border, #637182) !important;
-  border-radius: 22px !important;
+  border-radius: 12px !important;
   background: var(--v110-choice, #394553) !important;
   color: #fff !important;
   font: 500 14px/20px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
@@ -4603,7 +4603,7 @@ body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) textarea.opsi
   padding: 10px 14px !important;
   box-sizing: border-box !important;
   border: 1px solid var(--v110-muted-border, #637182) !important;
-  border-radius: 22px !important;
+  border-radius: 12px !important;
   background: var(--v110-choice, #394553) !important;
   color: #fff !important;
   font: 500 14px/20px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
@@ -4649,4 +4649,38 @@ body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
   background-color: #205b9e !important;
   border-color: #174475 !important;
   color: #fff !important;
+}
+
+
+/* =============================================================
+   OPSIX V1.1.0 â€“ LESBARE FRITEKSTCHIPS I DAGVISNING
+   Samme tekstfarge som Ã¸vrige lyse input/valg.
+   Natt og dempet modus er uendret.
+============================================================= */
+body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
+  textarea.opsix-medication-chip-input,
+body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
+  textarea.opsix-custom-chip-input {
+  color: #111827 !important;
+  caret-color: #111827 !important;
+  background-color: #ffffff !important;
+  border-color: #8793a1 !important;
+}
+body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
+  textarea.opsix-medication-chip-input::placeholder,
+body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
+  textarea.opsix-custom-chip-input::placeholder {
+  color: #111827 !important;
+  opacity: .85 !important;
+}
+body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
+  .opsix-medication-chip-row:has(> input[type="checkbox"]:checked)
+  > textarea.opsix-medication-chip-input,
+body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
+  .opsix-custom-chip-row:has(> input[type="checkbox"]:checked)
+  > textarea.opsix-custom-chip-input {
+  background-color: #a9cffd !important;
+  border-color: #2563a6 !important;
+  color: #111827 !important;
+  caret-color: #111827 !important;
 }
