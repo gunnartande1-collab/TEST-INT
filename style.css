@@ -4623,3 +4623,30 @@ body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) textarea.opsi
   outline: 2px solid var(--v110-focus, #9dc7ff) !important;
   outline-offset: 2px !important;
 }
+
+
+/* =============================================================
+   OPSIX V1.1.0 â€“ UTFYLTE FRITEKSTCHIPS SOM VALGTE CHIPS
+   Underliggende avkryssing styres fortsatt av eksisterende JS.
+   Tomme reservechips beholder ordinÃ¦r, nÃ¸ytral bakgrunn.
+============================================================= */
+body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
+  .opsix-medication-chip-row:has(> input[type="checkbox"]:checked)
+  > textarea.opsix-medication-chip-input,
+body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
+  .opsix-custom-chip-row:has(> input[type="checkbox"]:checked)
+  > textarea.opsix-custom-chip-input {
+  background-color: #245b9e !important;
+  border-color: #86baff !important;
+  color: #fff !important;
+}
+body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
+  .opsix-medication-chip-row:has(> input[type="checkbox"]:checked)
+  > textarea.opsix-medication-chip-input,
+body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
+  .opsix-custom-chip-row:has(> input[type="checkbox"]:checked)
+  > textarea.opsix-custom-chip-input {
+  background-color: #205b9e !important;
+  border-color: #174475 !important;
+  color: #fff !important;
+}
