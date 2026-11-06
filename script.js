@@ -2782,21 +2782,34 @@ function buildFollowNeedLine() {
   }
 })();
 
-/* OPSIX – tilgjengelig temavelger uten lagring */
+/* OPSIX – fungerende tretrinns temaknapp, kun visningsvalg */
 (() => {
   function init() {
-    const select = document.getElementById("opsixThemeSelect");
-    if (!select) return;
-    function apply(value) {
-      document.body.classList.toggle("theme-light", value === "day");
-      document.body.classList.toggle("theme-dim", value === "dim");
-      document.documentElement.style.colorScheme = value === "day" ? "light" : "dark";
+    const button = document.getElementById("themeToggle");
+    const label = document.getElementById("themeLabel");
+    const icon = document.getElementById("themeIcon");
+    if (!button || !label || !icon) return;
+    const modes = [
+      {key:"night", text:"Dempet", icon:"◐", next:"Bytt til dempet visning"},
+      {key:"dim", text:"Dag", icon:"☀", next:"Bytt til dagvisning"},
+      {key:"day", text:"Natt", icon:"☾", next:"Bytt til nattvisning"}
+    ];
+    let index = 0;
+    function apply() {
+      const mode = modes[index];
+      document.body.classList.toggle("theme-light",mode.key === "day");
+      document.body.classList.toggle("theme-dim",mode.key === "dim");
+      document.documentElement.style.colorScheme = mode.key === "day" ? "light" : "dark";
+      label.textContent = mode.text;
+      icon.textContent = mode.icon;
+      button.title = mode.next;
+      button.setAttribute("aria-label",mode.next);
+      button.setAttribute("data-current-theme",mode.key);
     }
-    select.value = "night";
-    apply("night");
-    select.addEventListener("change", () => apply(select.value));
+    button.addEventListener("click", () => { index=(index+1)%modes.length;apply(); });
+    apply();
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded",init);
   else init();
 })();
 
@@ -3161,8 +3174,11 @@ function buildFollowNeedLine() {
     content.id = id + "-content";
     content.className = "opsix-acute-content";
     children.forEach(node => {
-      // Fjern den gamle overskriften visuelt, men bevar alle felt.
+      // Fjern bare den opprinnelige tittelen, aldri hele feltgruppen.
       if (node === originalHeading && originalHeading?.matches(".section,.minorTitle,label,.bigSection")) { node.remove(); return; }
+      if (node.nodeType === 1 && originalHeading && node.contains(originalHeading)) {
+        originalHeading.remove();
+      }
       content.append(node);
     });
     section.append(toggle, content);
@@ -3176,9 +3192,35 @@ function buildFollowNeedLine() {
     });
     return {section,toggle,content,note};
   }).filter(Boolean);
+  // Sprøytepumper er prioritert ved Akutt: samme eksisterende kontroll flyttes,
+  // slik at den er tilgjengelig uten å åpne «Utstyr».
+  const equipmentAccordion = acuteAccordions.find(x => x.section.id === "bevar-full-utstyr");
+  const pumpRow = document.querySelector("#sharedEquipmentBlock .pumpRow");
+  const pumpOriginalParent = pumpRow?.parentElement;
+  const pumpOriginalNext = pumpRow?.nextSibling;
+  const acutePumpArea = document.createElement("div");
+  acutePumpArea.className = "opsix-acute-pump-area";
+  acutePumpArea.hidden = true;
+  const acutePumpHeading = document.createElement("div");
+  acutePumpHeading.className = "opsix-acute-pump-heading";
+  acutePumpHeading.textContent = "Sprøytepumper";
+  acutePumpArea.append(acutePumpHeading);
+  if (equipmentAccordion && pumpRow) equipmentAccordion.section.parentElement.insertBefore(acutePumpArea,equipmentAccordion.section);
+  function positionPump(acute) {
+    if (!pumpRow || !pumpOriginalParent || !equipmentAccordion) return;
+    if (acute) {
+      acutePumpArea.append(pumpRow);
+      acutePumpArea.hidden = false;
+    } else {
+      if (pumpOriginalNext?.parentNode === pumpOriginalParent) pumpOriginalParent.insertBefore(pumpRow,pumpOriginalNext);
+      else pumpOriginalParent.append(pumpRow);
+      acutePumpArea.hidden = true;
+    }
+  }
   let wasAcute = false;
   function refreshAcuteAccordions() {
     const acute = document.body.classList.contains("opsix-akutt");
+    positionPump(acute);
     for (const {section,toggle,content,note} of acuteAccordions) {
       note.hidden = !acute;
       section.classList.toggle("opsix-acute-collapsible", acute);

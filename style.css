@@ -4628,3 +4628,14 @@ body.opsix-test-mode .hasteCard::before,
 body.opsix-test-mode .hasteCard::after,
 body.opsix-test-mode .hasteCard.active::before,
 body.opsix-test-mode .hasteCard.active::after {content:none !important;display:none !important;}
+
+/* OPSIX 06.11 â€“ avstand mellom vekt og fÃ¸lgebehov */
+body.opsix-test-mode .opsix-operativ #weightWrap {margin-bottom:22px !important;}
+body.opsix-test-mode .opsix-operativ #weightWrap #vekt {margin-bottom:0 !important;}
+body.opsix-test-mode .opsix-operativ .followRow {grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+body.opsix-test-mode .opsix-acute-pump-area {margin:12px 0 18px;}
+body.opsix-test-mode .opsix-acute-pump-area[hidden] {display:none !important;}
+body.opsix-test-mode .opsix-acute-pump-heading {font-size:14px;font-weight:700;margin-bottom:9px;}
+body.opsix-test-mode .opsix-acute-pump-area .pumpRow {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+body.opsix-test-mode .opsix-acute-pump-area .inlineSelect {min-width:82px;}
+@media(max-width:420px){body.opsix-test-mode .opsix-operativ .followRow {grid-template-columns:1fr !important;}}
