@@ -15,6 +15,7 @@ const pageTitle = $("pageTitle"),
   rapport = $("rapport"),
   vektLabel = $("vektLabel"),
   copyMsg = $("copyMsg");
+const biPAPWrap = $("biPAPWrap"), acuteBiPAPWrap = $("acuteBiPAPWrap");
 const spontO2Wrap = $("spontO2Wrap"),
   highFlowWrap = $("highFlowWrap"),
   nivWrap = $("nivWrap"),
@@ -425,9 +426,13 @@ function buildFullAirwayLine() {
     }
     return tekst;
   }
-  if (main === "NIV (CPAP/BiPAP)") {
-    const f = clean($("nivFio2").value);
-    return f ? "Luftveier: NIV, FiO2 " + f + " %" : "Luftveier: NIV";
+  if (main === "CPAP") {
+    const p = clean($("cpapPressure").value), f = clean($("nivFio2").value);
+    return "Luftveier: CPAP" + (p ? ", trykk " + p + " cmH2O" : "") + (f ? ", FiO2 " + f + " %" : "");
+  }
+  if (main === "BiPAP") {
+    const ip = clean($("biPAPIPAP").value), ep = clean($("biPAPEPAP").value), f = clean($("biPAPFio2").value);
+    return "Luftveier: BiPAP" + (ip ? ", IPAP " + ip + " cmH2O" : "") + (ep ? ", EPAP " + ep + " cmH2O" : "") + (f ? ", FiO2 " + f + " %" : "");
   }
   if (main === "Intubert") {
     const deler = [];
@@ -493,9 +498,16 @@ function buildAcuteAirwayLines() {
     }
     return [tekst];
   }
-  if (airway === "NIV (CPAP/BiPAP)") {
+  if (airway === "CPAP") {
+    const p = clean($("acuteCpapPressure").value) || clean($("cpapPressure").value);
     const f = clean($("acuteNivFio2").value) || clean($("nivFio2").value);
-    return [f ? "Luftveier: NIV, FiO2 " + f + " %" : "Luftveier: NIV"];
+    return ["Luftveier: CPAP" + (p ? ", trykk " + p + " cmH2O" : "") + (f ? ", FiO2 " + f + " %" : "")];
+  }
+  if (airway === "BiPAP") {
+    const ip = clean($("acuteBiPAPIPAP").value) || clean($("biPAPIPAP").value);
+    const ep = clean($("acuteBiPAPEPAP").value) || clean($("biPAPEPAP").value);
+    const f = clean($("acuteBiPAPFio2").value) || clean($("biPAPFio2").value);
+    return ["Luftveier: BiPAP" + (ip ? ", IPAP " + ip + " cmH2O" : "") + (ep ? ", EPAP " + ep + " cmH2O" : "") + (f ? ", FiO2 " + f + " %" : "")];
   }
   if (airway === "Intubert") {
     const deler = [];
@@ -575,6 +587,8 @@ function buildUtstyrList() {
   if ($("dren_thorax").checked) {
     out.push("Thoraxdren");
   }
+  if ($("utst_ventrikkelsonde")?.checked) out.push("Ventrikkelsonde");
+  if ($("utst_urinkateter")?.checked) out.push("Urinkateter");
 
   // Annet utstyr – tas med dersom allerede registrert
   document.querySelectorAll(".drenAnnetText").forEach(txt => {
@@ -641,10 +655,10 @@ function buildHlrRespLines() {
     const dok = lege || dato ? " satt av " + (lege || "lege ikke oppgitt") + (dato ? " den " + dato : "") : "";
     out.push("HLR minus" + dok);
   }
-  if (respVal === "Ja") {
+  if (respVal === "Ja" && document.body.dataset.opsixRespRecheck !== "true") {
     out.push("Respirator pluss");
   }
-  if (respVal === "Nei") {
+  if (respVal === "Nei" && document.body.dataset.opsixRespRecheck !== "true") {
     const lege = clean($("respMinusLege")?.value);
     const dato = clean($("respMinusDato")?.value);
     const dok = lege || dato ? " satt av " + (lege || "lege ikke oppgitt") + (dato ? " den " + dato : "") : "";
@@ -656,8 +670,26 @@ function buildHlrRespLines() {
 /* ======================================================
    UI OPPDATERING
 ====================================================== */
+// Bevar transportform per pasientkategori uten å endre «Kuvøse» til «Båre».
+const opsixTransportPerKategori = new Map();
+let opsixForrigeTransportKategori = "";
 function updateSpedbarnUI() {
   const val = getSpedbarnValue();
+  if (opsixForrigeTransportKategori !== val) {
+    const eksisterende = getBinaryValue("transport");
+    if (opsixForrigeTransportKategori && eksisterende) {
+      opsixTransportPerKategori.set(opsixForrigeTransportKategori, eksisterende);
+    }
+    const forrigeErLiten = ["Nyfødt", "Spedbarn"].includes(opsixForrigeTransportKategori);
+    const nyErLiten = ["Nyfødt", "Spedbarn"].includes(val);
+    const neste = opsixTransportPerKategori.get(val) || (forrigeErLiten && nyErLiten ? eksisterende : "");
+    document.querySelectorAll('.binOpt[data-group="transport"]').forEach(el => {
+      el.checked = !!neste && el.dataset.value === neste;
+    });
+    opsixForrigeTransportKategori = val;
+  }
+  setHidden($("transport_bare_label"), val !== "Barn");
+  setHidden($("transport_kuvose")?.closest("label"), val === "Barn");
   const brukerGram = val === "Nyfødt" || val === "Spedbarn";
   const viserGA = brukerGram;
   const viserTransportform = val === "Nyfødt" || val === "Spedbarn" || val === "Barn";
@@ -672,14 +704,7 @@ function updateSpedbarnUI() {
 
   // Transportform vises kun for barn
   setHidden(transportWrap, !viserTransportform);
-  // Barn transporteres på båre, mens kuvøse er et eget valg for nyfødt/spedbarn.
-  const kuvose = $("transport_kuvose");
-  const kuvoseLabel = kuvose?.closest("label");
-  if (kuvose && kuvoseLabel) {
-    kuvose.dataset.value = val === "Barn" ? "Båre" : "Kuvøse";
-    const text = kuvoseLabel.querySelector("span");
-    if (text) text.textContent = kuvose.dataset.value;
-  }
+  // Ingen transportform får endret betydning ved bytte av pasientkategori.
 
   /* ==========================================
      KORREKT VEKTENHET
@@ -702,21 +727,13 @@ function updateSpedbarnUI() {
      FJERN UAKTUELL TRANSPORTFORM
   ========================================== */
 
-  if (!viserTransportform) {
-    document.querySelectorAll('.binOpt[data-group="transport"]').forEach(el => {
-      el.checked = false;
-      el.dataset.wasChecked = "false";
-    });
-  }
+  // Transportvalg bevares når transportseksjonen er skjult.
 
   /* ==========================================
      GESTASJONSALDER
   ========================================== */
 
-  if (!viserGA) {
-    $("gestasjonsUker").value = "";
-    $("gestasjonsDager").value = "";
-  }
+  // GA-data beholdes ved kategoriskifte og rapporteres bare når relevant.
   updateTitle();
   // Samme endringsvei ved musevalg, tastaturvalg og nullstilling.
   if (typeof window.opsixGcsCategoryChanged === "function") {
@@ -728,9 +745,7 @@ function updateCaveUI() {
   const valgt = document.querySelector(".caveRadio:checked");
   const skalVises = valgt && valgt.dataset.value === "Ja";
   setHidden(caveTextWrap, !skalVises);
-  if (!skalVises) {
-    caveText.value = "";
-  }
+  // Ikke slett spesifikasjon ved midlertidig endring av CAVE.
 }
 
 function calcMapFromSysDia(sysRaw, diaRaw) {
@@ -858,22 +873,19 @@ function updateSmitteSpes() {
   const vanligSmitte = !!valgt && valgt.id !== "sm_ingen";
   const skalVises = vanligSmitte || !!blodsmitte;
   setHidden($("smitteSpesWrap"), !skalVises);
-  if (!skalVises) {
-    $("smitteSpes").value = "";
-  }
+  // Behold spesifikasjon for eventuell gjenoppretting.
 }
 
 function refreshTrachDeps() {
   setHidden(trachO2Wrap, !trO2?.checked);
   setHidden(trachVentWrap, !trVent?.checked);
-  if (!trO2?.checked) $("trachO2Liter").value = "";
-  if (!trVent?.checked) ["trachVentFio2", "trachVentPeep", "trachVentTopp"].forEach(id => $(id).value = "");
+  // Trakeostomidetaljer beholdes selv når operatøren bytter modus.
 }
 
 function handleAirwayChange() {
   const v = getBinaryValue("airwayMain");
-  [spontO2Wrap, highFlowWrap, nivWrap, intubWrap, trachWrap].forEach(el => setHidden(el, true));
-  if (["Spontan med O2", "Spontan m/O2"].includes(v)) setHidden(spontO2Wrap, false);else if (["Spontant med high flow", "Spontant m/high flow"].includes(v)) setHidden(highFlowWrap, false);else if (v === "NIV (CPAP/BiPAP)") setHidden(nivWrap, false);else if (v === "Intubert") setHidden(intubWrap, false);else if (v === "Trakeostomi") setHidden(trachWrap, false);
+  [spontO2Wrap, highFlowWrap, nivWrap, biPAPWrap, intubWrap, trachWrap].forEach(el => setHidden(el, true));
+  if (["Spontan med O2", "Spontan m/O2"].includes(v)) setHidden(spontO2Wrap, false);else if (["Spontant med high flow", "Spontant m/high flow"].includes(v)) setHidden(highFlowWrap, false);else if (v === "CPAP") setHidden(nivWrap, false);else if (v === "BiPAP") setHidden(biPAPWrap, false);else if (v === "Intubert") setHidden(intubWrap, false);else if (v === "Trakeostomi") setHidden(trachWrap, false);
   refreshTrachDeps();
 }
 
@@ -883,6 +895,7 @@ function updateAcuteAirwayDetails() {
     acuteSpontO2Wrap,
     acuteHighFlowWrap,
     acuteNivWrap,
+    acuteBiPAPWrap,
     acuteIntubWrap,
     acuteTrachWrap,
     acuteTrachO2Wrap,
@@ -894,9 +907,8 @@ function updateAcuteAirwayDetails() {
   if (["Spontant med high flow", "Spontant m/high flow"].includes(a)) {
     setHidden(acuteHighFlowWrap, false);
   }
-  if (a === "NIV (CPAP/BiPAP)") {
-    setHidden(acuteNivWrap, false);
-  }
+  if (a === "CPAP") setHidden(acuteNivWrap, false);
+  if (a === "BiPAP") setHidden(acuteBiPAPWrap, false);
   if (a === "Intubert") {
     setHidden(acuteIntubWrap, false);
   }
@@ -969,6 +981,10 @@ function syncAcuteToFull() {
     ["acuteHighFlowFio2", "highFlowFio2"],
     ["acuteHighFlowFlow", "highFlowFlow"],
     ["acuteNivFio2", "nivFio2"],
+    ["acuteCpapPressure", "cpapPressure"],
+    ["acuteBiPAPIPAP", "biPAPIPAP"],
+    ["acuteBiPAPEPAP", "biPAPEPAP"],
+    ["acuteBiPAPFio2", "biPAPFio2"],
     ["acuteIntubFio2", "intubFio2"],
     ["acuteIntubPeep", "intubPeep"],
     ["acuteIntubTopp", "intubTopp"],
@@ -993,6 +1009,14 @@ function syncFullToAcute() {
     ["highFlowFio2", "acuteHighFlowFio2"],
     ["highFlowFlow", "acuteHighFlowFlow"],
     ["nivFio2", "acuteNivFio2"],
+  ["cpapPressure", "acuteCpapPressure"],
+  ["biPAPIPAP", "acuteBiPAPIPAP"],
+  ["biPAPEPAP", "acuteBiPAPEPAP"],
+  ["biPAPFio2", "acuteBiPAPFio2"],
+    ["cpapPressure", "acuteCpapPressure"],
+    ["biPAPIPAP", "acuteBiPAPIPAP"],
+    ["biPAPEPAP", "acuteBiPAPEPAP"],
+    ["biPAPFio2", "acuteBiPAPFio2"],
     ["intubFio2", "acuteIntubFio2"],
     ["intubPeep", "acuteIntubPeep"],
     ["intubTopp", "acuteIntubTopp"],
@@ -1022,6 +1046,10 @@ const LUFTVEI_DETALJFELTER = [
   ["highFlowFio2", "acuteHighFlowFio2"],
   ["highFlowFlow", "acuteHighFlowFlow"],
   ["nivFio2", "acuteNivFio2"],
+  ["cpapPressure", "acuteCpapPressure"],
+  ["biPAPIPAP", "acuteBiPAPIPAP"],
+  ["biPAPEPAP", "acuteBiPAPEPAP"],
+  ["biPAPFio2", "acuteBiPAPFio2"],
   ["intubFio2", "acuteIntubFio2"],
   ["intubPeep", "acuteIntubPeep"],
   ["intubTopp", "acuteIntubTopp"],
@@ -1036,10 +1064,23 @@ const LUFTVEI_TRACHVALG = [["tr_spont", "acute_tr_spont"], ["tr_o2", "acute_tr_o
    SYNKRONISERING AV LUFTVEIER
 ====================================================== */
 
+let opsixForrigeLuftveisvalg = "";
+function markerRespForRecheckOnAirway(newAirway) {
+  if (newAirway === opsixForrigeLuftveisvalg) return;
+  if (document.querySelector(".respRadio:checked")) {
+    document.body.dataset.opsixRespRecheck = "true";
+  }
+  opsixForrigeLuftveisvalg = newAirway;
+  oppdaterRespBekreftelsesVisning();
+}
+function oppdaterRespBekreftelsesVisning() {
+  setHidden($("opsixRespRecheck"), document.body.dataset.opsixRespRecheck !== "true" || !document.querySelector(".respRadio:checked"));
+}
 function synkroniserLuftveiFra(kilde) {
   const fraAkutt = kilde === "acute";
   const fraGruppe = fraAkutt ? "acuteAirway" : "airwayMain";
   const tilGruppe = fraAkutt ? "airwayMain" : "acuteAirway";
+  markerRespForRecheckOnAirway(getBinaryValue(fraGruppe));
 
   // Erstatt tidligere luftveisvalg med gjeldende valg.
 
@@ -1047,7 +1088,18 @@ function synkroniserLuftveiFra(kilde) {
 
   // Synkroniser tilhørende luftveisverdier.
 
-  LUFTVEI_DETALJFELTER.forEach(([fullId, akuttId]) => {
+  const relevant = {
+    "Spontan m/O2": ["spontO2Liter"],
+    "Spontant m/high flow": ["highFlowFio2", "highFlowFlow"],
+    "Spontant med high flow": ["highFlowFio2", "highFlowFlow"],
+    "CPAP": ["nivFio2", "cpapPressure"],
+    "BiPAP": ["biPAPIPAP", "biPAPEPAP", "biPAPFio2"],
+    "NIV (CPAP/BiPAP)": ["nivFio2", "cpapPressure"],
+    "Intubert": ["intubFio2", "intubPeep", "intubTopp"],
+    "Trakeostomi": ["trachO2Liter", "trachVentFio2", "trachVentPeep", "trachVentTopp"]
+  };
+  const activeFields = relevant[getBinaryValue(fraGruppe)] || [];
+  LUFTVEI_DETALJFELTER.filter(([fullId]) => activeFields.includes(fullId)).forEach(([fullId, akuttId]) => {
     const fra = $(fraAkutt ? akuttId : fullId);
     const til = $(fraAkutt ? fullId : akuttId);
     if (fra && til) {
@@ -1581,6 +1633,10 @@ function bindAcuteAirwayInputEvents() {
     "acuteHighFlowFio2",
     "acuteHighFlowFlow",
     "acuteNivFio2",
+    "acuteCpapPressure",
+    "acuteBiPAPIPAP",
+    "acuteBiPAPEPAP",
+    "acuteBiPAPFio2",
     "acuteIntubFio2",
     "acuteIntubPeep",
     "acuteIntubTopp",
@@ -1599,14 +1655,8 @@ function updateHlrRespUI() {
   const respVal = document.querySelector(".respRadio:checked")?.value || "";
   setHidden($("hlrMinusTextWrap"), hlrVal !== "Nei");
   setHidden($("respMinusTextWrap"), respVal !== "Nei");
-  if (hlrVal !== "Nei") {
-    $("hlrMinusLege").value = "";
-    $("hlrMinusDato").value = "";
-  }
-  if (respVal !== "Nei") {
-    $("respMinusLege").value = "";
-    $("respMinusDato").value = "";
-  }
+  // Bevar lege og dato også om status midlertidig endres.
+  oppdaterRespBekreftelsesVisning();
 }
 
 function bindHlrRespEvents() {
@@ -1624,6 +1674,7 @@ function bindHlrRespEvents() {
       } else {
         radio.checked = true;
       }
+      if (radio.classList.contains("respRadio")) document.body.dataset.opsixRespRecheck = "false";
       updateHlrRespUI();
       lagRapport();
     });
@@ -1641,11 +1692,16 @@ function bindEvents() {
   bindCvkEvents();
   bindUtstyrPumpeEvents();
   bindHighFlowNumberOnly();
-  bindMedicationNeiEvents();
+  // Felles bevarende logikk håndterer nå Nei-valg i alle gruppene.
   bindSpedbarnEvents();
   bindCaveEvents();
   bindSmitteEvents();
   bindHlrRespEvents();
+  $("opsixRespConfirm")?.addEventListener("click", () => {
+    document.body.dataset.opsixRespRecheck = "false";
+    oppdaterRespBekreftelsesVisning();
+    lagRapport();
+  });
   bindBinaryOptionEvents();
   bindTrachEvents();
   bindAcuteTrachEvents();
@@ -1746,6 +1802,11 @@ function addDynamicTextRow(container, placeholder, checkboxClass, textClass) {
       txt.setSelectionRange(Math.min(cursor,txt.value.length),Math.min(cursor,txt.value.length));
     }
     chk.checked = !!clean(txt.value);
+    const noChoice = textClass === "sedText" ? $("sed_nei") : textClass === "pressorText" ? $("pre_nei") : document.querySelector('input[name="medicationOther"][value="Nei"]');
+    if (chk.checked && noChoice?.checked) {
+      noChoice.checked = false;
+      noChoice.opsixRestorePrevious?.();
+    }
     if (textClass === "sedText") ensureSedBlankRow();
     if (textClass === "pressorText") ensurePressorBlankRow();
     if (textClass === "andreInfText") ensureAndreInfBlankRow();
@@ -1795,7 +1856,7 @@ function resetPressorRows() {
 }
 
 function addAndreInfRow() {
-  addDynamicTextRow(andreInfBody, "Annet medikament / infusjon", "andreInfChk", "andreInfText");
+  addDynamicTextRow(andreInfBody, "Annet medikament", "andreInfChk", "andreInfText");
 }
 
 function ensureAndreInfBlankRow() {
@@ -1818,7 +1879,10 @@ function bindCustomChip(txt, chk, row, container, ensureBlank, noneId) {
   txt.addEventListener("input", () => {
     txt.value = txt.value.replace(/\s*\n\s*/g, " ");
     chk.checked = Boolean(clean(txt.value));
-    if (chk.checked && $(noneId)) $(noneId).checked = false;
+    if (chk.checked && $(noneId)?.checked) {
+      $(noneId).checked = false;
+      $(noneId).opsixRestorePrevious?.();
+    }
     ensureBlank();
     resize();
     if (!clean(txt.value) && row.nextElementSibling) {
@@ -2045,6 +2109,8 @@ function oppdaterKliniskeFeltvarsler() {
     "acuteHighFlowFio2",
     "nivFio2",
     "acuteNivFio2",
+    "biPAPFio2",
+    "acuteBiPAPFio2",
     "intubFio2",
     "acuteIntubFio2",
     "trachVentFio2",
@@ -2228,9 +2294,9 @@ function addTransportform(lines) {
 
 function getMedicationData() {
   return {
-    sedasjon: [...linesFixedMeds(".sed"), ...collectDynamicTexts(".sedText", ".sedDynChk")],
-    pressor: [...linesFixedMeds(".pre"), ...collectDynamicTexts(".pressorText", ".pressorDynChk")],
-    andre: [
+    sedasjon: $("sed_nei")?.checked ? ["Nei"] : [...linesFixedMeds(".sed"), ...collectDynamicTexts(".sedText", ".sedDynChk")],
+    pressor: $("pre_nei")?.checked ? ["Nei"] : [...linesFixedMeds(".pre"), ...collectDynamicTexts(".pressorText", ".pressorDynChk")],
+    andre: document.querySelector('input[name="medicationOther"][value="Nei"]')?.checked ? ["Nei"] : [
       ...Array.from(document.querySelectorAll('input[name="medicationOther"]:checked')).map(x => x.value),
       ...collectDynamicTexts(".andreInfText", ".andreInfChk")
     ]
@@ -2367,6 +2433,11 @@ async function kopierRapport() {
 }
 
 function nullstillSkjema() {
+  document.dispatchEvent(new Event("opsix:reset"));
+  opsixForrigeLuftveisvalg = "";
+  opsixTransportPerKategori.clear();
+  opsixForrigeTransportKategori = "";
+  document.body.dataset.opsixRespRecheck = "false";
   // Avslutt gammel statusvisning, også ved pågående kopiering.
   copyVersion++;
   clearTimeout(copyTimer);
@@ -2427,44 +2498,44 @@ function nullstillSkjema() {
 }
 
 function bindExclusiveChipGroup(options) {
-  const {
-    noneSelector,
-    otherSelector,
-    clearSelectors = [],
-    resetRows,
-    onChange
-  } = options;
+  const { noneSelector, otherSelector, extraCheckSelector = "", onChange } = options;
   const none = document.querySelector(noneSelector);
-  const others = document.querySelectorAll(otherSelector);
+  const allOthers = () => [...document.querySelectorAll(otherSelector), ...document.querySelectorAll(extraCheckSelector || ".opsix-no-extra-checkbox")];
   if (!none) return;
+  let suspended = [];
+  document.addEventListener("opsix:reset", () => { suspended = []; });
+  const restore = () => {
+    if (!suspended.length) return;
+    suspended.forEach(el => { if (el.isConnected) el.checked = true; });
+    suspended = [];
+  };
+  none.opsixRestorePrevious = restore;
   none.addEventListener("change", () => {
     if (none.checked) {
-      others.forEach(chk => {
-        chk.checked = false;
-      });
-      clearSelectors.forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => {
-          if ("value" in el) el.value = "";
-          if ("checked" in el) el.checked = false;
-          el.classList?.add("hidden");
-        });
-      });
-      if (typeof resetRows === "function") {
-        resetRows();
-      }
+      suspended = allOthers().filter(el => el.checked);
+      suspended.forEach(el => { el.checked = false; });
+    } else {
+      restore();
     }
-    if (typeof onChange === "function") onChange();
+    onChange?.();
     lagRapport();
   });
-  others.forEach(chk => {
-    chk.addEventListener("change", () => {
-      if (chk.checked) {
-        none.checked = false;
-      }
-      if (typeof onChange === "function") onChange();
-      lagRapport();
+  const registerOthers = () => {
+    allOthers().forEach(el => {
+      if (el.dataset.opsixExclusiveBound === noneSelector) return;
+      el.dataset.opsixExclusiveBound = noneSelector;
+      el.addEventListener("change", () => {
+        if (el.checked && none.checked) {
+          none.checked = false;
+          restore();
+        }
+        onChange?.();
+        lagRapport();
+      });
     });
-  });
+  };
+  registerOthers();
+  // Dynamiske fritekstchips registreres via egne inputhendelser.
 }
 
 function bindSmartChipLogic() {
@@ -2478,15 +2549,7 @@ function bindSmartChipLogic() {
   bindExclusiveChipGroup({
     noneSelector: "#til_ingen",
     otherSelector: '.accessChipRow input[type="checkbox"]:not(#til_ingen)',
-    clearSelectors: [".tilgangDynChk", ".tilgangText"],
-    resetRows: () => {
-      $("cvkLumen").value = "";
-      $("pvkAntall").value = "";
-      if (typeof resetTilgangRows === "function") {
-        resetTilgangRows();
-      }
-      updateTilgangerUI();
-    },
+    extraCheckSelector: ".tilgangDynChk",
     onChange: () => {
       updateTilgangerUI();
     }
@@ -2496,40 +2559,29 @@ function bindSmartChipLogic() {
   bindExclusiveChipGroup({
     noneSelector: "#utst_ingen",
     otherSelector: '.utstyrChipRow input[type="checkbox"]:not(#utst_ingen)',
-    clearSelectors: ["#utstPumpeAntall", ".drenAnnetChk", ".drenAnnetText"],
-    resetRows: () => {
-      if (typeof resetDrenAnnetFields === "function") resetDrenAnnetFields();
-    }
+    extraCheckSelector: ".drenAnnetChk",
+    onChange: updateUtstyrPumpeUI
   });
 
   // Sedasjon: Nei slår av andre sedasjonsvalg og fritekst
   bindExclusiveChipGroup({
     noneSelector: "#sed_nei",
     otherSelector: '.sed:not(#sed_nei)',
-    clearSelectors: [".sedDynChk", ".sedText"],
-    resetRows: () => {
-      if (typeof resetSedRows === "function") resetSedRows();
-    }
+    extraCheckSelector: ".sedDynChk"
   });
 
   // Pressor: Nei slår av andre pressorvalg og fritekst
   bindExclusiveChipGroup({
     noneSelector: "#pre_nei",
     otherSelector: '.pre:not(#pre_nei)',
-    clearSelectors: [".pressorDynChk", ".pressorText"],
-    resetRows: () => {
-      if (typeof resetPressorRows === "function") resetPressorRows();
-    }
+    extraCheckSelector: ".pressorDynChk"
   });
 
   // Andre medikamenter: Nei slår av Ringer/NaCl/Blod/Plasma/annet
   bindExclusiveChipGroup({
     noneSelector: 'input[name="medicationOther"][value="Nei"]',
     otherSelector: 'input[name="medicationOther"]:not([value="Nei"])',
-    clearSelectors: [".andreInfChk", ".andreInfText"],
-    resetRows: () => {
-      if (typeof resetAndreInfRows === "function") resetAndreInfRows();
-    }
+    extraCheckSelector: ".andreInfChk"
   });
 
   // Spesialtransport: Ikke aktuelt slår av ECMO/IABP osv.
@@ -3026,8 +3078,7 @@ function buildFollowNeedLine() {
 
   const reportPanel = document.createElement("section");
   reportPanel.className = "opsix-report-panel";
-  reportPanel.setAttribute("aria-labelledby", "opsixReportTitle");
-  reportPanel.append(title("Generert transportrapport", "opsixReportTitle"));
+  reportPanel.setAttribute("aria-label", "Transportrapport");
 
   // Flytt eksisterende DOM-noder. IKKE klon dem: registreringer,
   // valgte verdier, ID-er og JS-hendelser må følge de samme nodene.
@@ -3048,7 +3099,11 @@ function buildFollowNeedLine() {
   reportLayout.append(refs.report, reportTools);
   if (refs.actions) reportTools.append(refs.actions);
   const footerTools = $("opsixFooterActions");
-  if (footerTools) reportTools.append(footerTools);
+  if (footerTools) {
+    const feedback = footerTools.querySelector(".feedbackBtn");
+    if (feedback) footerTools.prepend(feedback);
+    reportTools.append(footerTools);
+  }
   reportPanel.append(reportLayout);
   main.append(columns, reportPanel);
   main.classList.add("opsix-v110");
@@ -3403,7 +3458,7 @@ function buildFollowNeedLine() {
   }
   const optionalIds = [
     "bevar-full-tidligere", "bevar-full-vitalparametre",
-    "bevar-full-tilganger", "bevar-full-utstyr"
+    "bevar-full-tilganger"
   ];
   function hasValues(root) {
     return root && [...root.querySelectorAll("input,textarea,select")].some(el => {
@@ -3493,48 +3548,9 @@ function buildFollowNeedLine() {
     });
     return {section,toggle,content,note};
   }).filter(Boolean);
-  // Sprøytepumper er prioritert ved Akutt: samme eksisterende kontroll flyttes,
-  // slik at den er tilgjengelig uten å åpne «Utstyr».
-  const equipmentAccordion = acuteAccordions.find(x => x.section.id === "bevar-full-utstyr");
-  const pumpRow = document.querySelector("#sharedEquipmentBlock .pumpRow");
-  const pumpOriginalParent = pumpRow?.parentElement;
-  const pumpOriginalNext = pumpRow?.nextSibling;
-  const acutePumpArea = document.createElement("div");
-  acutePumpArea.className = "opsix-acute-pump-area";
-  acutePumpArea.hidden = true;
-  // Chip-etiketten «Sprøytepumper» er allerede synlig; ikke legg til en duplikatoverskrift.
-  // Akutt: legg pumpene ETTER hele den sammenleggbare Utstyr-seksjonen,
-  // som en egen rad utenfor boksen. Normal hastegrad beholder original plassering.
-  if (equipmentAccordion && pumpRow) equipmentAccordion.section.insertAdjacentElement("afterend", acutePumpArea);
-  function positionPump(acute) {
-    if (!pumpRow || !pumpOriginalParent || !equipmentAccordion) return;
-    if (acute) {
-      // Bevar fokus og valgt antall: flytt kun når hastegraden faktisk skifter.
-      if (pumpRow.parentElement !== acutePumpArea) acutePumpArea.append(pumpRow);
-      acutePumpArea.hidden = false;
-    } else {
-      if (pumpRow.parentElement !== pumpOriginalParent) {
-        if (pumpOriginalNext?.parentNode === pumpOriginalParent) pumpOriginalParent.insertBefore(pumpRow,pumpOriginalNext);
-        else pumpOriginalParent.append(pumpRow);
-      }
-      acutePumpArea.hidden = true;
-    }
-  }
   let wasAcute = false;
   function refreshAcuteAccordions() {
     const acute = document.body.classList.contains("opsix-akutt");
-    positionPump(acute);
-    // Antall følger avhuking også når sprøytepumpene er flyttet til Akutt.
-    // Bruk eksisterende input og endre kun synlighet.
-    if (acute && pumpRow) {
-      const count = document.getElementById("utstPumpeAntall");
-      const checked = document.getElementById("utst_pumper")?.checked;
-      if (count) {
-        count.classList.toggle("hidden", !checked);
-        count.hidden = !checked;
-        count.disabled = false;
-      }
-    }
     for (const {section,toggle,content,note} of acuteAccordions) {
       note.hidden = !acute;
       section.classList.toggle("opsix-acute-collapsible", acute);
@@ -3776,5 +3792,38 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.querySelectorAll('.hasteCard').forEach(input => {
     if (!input.hasAttribute('aria-pressed')) input.setAttribute('aria-pressed', String(input.classList.contains('active')));
+  });
+})();
+/* OPSIX V1.1.0 – feltstatus for ordinære fritekstfelt, vekt og vitalparametre.
+   Endrer kun visuell status. Valideringsklassen kliniskUgyldig har prioritet.
+   Ingen verdier, rapportdata eller valideringsgrenser endres. */
+(() => {
+  const fields = document.querySelectorAll([
+    "#hovedproblem", "#acuteHovedproblem", "#tidligere", "#caveText",
+    "#smitteSpes", "#rekNavn", "#rekTlf", "#acuteRekNavn", "#acuteRekTlf",
+    "#mottNavn", "#mottTlf", "#hlrMinusLege", "#hlrMinusDato",
+    "#respMinusLege", "#respMinusDato",
+    "#vekt", "#rf", "#spo2", "#puls", "#btSys", "#btDia", "#map", "#temp", "#gcs"
+  ].join(","));
+  const markCompleted = field => {
+    field.classList.toggle("opsix-filled-entry",
+      Boolean(clean(field.value)) && !field.classList.contains("kliniskUgyldig"));
+  };
+  fields.forEach(field => {
+    field.addEventListener("focus", () => field.classList.remove("opsix-filled-entry"));
+    field.addEventListener("blur", () => {
+      // GCS blir validert etter at feltet er forlatt; øvrige grenseverdier
+      // har sine egne valideringslyttere og rapporteres på samme måte som før.
+      if (field.id === "gcs" && typeof oppdaterKliniskeFeltvarsler === "function") {
+        oppdaterKliniskeFeltvarsler();
+      }
+      markCompleted(field);
+    });
+    field.addEventListener("input", () => {
+      if (!clean(field.value)) field.classList.remove("opsix-filled-entry");
+    });
+  });
+  document.addEventListener("opsix:reset", () => {
+    fields.forEach(field => field.classList.remove("opsix-filled-entry"));
   });
 })();

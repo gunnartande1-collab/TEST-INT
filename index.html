@@ -45,13 +45,13 @@
             <span class="hasteCardText">Vurdering for intervensjon. Transport så raskt som mulig.</span>
           </button>
 
-          <button type="button" class="hasteCard haste-samme" data-haste="Samme døgn (V1)">
-            <span class="hasteCardTitle">Samme døgn</span>
+          <button type="button" class="hasteCard haste-samme" data-haste="Vanlig 1">
+            <span class="hasteCardTitle">Vanlig 1</span>
             <span class="hasteCardText">Transport bør gjennomføres samme dag.</span>
           </button>
 
-          <button type="button" class="hasteCard haste-planlagt" data-haste="Planlagt transport (V2)">
-            <span class="hasteCardTitle">Planlagt</span>
+          <button type="button" class="hasteCard haste-planlagt" data-haste="Vanlig 2 (planlagt)">
+            <span class="hasteCardTitle">Vanlig 2 (planlagt)</span>
             <span class="hasteCardText">Transport som kan planlegges frem i tid.</span>
           </button>
 
@@ -211,6 +211,11 @@
                   <span>Kuvøse</span>
                 </label>
 
+                <label class="medChip spedChip hidden" id="transport_bare_label">
+                  <input type="radio" name="transport" class="chk binOpt" data-group="transport" data-value="Båre" id="transport_bare">
+                  <span>Båre</span>
+                </label>
+
                 <label class="medChip spedChip">
                   <input
                     type="radio"
@@ -290,9 +295,14 @@
               </label>
 
               <label class="binaryOpt">
-                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="NIV (CPAP/BiPAP)" id="acute_air_niv">
-                <span>NIV (CPAP/BiPAP)</span>
-              </label>
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="CPAP" id="acute_air_niv">
+                 <span>CPAP</span>
+               </label>
+
+               <label class="binaryOpt">
+                 <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="BiPAP" id="acute_air_bipap">
+                 <span>BiPAP</span>
+               </label>
 
               <label class="binaryOpt">
                 <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Intubert" id="acute_air_intubert">
@@ -345,20 +355,19 @@
 
             </div>
 
-            <div id="acuteNivWrap" class="hidden">
-
-              <div class="inlineRow" style="margin-top:10px;">
-                <div class="unitInputWrap">
-                  <input
-                    id="acuteNivFio2"
-                    type="text"
-                    inputmode="decimal"
-                  >
-                  <span>% FiO₂</span>
-                </div>
-              </div>
-
-            </div>
+             <div id="acuteNivWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap"><input id="acuteCpapPressure" type="text" inputmode="decimal" aria-label="CPAP-trykk i cmH2O"><span>cmH₂O</span></div>
+                 <div class="unitInputWrap"><input id="acuteNivFio2" type="text" inputmode="decimal" aria-label="CPAP FiO2 prosent"><span>% FiO₂</span></div>
+               </div>
+             </div>
+             <div id="acuteBiPAPWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap"><input id="acuteBiPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O"><span>IPAP</span></div>
+                 <div class="unitInputWrap"><input id="acuteBiPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O"><span>EPAP</span></div>
+                 <div class="unitInputWrap"><input id="acuteBiPAPFio2" type="text" inputmode="decimal" aria-label="BiPAP FiO2 prosent"><span>% FiO₂</span></div>
+               </div>
+             </div>
 
             <div id="acuteIntubWrap" class="hidden">
 
@@ -502,7 +511,8 @@
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan u/O2" id="air_spont_uten"><span>Spontan u/O₂</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan m/O2" id="air_spont_med"><span>Spontan m/O₂</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontant m/high flow" id="air_highflow"><span>Spontant m/high flow</span></label>
-              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="NIV (CPAP/BiPAP)" id="air_niv"><span>NIV (CPAP/BiPAP)</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="CPAP" id="air_niv"><span>CPAP</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="BiPAP" id="air_bipap"><span>BiPAP</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Intubert" id="air_intubert"><span>Intubert</span></label>
               <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Trakeostomi" id="air_trach"><span>Trakeostomi</span></label>
             </div>
@@ -543,18 +553,25 @@
 
             </div>
 
-            <div id="nivWrap" class="hidden">
-              <div class="inlineRow" style="margin-top:10px;">
-                <div class="unitInputWrap">
-                  <input
-                    id="nivFio2"
-                    type="text"
-                    inputmode="decimal"
-                  >
-                  <span>% FiO₂</span>
-                </div>
-              </div>
-            </div>
+             <div id="nivWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap">
+                   <input id="cpapPressure" type="text" inputmode="decimal" aria-label="CPAP-trykk i cmH2O">
+                   <span>cmH₂O</span>
+                 </div>
+                 <div class="unitInputWrap">
+                   <input id="nivFio2" type="text" inputmode="decimal" aria-label="CPAP FiO2 prosent">
+                   <span>% FiO₂</span>
+                 </div>
+               </div>
+             </div>
+             <div id="biPAPWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap"><input id="biPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O"><span>IPAP</span></div>
+                 <div class="unitInputWrap"><input id="biPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O"><span>EPAP</span></div>
+                 <div class="unitInputWrap"><input id="biPAPFio2" type="text" inputmode="decimal" aria-label="BiPAP FiO2 prosent"><span>% FiO₂</span></div>
+               </div>
+             </div>
 
             <div id="intubWrap" class="hidden">
 
@@ -738,7 +755,7 @@
           </div>
 
           <div class="medGroup">
-            <div class="medGroupTitle">Andre medikamenter / infusjoner</div>
+            <div class="medGroupTitle">Andre medikamenter</div>
 
             <div class="chipRow medicationOtherRow">
               <label class="medChip">
@@ -829,26 +846,6 @@
 
                 <div class="chipRow utstyrChipRow">
 
-                  <label class="medChip akuttSkjulUtstyr">
-                    <input
-                      id="utst_ingen"
-                      class="chk dren"
-                      type="checkbox"
-                      data-name="Ingen utstyr"
-                    >
-                    <span>Ingen utstyr</span>
-                  </label>
-
-                  <label class="medChip akuttSkjulUtstyr">
-                    <input id="utst_arterie" class="chk dren" type="checkbox" data-name="Arteriekran">
-                    <span>Arteriekran</span>
-                  </label>
-
-                  <label class="medChip akuttSkjulUtstyr">
-                    <input id="dren_thorax" class="chk dren" type="checkbox" data-name="Thoraxdren">
-                    <span>Thoraxdren</span>
-                  </label>
-
                   <div class="pumpRow">
                     <label class="medChip">
                       <input
@@ -874,6 +871,37 @@
                       <option>10</option>
                     </select>
                   </div>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input
+                      id="utst_ingen"
+                      class="chk dren"
+                      type="checkbox"
+                      data-name="Ingen utstyr"
+                    >
+                    <span>Ingen utstyr</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="utst_arterie" class="chk dren" type="checkbox" data-name="Arteriekran">
+                    <span>Arteriekran</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="dren_thorax" class="chk dren" type="checkbox" data-name="Thoraxdren">
+                    <span>Thoraxdren</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="utst_ventrikkelsonde" class="chk dren" type="checkbox" data-name="Ventrikkelsonde">
+                    <span>Ventrikkelsonde</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="utst_urinkateter" class="chk dren" type="checkbox" data-name="Urinkateter">
+                    <span>Urinkateter</span>
+                  </label>
+
 
                 </div> <!-- chipRow -->
 
@@ -995,6 +1023,11 @@
                 <input id="hlrMinusLege" placeholder="Lege HLR -">
                 <input id="hlrMinusDato" placeholder="Dato">
               </div>
+
+               <div id="opsixRespRecheck" class="hidden opsix-recheck-row" role="status">
+                 <span>Respiratorstatus må bekreftes på nytt etter endret luftveisstatus.</span>
+                 <button id="opsixRespConfirm" type="button">Bekreft respiratorstatus</button>
+               </div>
 
               <div id="respMinusTextWrap" class="hidden doctorRow">
                 <input id="respMinusLege" placeholder="Lege respirator -">

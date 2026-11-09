@@ -4442,7 +4442,7 @@ body.opsix-test-mode .opsix-columns .opsix-column #weightWrap #vektLabel {
   margin: 0 0 7px !important;
 }
 
-/* ==== OPSIX DESIGN SYSTEM â€“ TYPOGRAFI ==== */
+/* ==== OPSIX DESIGN SYSTEM Ã¢â‚¬â€œ TYPOGRAFI ==== */
 body.opsix-test-mode {
   --opsix-heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --opsix-colheading-size: 20px;
@@ -4473,14 +4473,14 @@ body.opsix-test-mode .opsix-columns .opsix-column :is(.section,.vpTitle) {
   border-top: 0 !important;
   padding-top: 0 !important;
 }
-/* Den siste deklarasjonen for kolonneproporsjon gjelder alltid pÃ¥ desktop. */
+/* Den siste deklarasjonen for kolonneproporsjon gjelder alltid pÃƒÂ¥ desktop. */
 @media (min-width: 1201px) {
  body.opsix-test-mode .opsix-columns,
  body.opsix-no-haste.opsix-test-mode .opsix-columns {
    grid-template-columns: minmax(0,27fr) minmax(0,43fr) minmax(0,30fr) !important;
  }
 }
-/* Synlig fokus pÃ¥ reelle input-elementer og tilhÃ¸rende chips. */
+/* Synlig fokus pÃƒÂ¥ reelle input-elementer og tilhÃƒÂ¸rende chips. */
 body.opsix-test-mode :is(.medChip,.spedChip,.followChip,.binaryOpt,.smChip):focus-within,
 body.opsix-test-mode .specialGroup .specCell:focus-within {
   outline: 3px solid #7eb8fa !important;
@@ -4488,7 +4488,7 @@ body.opsix-test-mode .specialGroup .specCell:focus-within {
 }
 
 /* =============================================================
-   OPSIX V1.1.0 â€“ MEDIKAMENT-FRITEKST SOM REDIGERBARE CHIPS
+   OPSIX V1.1.0 Ã¢â‚¬â€œ MEDIKAMENT-FRITEKST SOM REDIGERBARE CHIPS
    Utelukkende Sedasjon / Pressor / Andre. Tilganger og Utstyr
    beholder sine eksisterende fritekstfelt.
 ============================================================= */
@@ -4560,7 +4560,7 @@ body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) text
 }
 
 /* =====================================================
-   OPSIX V1.1.0 â€“ TILGANGER OG UTSTYR: FRITEKSTCHIPS
+   OPSIX V1.1.0 Ã¢â‚¬â€œ TILGANGER OG UTSTYR: FRITEKSTCHIPS
    Bruk samme utforming og dynamikk som medikamentchips.
 ===================================================== */
 body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody).accessDynamic {
@@ -4626,9 +4626,9 @@ body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) textarea.opsi
 
 
 /* =============================================================
-   OPSIX V1.1.0 â€“ UTFYLTE FRITEKSTCHIPS SOM VALGTE CHIPS
+   OPSIX V1.1.0 Ã¢â‚¬â€œ UTFYLTE FRITEKSTCHIPS SOM VALGTE CHIPS
    Underliggende avkryssing styres fortsatt av eksisterende JS.
-   Tomme reservechips beholder ordinÃ¦r, nÃ¸ytral bakgrunn.
+   Tomme reservechips beholder ordinÃƒÂ¦r, nÃƒÂ¸ytral bakgrunn.
 ============================================================= */
 body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
   .opsix-medication-chip-row:has(> input[type="checkbox"]:checked)
@@ -4653,8 +4653,8 @@ body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
 
 
 /* =============================================================
-   OPSIX V1.1.0 â€“ LESBARE FRITEKSTCHIPS I DAGVISNING
-   Samme tekstfarge som Ã¸vrige lyse input/valg.
+   OPSIX V1.1.0 Ã¢â‚¬â€œ LESBARE FRITEKSTCHIPS I DAGVISNING
+   Samme tekstfarge som ÃƒÂ¸vrige lyse input/valg.
    Natt og dempet modus er uendret.
 ============================================================= */
 body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
@@ -4683,4 +4683,151 @@ body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
   border-color: #2563a6 !important;
   color: #111827 !important;
   caret-color: #111827 !important;
+}
+/* ==============================================================
+   OPSIX V1.1.0 TEST â€“ avtalte justeringer 09.11.2026
+   MÃ¥lrettet tilleggs-CSS for nye felt. Andre temaer uendret.
+============================================================== */
+body.opsix-test-mode :is(#biPAPWrap,#acuteBiPAPWrap) {
+  margin-top: 10px;
+  padding: 8px 0;
+  background: transparent;
+  border: 0;
+  max-width: 560px;
+}
+body.opsix-test-mode :is(#biPAPWrap,#acuteBiPAPWrap) .unitInputWrap {
+  flex: 1 1 125px;
+  min-width: 125px;
+  max-width: 170px;
+}
+body.opsix-test-mode :is(#biPAPWrap,#acuteBiPAPWrap) .inlineRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+body.opsix-test-mode .opsix-report-tools :is(#copyBtn,#resetBtn,#opsixFooterActions .feedbackBtn) {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 52px !important;
+  border-radius: 14px !important;
+  padding: 0 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font: 700 14px/1.2 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+}
+body.opsix-test-mode .opsix-report-tools #opsixFooterActions .feedbackBtn {
+  background: #366a91;
+  color: #fff;
+  text-decoration: none;
+}
+body.theme-light.opsix-test-mode .opsix-report-tools #opsixFooterActions .feedbackBtn {
+  background: #d5e5f2;
+  color: #162534;
+}
+body.opsix-test-mode .opsix-report-tools #opsixFooterActions {
+  gap: 12px;
+}
+body.opsix-test-mode .opsix-report-tools #opsixFooterActions > .feedbackBtn {
+  order: -1;
+}
+/* OPSIX â€“ ferdigutfylte felt. Fargevalg fÃ¸lger aktivt tema.
+   Ingen andre chips, rapportfelt eller datakilder omfattes. */
+body.opsix-test-mode {
+  --opsix-complete-bg: #344f68;
+  --opsix-complete-border: #79aee2;
+  --opsix-complete-text: #f8fbff;
+  --opsix-complete-label: #e1ebf5;
+  --opsix-edit-bg: #ffffff;
+  --opsix-edit-border: #79aee2;
+  --opsix-edit-text: #17283a;
+  --opsix-edit-label: #526173;
+}
+body.theme-light.opsix-test-mode {
+  --opsix-complete-bg: #e0e6ec;
+  --opsix-complete-border: #a9b8c5;
+  --opsix-complete-text: #263442;
+  --opsix-complete-label: #536273;
+  --opsix-edit-bg: #ffffff;
+  --opsix-edit-border: #526a84;
+  --opsix-edit-text: #202b39;
+  --opsix-edit-label: #68788a;
+}
+body.theme-dim.opsix-test-mode {
+  --opsix-complete-bg: #3c4d5d;
+  --opsix-complete-border: #8092a3;
+  --opsix-complete-text: #ffffff;
+  --opsix-complete-label: #c1ced9;
+  --opsix-edit-bg: #e5e9ed;
+  --opsix-edit-border: #aab8c3;
+  --opsix-edit-text: #202b35;
+  --opsix-edit-label: #586775;
+}
+body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs).opsix-filled-entry:not(.kliniskUgyldig):not(:focus) {
+  background: var(--opsix-complete-bg) !important;
+  border-color: var(--opsix-complete-border) !important;
+  color: var(--opsix-complete-text) !important;
+  caret-color: var(--opsix-complete-text);
+}
+/* Fokus viser pÃ¥gÃ¥ende redigering; natt er hvit, dag/dempet har egne farger. */
+body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs):focus {
+  background: var(--opsix-edit-bg) !important;
+  border-color: var(--opsix-edit-border) !important;
+  color: var(--opsix-edit-text) !important;
+  caret-color: var(--opsix-edit-text);
+}
+/* RF, SpO2, Puls, SYS, DIA, MAP, Tmp og GCS forblir lesbare inne i ruten. */
+body.opsix-test-mode .inlineVitals :is(.vpField,.btMini):has(> input.opsix-filled-entry:not(.kliniskUgyldig):not(:focus)) > span {
+  color: var(--opsix-complete-label) !important;
+}
+body.opsix-test-mode .inlineVitals :is(.vpField,.btMini):has(> input:focus) > span {
+  color: var(--opsix-edit-label) !important;
+}
+/* Klinisk ugyldig verdi skal aldri gis ferdigutfylt-fargen. */
+body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs).kliniskUgyldig:not(:focus) {
+  background: #fff1f2 !important;
+  border: 2px solid #dc2626 !important;
+  color: #b91c1c !important;
+}
+body.opsix-test-mode .opsix-recheck-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #a58e65;
+  border-radius: 10px;
+}
+body.opsix-test-mode .opsix-recheck-row button {
+  min-height: 36px;
+  padding: 6px 12px;
+  background: #4b6e92;
+  color: #fff;
+}
+/* Â«Ingen utstyrÂ» / Â«Ingen tilgangerÂ» deaktiverer presentasjon,
+   men sletter ikke tidligere angitte verdier. */
+body.opsix-test-mode:has(#utst_ingen:checked) :is(#utstyrDynamicBody,.utstyrChipRow label:not(:has(#utst_ingen)),.utstyrChipRow .pumpRow) {
+  opacity: .52;
+}
+body.opsix-test-mode:has(#til_ingen:checked) :is(#tilgangerDynamicBody,.accessChipRow label:not(:has(#til_ingen))) {
+  opacity: .52;
+}
+
+/* ==============================================================
+   OPSIX V1.1.0 TEST â€“ godkjent fargejustering, 09.11.2026
+   Kun valgt luftveischip i Dag: samme blÃ¥ som Ã¸vrige valgte chips.
+   Natt/Dempet og luftveislogikk endres ikke.
+============================================================== */
+body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(input:checked),
+body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(input:checked):hover {
+  background: #205b9e !important;
+  border-color: #174475 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(input:checked) span {
+  color: #ffffff !important;
 }
