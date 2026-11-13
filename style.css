@@ -1,5018 +1,1234 @@
-/* OPSIX V1.1.0 TEST | Refaktorert CSS.
- * Obsolete deklarasjoner for identisk selektor + medie-kontekst fjernet.
- * Originale tema-, responsivitets- og registreringsregler beholdt.
- */
-:root {
-  --opsix-text-scale: 1;
-  --bg: #2f3136;
-  --panel: #3a3d43;
-  --text: #f1f1f1;
-  --muted: #cfcfcf;
-  --field: #e2e2e2;
-  --fieldText: #111;
-  --green: #35c16a;
-  --greenHover: #2fb45f;
-  --red: #ef4444;
-  --redHover: #e03b3b;
-  --accent: #8fb0ff;
-  --hasteAkutt: #ef4444;
-  --hasteHaster: #facc15;
-  --hasteSamme: #7FAE7E;
-  --hastePlanlagt: #2F6B3B;
-  --hasteText: #111;
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-.wrap {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
-.card {
-  background: var(--panel);
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid var(--line);
-}
-h1 {
-  text-align: center;
-  margin: 6px 0 28px;
-  letter-spacing: 1px;
-}
-label {
-  display: block;
-  font-weight: 900;
-  margin-top: 14px;
-  margin-bottom: 6px;
-}
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 9px;
-  background: var(--field);
-  color: var(--fieldText);
-  font-size: calc(14px * var(--opsix-text-scale));
-  margin-bottom: 10px;
-}
-textarea {
-  resize: vertical;
-  overflow: auto;
-  min-height: 72px;
-  white-space: pre-wrap;
-}
-textarea::-webkit-resizer {
-  background: linear-gradient(
-      135deg,
-      transparent 0%,
-      transparent 50%,
-      #222 50%,
-      #222 60%,
-      transparent 60%,
-      transparent 100%
-    );
-}
-textarea.report {
-  margin-top: 15px;
-  min-height: 260px;
-  white-space: pre-wrap;
-  font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  resize: vertical;
-  overflow: auto;
-}
-.hidden {
-  display: none !important;
-}
-#rapport {
-  min-height: 180px;
-  overflow-y: hidden;
-  resize: none;
-}
-.chk {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--accent);
-  flex: 0 0 auto;
-}
-.binaryRow {
-  display: flex;
-  gap: 20px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-}
-.binaryOpt {
-  gap: 3px;
-  margin: 0 40px 0 0;
-}
-.clickableChoice {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  cursor: pointer;
-  font-weight: 400;
-  margin: 0 40px 0 0;
-}
-.binaryOpt input,
-.clickableChoice input {
-  margin: 0;
-  cursor: pointer;
-}
-.clickableChoice span {
-  font-weight: 400;
-}
-.toggleCell {
-  cursor: pointer;
-  user-select: none;
-  border-radius: 10px;
-}
-.toggleCell:hover {
-  background: rgba(255,255,255,.05);
-}
-.toggleInner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 32px;
-  flex-wrap: wrap;
-}
-.inlineVitals {
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-.vpField,
-.btMini,
-.gestField {
-  position: relative;
-  height: 44px;
-}
-.vpField {
-  width: 95px;
-  flex: 0 0 95px;
-}
-.btMini {
-  width: 82px;
-  flex: 0 0 82px;
-}
-.gestField {
-  width: 120px;
-}
-.vpField span,
-.btMini span,
-.gestField span {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #8c8c8c;
-  font-size: calc(13px * var(--opsix-text-scale));
-  pointer-events: none;
-  z-index: 2;
-}
-.vpField input,
-.btMini input,
-.gestField input {
-  height: 44px;
-  line-height: 44px;
-  padding-top: 0;
-  padding-bottom: 0;
-  vertical-align: middle;
-}
-.vpField input {
-  padding-left: 44px;
-}
-.btMini input {
-  padding-left: 42px;
-}
-.gestField input {
-  padding-left: 52px;
-}
-.btWrap {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex-wrap: nowrap;
-  flex: 0 0 auto;
-}
-.btSlash {
-  font-weight: 900;
-  color: var(--muted);
-  margin: 11px 0 0;
-  width: 8px;
-  text-align: center;
-}
-.gestWrap,
-.inlineRow {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.dynamicRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.dynamicRow {
-  gap: 8px;
-  margin-top: 4px;
-}
-.dynamicRow input[type=text] {
-  flex: 1 1 auto;
-}
-.pvkSelect {
-  width: 110px;
-}
-.btnbar {
-  margin-top: 20px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-button {
-  border: none;
-  border-radius: 10px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: .15s;
-  font-size: calc(14px * var(--opsix-text-scale));
-}
-button:hover {
-  opacity: .97;
-}
-button:active {
-  transform: translateY(1px);
-}
-.actionBtn {
-  min-height: 52px;
-  padding: 0 22px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  line-height: 1;
-  white-space: nowrap;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  font-weight: 700;
-  font-size: calc(14px * var(--opsix-text-scale));
-  letter-spacing: .2px;
-  transition: background .18s ease,
-    transform .12s ease,
-    box-shadow .18s ease,
-    border-color .18s ease;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
-}
-.actionBtn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.28);
-}
-.actionBtn:active {
-  transform: translateY(0);
-}
-.copyIcon {
-  opacity: .92;
-}
-.btn-copy {
-  background: var(--green);
-  color: #0b1a10;
-  min-width: 190px;
-}
-.btn-copy:hover {
-  background: var(--greenHover);
-}
-.btn-red {
-  background: var(--red);
-  color: #fff;
-  min-width: 140px;
-}
-.btn-red:hover {
-  background: var(--redHover);
-}
-.push-right {
-  margin-left: auto;
-}
-.copyMsg {
-  color: #a7f3c1;
-  font-weight: 700;
-  min-height: 20px;
-  font-size: calc(13px * var(--opsix-text-scale));
-}
-.hasteLabel {
-  display: block;
-  font-weight: 900;
-  font-size: calc(20px * var(--opsix-text-scale));
-  letter-spacing: .6px;
-  margin-top: 14px;
-  margin-bottom: 12px;
-  color: #ffffff;
-}
-.haste-akutt {
-  background: #3a3d43;
-  border: 2px solid var(--hasteAkutt);
-}
-.haste-haster {
-  background: #3a3d43;
-  border: 2px solid var(--hasteHaster);
-}
-.haste-samme {
-  background: #3a3d43;
-  border: 2px solid var(--hasteSamme);
-}
-.haste-planlagt {
-  background: #3a3d43;
-  border: 2px solid var(--hastePlanlagt);
-}
-.specCell input[type="checkbox"],
-.specCell span {
-  cursor: pointer;
-}
-.specLabel {
-  position: relative;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-}
-.specLabel::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateX(10px) translateY(-50%);
-  white-space: normal;
-  max-width: 240px;
-  background: rgba(23,27,34,.96);
-  color: #f8fafc;
-  font-size: calc(12px * var(--opsix-text-scale));
-  padding: 6px 10px;
-  border-radius: 10px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  z-index: 10;
-  transition: opacity .18s ease,transform .18s ease;
-  transition-delay: 0s;
-}
-.specLabel:hover::after {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(10px) translateY(-50%);
-  transition-delay: .25s;
-}
-@media (max-width:980px) {
-  .inlineVitals {
-    flex-wrap: wrap;
-  }
-}
-@media (max-width:720px) {
-  .vpField,
-.btMini {
-    width: 46%;
-    flex: 1 1 46%;
-  }
-}
-@media (max-width:720px) {
-  .btWrap {
-    width: 100%;
-    flex-wrap: wrap;
-  }
-}
-@media (max-width:720px) {
-  .push-right {
-    margin-left: 0;
-  }
-}
-@media (max-width:720px) {
-  .actionBtn {
-    width: 100%;
-    min-width: unset;
-  }
-}
-@media (max-width:720px) {
-  .copyMsg {
-    width: 100%;
-  }
-}
-.specChoice {
-  cursor: pointer;
-}
-#andreInfBody td,
-#tilgangerDynamicBody td {
-  width: 100%;
-}
-#andreInfBody input[type="text"],
-#tilgangerDynamicBody input[type="text"] {
-  flex: 0 0 420px !important;
-  width: 420px !important;
-  min-width: 0 !important;
-}
-#tilgangerDynamicBody .dynamicRow {
-  flex-direction: row !important;
-}
-#tilgangerDynamicBody .dynamicRow .chk {
-  flex: 0 0 18px !important;
-  width: 18px !important;
-  height: 18px !important;
-  margin: 0 !important;
-}
-#sedDynamicBody .dynamicRow input[type="text"],
-#pressorDynamicBody .dynamicRow input[type="text"],
-#andreInfBody .dynamicRow input[type="text"] {
-  display: block !important;
-}
-#tilgangerDynamicBody .dynamicRow input[type="text"] {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-  display: block !important;
-}
-#sedDynamicBody,
-#pressorDynamicBody,
-#andreInfBody {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-#sedDynamicBody .dynamicRow,
-#pressorDynamicBody .dynamicRow,
-#andreInfBody .dynamicRow {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  flex-wrap: nowrap !important;
-  width: 100% !important;
-  gap: 8px !important;
-  margin-top: 0 !important;
-}
-#sedDynamicBody .dynamicRow .chk,
-#pressorDynamicBody .dynamicRow .chk,
-#andreInfBody .dynamicRow .chk {
-  flex: 0 0 18px !important;
-  width: 18px !important;
-  height: 18px !important;
-  margin: 0 !important;
-}
-#sedDynamicBody .dynamicRow input[type="text"],
-#pressorDynamicBody .dynamicRow input[type="text"],
-#andreInfBody .dynamicRow input[type="text"] {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-}
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type=number] {
-  appearance: textfield;
-  -moz-appearance: textfield;
-}
-.spesialtransportRow .specCell {
-  margin: 0;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-.spesialtransportRow .specLabel {
-  cursor: pointer;
-}
-.copyIcon,
-.trashIcon {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 auto;
-}
-.section {
-  margin-top: 28px;
-  padding-top: 16px;
-  border-top: 1px solid #5a5d66;
-  font-weight: 900;
-  font-size: calc(20px * var(--opsix-text-scale));
-  color: #fff;
-  width: 100%;
-}
-.airwayRow {
-  overflow-x: auto;
-}
-#hovedproblem,
-#acuteHovedproblem {
-  min-height: 120px;
-  margin-top: 10px;
-  margin-bottom: 26px;
-}
-.phoneInput {
-  width: 150px;
-}
-.section + .binaryRow {
-  margin-top: 12px;
-}
-.minorTitle {
-  display: block;
-  margin-top: 18px;
-  margin-bottom: 8px;
-  line-height: 1.3;
-  font-size: calc(20px * var(--opsix-text-scale));
-  font-weight: 800;
-  color: #f3f4f6;
-}
-.vpTitle {
-  margin-bottom: 14px;
-}
-:root {
-  --adminRowWidth: 570px;
-}
-.doctorRow {
-  display: grid;
-  grid-template-columns: 420px 145px;
-  gap: 10px;
-  width: var(--adminRowWidth);
-  max-width: 100%;
-  align-items: center;
-}
-#tilgangerDynamicBody .dynamicRow {
-  display: flex !important;
-  align-items: center !important;
-  flex-wrap: nowrap !important;
-  gap: 10px !important;
-  width: var(--adminRowWidth) !important;
-  max-width: 100% !important;
-}
-#tilgangerDynamicBody .dynamicRow input {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin-bottom: 0 !important;
-}
-.pvkSelect {
-  margin-bottom: 0;
-  align-self: center;
-}
-.medGroup:first-of-type {
-  margin-top: 0;
-}
-.medGroupTitle {
-  color: #d8d8d8;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-}
-.medDynamic {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 570px;
-}
-.medDynamic .dynamicRow {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  gap: 8px !important;
-  flex-wrap: nowrap !important;
-  width: 100% !important;
-  margin-top: 0 !important;
-}
-.medDynamic .dynamicRow .chk {
-  flex: 0 0 18px !important;
-  width: 18px !important;
-  height: 18px !important;
-  margin: 0 !important;
-}
-.medDynamic .dynamicRow input[type="text"] {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-}
-@media (max-width:720px) {
-  .medChip {
-    flex: 1 1 auto;
-  }
-}
-@media (max-width:720px) {
-  .medDynamic {
-    max-width: 100%;
-  }
-}
-.airwayRow {
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  overflow: visible;
-}
-.airwayRow .binaryOpt {
-  text-align: center;
-}
-.airwayRow .binaryOpt input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-@media (max-width:720px) {
-  .airwayRow {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-#trachWrap .table,
-#acuteTrachWrap .table {
-  margin-top: 10px;
-}
-#trachWrap table,
-#acuteTrachWrap table {
-  display: block;
-  width: 100%;
-}
-#trachWrap tbody,
-#acuteTrachWrap tbody {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 10px;
-}
-#trachWrap tr,
-#acuteTrachWrap tr {
-  display: block;
-}
-#trachWrap td,
-#acuteTrachWrap td {
-  display: block;
-  padding: 0;
-}
-#trachWrap .toggleCell,
-#acuteTrachWrap .toggleCell {
-  min-height: 40px;
-  padding: 0 14px;
-  border-radius: 14px;
-  background: #2a2d33;
-  border: 1px solid rgba(255,255,255,0.10);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #f1f1f1;
-  font-weight: 650;
-  font-size: calc(13px * var(--opsix-text-scale));
-  cursor: pointer;
-  transition: .15s ease;
-}
-#trachWrap .toggleCell:hover,
-#acuteTrachWrap .toggleCell:hover {
-  background: #3a3e46;
-}
-#trachWrap .toggleInner,
-#acuteTrachWrap .toggleInner {
-  justify-content: center;
-}
-#trachWrap .toggleInner input,
-#acuteTrachWrap .toggleInner input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-#trachWrap .toggleCell:has(input:checked),
-#acuteTrachWrap .toggleCell:has(input:checked) {
-  background: #8fb0ff;
-  color: #111;
-  border-color: #8fb0ff;
-  box-shadow: 0 0 0 2px rgba(143,176,255,0.18);
-}
-@media (max-width:720px) {
-  #trachWrap tbody,
-#acuteTrachWrap tbody {
-    grid-template-columns: 1fr;
-  }
-}
-#spontO2Wrap,
-#highFlowWrap,
-#nivWrap,
-#intubWrap,
-#trachO2Wrap,
-#trachVentWrap,
-#acuteSpontO2Wrap,
-#acuteHighFlowWrap,
-#acuteNivWrap,
-#acuteIntubWrap,
-#acuteTrachO2Wrap,
-#acuteTrachVentWrap {
-  margin-top: 10px;
-  padding: 8px 0;
-  background: transparent;
-  border: 0;
-  max-width: 560px;
-}
-#spontO2Wrap label,
-#highFlowWrap label,
-#nivWrap label,
-#intubWrap label,
-#trachO2Wrap label,
-#trachVentWrap label,
-#acuteSpontO2Wrap label,
-#acuteHighFlowWrap label,
-#acuteNivWrap label,
-#acuteIntubWrap label,
-#acuteTrachO2Wrap label,
-#acuteTrachVentWrap label {
-  margin-top: 0;
-  margin-bottom: 5px;
-  font-size: calc(12px * var(--opsix-text-scale));
-  font-weight: 700;
-  color: #cfcfcf;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-}
-#spontO2Wrap input,
-#highFlowWrap input,
-#nivWrap input,
-#intubWrap input,
-#trachO2Wrap input,
-#trachVentWrap input,
-#acuteSpontO2Wrap input,
-#acuteHighFlowWrap input,
-#acuteNivWrap input,
-#acuteIntubWrap input,
-#acuteTrachO2Wrap input,
-#acuteTrachVentWrap input {
-  margin-bottom: 8px;
-}
-#spontO2Wrap input:last-child,
-#highFlowWrap input:last-child,
-#nivWrap input:last-child,
-#intubWrap input:last-child,
-#trachO2Wrap input:last-child,
-#trachVentWrap input:last-child,
-#acuteSpontO2Wrap input:last-child,
-#acuteHighFlowWrap input:last-child,
-#acuteNivWrap input:last-child,
-#acuteIntubWrap input:last-child,
-#acuteTrachO2Wrap input:last-child,
-#acuteTrachVentWrap input:last-child {
-  margin-bottom: 0;
-}
-.infoGroup {
-  margin-top: 22px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  border: 0;
-}
-.infoGroup .section {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-.infoGroup .binaryRow {
-  gap: 14px;
-  margin-top: 10px;
-}
-.infoGroup textarea,
-.infoGroup input {
-  margin-top: 10px;
-}
-.accessGroup {
-  margin-top: 22px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  border: 0;
-}
-.accessGroup .minorTitle {
-  margin-top: 0;
-  margin-bottom: 8px;
-}
-.specialGroup .specCell input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-.accessGroup .toggleCell {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 34px;
-  border-radius: 12px;
-  padding: 6px 10px;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.04);
-}
-.accessGroup .toggleInner,
-.accessGroup .clickableChoice {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.accessGroup input[type="checkbox"] {
-  margin: 0;
-}
-.accessGroup select {
-  height: 42px;
-  min-height: 42px;
-  padding: 0 10px;
-  line-height: normal;
-  border-radius: 10px;
-}
-input,
-textarea,
-select {
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-}
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: rgba(255,255,255,0.16);
-}
-.bigSection {
-  display: block;
-  margin-top: 30px;
-  margin-bottom: 14px;
-  font-size: calc(20px * var(--opsix-text-scale));
-  font-weight: 850;
-  letter-spacing: .01em;
-  color: #ffffff;
-}
-.binaryRow {
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-.smLine,
-.airwayRow {
-  margin-bottom: 4px;
-}
-:root {
-  --line: rgba(255,255,255,0.05);
-}
-.toggleCell {
-  border-color: rgba(255,255,255,0.04);
-}
-input,
-textarea,
-select {
-  box-shadow: none;
-}
-.toggleCell.active {
-  background: rgba(70,130,180,0.85);
-  color: #111;
-  border-color: rgba(70,130,180,0.9);
-}
-.toggleCell.active span,
-.binaryOpt:has(input:checked) span,
-.clickableChoice:has(input:checked) span {
-  color: #111;
-}
-.airwayRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-.airwayRow .binaryOpt {
-  gap: 6px;
-}
-.medGroup {
-  margin-top: 12px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.05);
-}
-.medGroupTitle {
-  font-size: calc(13px * var(--opsix-text-scale));
-  font-weight: 600;
-  opacity: 0.72;
-  margin-bottom: 8px;
-}
-.chipRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.medChip {
-  gap: 6px;
-}
-.medChip input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-.medChip:has(input:checked) span {
-  color: #111;
-}
-.clickableChoice:has(#til_cvk:checked),
-.clickableChoice:has(#til_pvk:checked),
-.clickableChoice:has(#utst_pumper:checked),
-.clickableChoice:has(#acutePumperChk:checked) {
-  background: transparent !important;
-  color: #f1f1f1 !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-.clickableChoice:has(#til_cvk:checked) span,
-.clickableChoice:has(#til_pvk:checked) span,
-.clickableChoice:has(#utst_pumper:checked) span,
-.clickableChoice:has(#acutePumperChk:checked) span {
-  color: #f1f1f1 !important;
-}
-.binaryOpt:has(#transport_kuvose:checked),
-.binaryOpt:has(#transport_pedimate:checked),
-.binaryOpt:has(#transport_barnibag:checked),
-.binaryOpt:has(#transport_kengufix:checked) {
-  background: transparent !important;
-  color: #f1f1f1 !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-.binaryOpt:has(#transport_kuvose:checked) span,
-.binaryOpt:has(#transport_pedimate:checked) span,
-.binaryOpt:has(#transport_barnibag:checked) span,
-.binaryOpt:has(#transport_kengufix:checked) span {
-  color: #f1f1f1 !important;
-}
-.feedbackBtn {
-  min-height: 44px;
-  border: 1px solid rgba(255,255,255,0.06);
-  font-size: calc(13px * var(--opsix-text-scale));
-}
-.feedbackBtn:hover {
-  background: rgba(255,255,255,0.035);
-  color: #f3f4f6;
-}
-.doctorGroup {
-  margin-top: 22px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  border: 0;
-}
-.hasteGrid {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 12px;
-  margin-top: 10px;
-  margin-bottom: 24px;
-}
-.hasteCard {
-  min-height: 118px;
-  padding: 14px 14px 12px;
-  border-radius: 16px;
-  border: 2px solid transparent;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 8px;
-  text-align: left;
-  white-space: normal !important;
-  color: #111;
-}
-.hasteCardTitle,
-.hasteCardText {
-  display: block;
-  width: 100%;
-}
-.hasteCardTitle {
-  font-size: calc(17px * var(--opsix-text-scale));
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-}
-.hasteCardText {
-  font-size: calc(12px * var(--opsix-text-scale));
-  font-weight: 650;
-  line-height: 1.35;
-  opacity: .88;
-}
-.hasteCard.active {
-  filter: brightness(0.92) saturate(1.12);
-  box-shadow: 0 9px 24px rgba(0,0,0,0.35),
-    inset 0 0 0 2px rgba(0,0,0,0.18);
-}
-@media (max-width:900px) {
-  .hasteGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (max-width:560px) {
-  .hasteGrid {
-    grid-template-columns: 1fr;
-  }
-}
-.hasteCard {
-  position: relative;
-  transition: transform .08s ease,
-    filter .12s ease,
-    box-shadow .12s ease,
-    border-color .12s ease,
-    background .12s ease;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
-}
-.hasteCard.active {
-  transform: translateY(1px);
-  color: #111;
-}
-.haste-akutt.active {
-  background: var(--hasteAkutt);
-}
-.haste-haster.active {
-  background: var(--hasteHaster);
-}
-.haste-samme.active {
-  background: var(--hasteSamme);
-}
-.haste-planlagt.active {
-  background: var(--hastePlanlagt);
-}
-.formGroup {
-  margin-top: 22px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  border: 0;
-}
-.formGroup .section,
-.formGroup .minorTitle,
-.formGroup label:first-child {
-  margin-top: 0;
-}
-.feedbackWrap {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 0;
-  margin-top: 14px;
-}
-.feedbackBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border-radius: 12px;
-  background: #3f4249;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  transition: 0.15s ease;
-}
-.feedbackBtn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-.hasteGrid .hasteCard {
-  background: #3a3d43 !important;
-  border: 2px solid transparent !important;
-  color: #f1f1f1 !important;
-}
-.hasteGrid .hasteCard.haste-akutt {
-  border-color: var(--hasteAkutt) !important;
-}
-.hasteGrid .hasteCard.haste-haster {
-  border-color: var(--hasteHaster) !important;
-}
-.hasteGrid .hasteCard.haste-samme {
-  border-color: var(--hasteSamme) !important;
-}
-.hasteGrid .hasteCard.haste-planlagt {
-  border-color: var(--hastePlanlagt) !important;
-}
-.hasteGrid .hasteCard.haste-akutt.active {
-  background: var(--hasteAkutt) !important;
-  color: #111 !important;
-}
-.hasteGrid .hasteCard.haste-haster.active {
-  background: var(--hasteHaster) !important;
-  color: #111 !important;
-}
-.hasteGrid .hasteCard.haste-samme.active {
-  background: var(--hasteSamme) !important;
-  color: #111 !important;
-}
-.hasteGrid .hasteCard.haste-planlagt.active {
-  background: var(--hastePlanlagt) !important;
-  color: #111 !important;
-}
-.followRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-.followChip {
-  color: #f1f1f1;
-}
-.followChip input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-.followChip:has(input:checked) span {
-  color: #111;
-}
-.smLine {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-.smChip {
-  min-width: 145px;
-}
-#smitteSpes {
-  max-width: 100%;
-}
-.caveRow {
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-.accessChipRow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-.accessChipRow select {
-  width: 100px;
-  margin: 0;
-}
-.accessDynamic {
-  margin-top: 12px;
-  max-width: 570px;
-}
-.accessDynamic .dynamicRow {
-  display: flex !important;
-  align-items: center !important;
-  flex-wrap: nowrap !important;
-  gap: 8px !important;
-  width: 100% !important;
-  margin-top: 8px !important;
-}
-.accessDynamic .dynamicRow .chk {
-  flex: 0 0 18px !important;
-  width: 18px !important;
-  height: 18px !important;
-  margin: 0 !important;
-}
-.accessDynamic .dynamicRow input[type="text"] {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  margin: 0 !important;
-}
-.utstyrGroup {
-  margin-top: 8px;
-}
-.utstyrChipRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-.inlineSelect {
-  width: 90px;
-  min-width: 90px;
-  margin: 0;
-}
-#utstyrDynamicBody {
-  margin-top: 12px;
-  max-width: 580px;
-}
-#utstyrDynamicBody .dynamicRow {
-  display: flex !important;
-  align-items: center !important;
-  flex-wrap: nowrap !important;
-  gap: 8px !important;
-  width: 100% !important;
-  margin-top: 8px !important;
-}
-#utstyrDynamicBody .dynamicRow .chk {
-  flex: 0 0 18px !important;
-  width: 18px !important;
-  height: 18px !important;
-  margin: 0 !important;
-}
-#utstyrDynamicBody .dynamicRow input[type="text"] {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  margin: 0 !important;
-}
-#caveTextWrap {
-  max-width: 580px;
-}
-#caveText {
-  width: 100%;
-  box-sizing: border-box;
-}
-#smitteSpesWrap {
-  max-width: 580px;
-}
-#smitteSpes {
-  width: 100%;
-  box-sizing: border-box;
-}
-.medChip,
-.followChip,
-.binaryOpt,
-.smChip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 10px 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: #2f333b;
-  font-size: calc(14px * var(--opsix-text-scale));
-  font-weight: 500;
-  line-height: 1.2;
-  cursor: pointer;
-  transition: 0.15s ease;
-  box-sizing: border-box;
-}
-.spedChip {
-  cursor: pointer;
-  transition: 0.15s ease;
-  box-sizing: border-box;
-}
-.medChip span,
-.followChip span,
-.binaryOpt span,
-.smChip span,
-.spedChip span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.medChip input,
-.followChip input,
-.binaryOpt input,
-.smChip input {
-  display: none;
-}
-.medChip:has(input:checked),
-.followChip:has(input:checked),
-.binaryOpt:has(input:checked),
-.smChip:has(input:checked) {
-  background: #2b5cab;
-  border-color: #4f83d1;
-  color: #fff;
-}
-.medChip:hover,
-.followChip:hover,
-.binaryOpt:hover,
-.smChip:hover,
-.spedChip:hover {
-  background: #3a404b;
-}
-.medicationOtherRow .medChip,
-.medGroup .medChip {
-  min-height: 40px !important;
-  height: 40px !important;
-  padding: 0 14px !important;
-  margin: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1.2 !important;
-}
-.medicationOtherRow .medChip span,
-.medGroup .medChip span {
-  line-height: 1.2 !important;
-}
-.pumpRow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.unitInputWrap {
-  width: 180px;
-  max-width: 100%;
-}
-.unitInputWrap input {
-  width: 100%;
-}
-.intubRow {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: nowrap;
-}
-.intubRow .unitInputWrap {
-  width: 150px;
-  flex: 0 0 150px;
-}
-.unitInputWrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.unitInputWrap input {
-  height: 42px;
-  margin: 0 !important;
-  padding-right: 70px;
-}
-.unitInputWrap span {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  height: 100%;
-  color: #8c8c8c;
-  font-size: calc(13px * var(--opsix-text-scale));
-  line-height: 1;
-  pointer-events: none;
-}
-.spedChip {
-  min-height: 40px !important;
-  height: 40px !important;
-  padding: 0 14px !important;
-  margin: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 999px !important;
-  background: #2f333b !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  color: #f1f1f1 !important;
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-  font-weight: 500 !important;
-  line-height: 1.2 !important;
-}
-.spedChip input {
-  display: none !important;
-}
-.spedChip:has(input:checked) {
-  background: #2b5cab !important;
-  border-color: #4f83d1 !important;
-  color: #fff !important;
-}
-.spedChip:has(input:checked) span {
-  color: #fff !important;
-}
-.airwayRow .binaryOpt {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-height: 40px !important;
-  height: 40px !important;
-  padding: 0 14px !important;
-  margin: 0 !important;
-  border-radius: 999px !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  background: #2f333b !important;
-  color: #f1f1f1 !important;
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-  font-weight: 500 !important;
-  line-height: 1.2 !important;
-  cursor: pointer;
-  transition: 0.15s ease;
-  box-sizing: border-box;
-}
-.airwayRow .binaryOpt input {
-  display: none !important;
-}
-.airwayRow .binaryOpt span {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: inherit !important;
-  line-height: 1.2 !important;
-}
-.airwayRow .binaryOpt:hover {
-  background: #3a404b !important;
-}
-.airwayRow .binaryOpt:has(input:checked) {
-  background: #2b5cab !important;
-  border-color: #4f83d1 !important;
-  color: #fff !important;
-  box-shadow: none !important;
-}
-.airwayRow .binaryOpt:has(input:checked) span {
-  color: #fff !important;
-}
-.specialGroup .specCell {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-height: 40px !important;
-  height: 40px !important;
-  padding: 0 14px !important;
-  margin: 0 !important;
-  border-radius: 999px !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  background: #2f333b !important;
-  color: #f1f1f1 !important;
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-  font-weight: 500 !important;
-  line-height: 1.2 !important;
-  cursor: pointer;
-  transition: 0.15s ease;
-  box-sizing: border-box;
-}
-.specialGroup .specCell input {
-  display: none !important;
-}
-.specialGroup .specCell span,
-.specialGroup .specCell .specLabel {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: inherit !important;
-  font-size: inherit !important;
-  font-weight: inherit !important;
-  line-height: 1.2 !important;
-}
-.specialGroup .specCell:hover {
-  background: #3a404b !important;
-}
-.specialGroup .specCell:has(input:checked),
-.specialGroup .specCell.active {
-  background: #2b5cab !important;
-  border-color: #4f83d1 !important;
-  color: #fff !important;
-  box-shadow: none !important;
-}
-.specialGroup .specCell:has(input:checked) span,
-.specialGroup .specCell.active span {
-  color: #fff !important;
-}
-.spesialtransportRow {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  gap: 8px !important;
-  flex-wrap: wrap !important;
-  padding: 0 !important;
-}
-#weightWrap {
-  margin-top: 18px;
-  max-width: 240px;
-  padding: 12px 14px;
-  border: 2px solid rgba(239,68,68,0.75);
-  border-radius: 14px;
-  background: rgba(239,68,68,0.06);
-}
-#weightWrap label {
-  margin-top: 0;
-  color: #ffd7d7;
-}
-#weightWrap #vekt {
-  width: 100%;
-  margin-bottom: 0;
-  border: 2px solid rgba(239,68,68,0.65);
-}
-#weightWrap #vekt:focus {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239,68,68,0.16);
-}
-#transportWrap .transportRow > label {
-  flex: 0 0 125px !important;
-  width: 125px !important;
-  min-width: 125px !important;
-  max-width: 125px !important;
-  height: 40px !important;
-  min-height: 40px !important;
-  max-height: 40px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box !important;
-  border-radius: 999px !important;
-}
-#transportWrap .transportRow > label span {
-  width: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: 1 !important;
-}
-.childTooltip {
-  position: relative;
-}
-.childTooltip::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 8px);
-  transform: translateX(-50%);
-  white-space: nowrap;
-  background: rgba(20,20,20,0.96);
-  color: #fff;
-  font-size: calc(12px * var(--opsix-text-scale));
-  font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 10px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity .18s ease, visibility .18s ease;
-  transition-delay: .3s;
-  z-index: 9999;
-}
-.childTooltip:hover::after {
-  opacity: 1;
-  visibility: visible;
-}
-#cvkLumen,
-#pvkAntall {
-  width: 155px !important;
-  min-width: 155px !important;
-  height: 46px !important;
-  min-height: 46px !important;
-  padding: 0 38px 0 12px !important;
-  margin: 0 !important;
-  font-size: calc(15px * var(--opsix-text-scale)) !important;
-  line-height: normal !important;
-  box-sizing: border-box !important;
-  vertical-align: middle;
-}
-.feedbackDialog {
-  width: min(440px, calc(100% - 32px));
-  max-width: 440px;
-  max-height: calc(100vh - 40px);
-  padding: 0;
-  border: 1px solid var(--line, #50545c);
-  border-radius: 14px;
-  background: var(--panel, #3a3d43);
-  color: var(--text, #f1f1f1);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  overflow: auto;
-}
-.feedbackDialog:not([open]) {
-  display: none;
-}
-.feedbackDialog::backdrop {
-  background: rgba(0, 0, 0, 0.65);
-}
-.feedbackDialogHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--line, #50545c);
-}
-.feedbackDialogHeader h2 {
-  margin: 0;
-  font-size: calc(19px * var(--opsix-text-scale));
-  font-weight: 650;
-  line-height: 1.3;
-  color: inherit;
-}
-.feedbackDialogClose {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: inherit;
-  font-size: calc(28px * var(--opsix-text-scale));
-  line-height: 1;
-  cursor: pointer;
-}
-.feedbackDialogClose:hover {
-  background: rgba(128, 128, 128, 0.2);
-}
-.feedbackDialogBody {
-  padding: 24px;
-}
-.feedbackDialogBody p {
-  margin: 0;
-  font-size: calc(15px * var(--opsix-text-scale));
-  line-height: 1.7;
-}
-.feedbackDialogFooter {
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 24px 20px;
-}
-.feedbackDialogOk {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 8px;
-  background: var(--green, #35c16a);
-  color: #111;
-  font: inherit;
-  font-size: calc(14px * var(--opsix-text-scale));
-  font-weight: 650;
-  cursor: pointer;
-}
-.feedbackDialogOk:hover {
-  background: var(--greenHover, #2fb45f);
-}
-.feedbackDialogClose:focus-visible,
-.feedbackDialogOk:focus-visible {
-  outline: 2px solid var(--accent, #8fb0ff);
-  outline-offset: 3px;
-}
-.versionInfo {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.versionNumber {
-  font-size: calc(13px * var(--opsix-text-scale));
-  color: var(--muted, #cfcfcf);
-  font-weight: 500;
-}
-.versionHistoryBtn {
-  border: none;
-  background: transparent;
-  color: var(--accent, #8fb0ff);
-  font: inherit;
-  font-size: calc(13px * var(--opsix-text-scale));
-  font-weight: 500;
-  cursor: pointer;
-  padding: 6px 0;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.versionHistoryBtn:hover {
-  color: var(--text, #f1f1f1);
-}
-.versionHistoryDialog {
-  width: min(620px, calc(100% - 32px));
-  max-width: 620px;
-  max-height: min(80vh, 760px);
-  padding: 0;
-  border: 1px solid var(--line, #50545c);
-  border-radius: 14px;
-  background: var(--panel, #3a3d43);
-  color: var(--text, #f1f1f1);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  overflow: auto;
-}
-.versionHistoryDialog:not([open]) {
-  display: none;
-}
-.versionHistoryDialog::backdrop {
-  background: rgba(0, 0, 0, 0.65);
-}
-.versionHistoryHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 22px 24px;
-  border-bottom: 1px solid var(--line, #50545c);
-}
-.versionHistoryHeader h2 {
-  margin: 0 0 5px;
-  font-size: calc(21px * var(--opsix-text-scale));
-  font-weight: 650;
-  color: inherit;
-}
-.versionHistoryHeader p {
-  margin: 0;
-  font-size: calc(13px * var(--opsix-text-scale));
-  color: var(--muted, #cfcfcf);
-}
-.versionHistoryClose {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: inherit;
-  font-size: calc(28px * var(--opsix-text-scale));
-  line-height: 1;
-  cursor: pointer;
-}
-.versionHistoryClose:hover {
-  background: rgba(128, 128, 128, 0.2);
-}
-.versionHistoryBody {
-  padding: 22px 24px;
-}
-.versionHistoryIntro {
-  margin-bottom: 20px;
-  color: var(--muted, #cfcfcf);
-  font-size: calc(13px * var(--opsix-text-scale));
-  line-height: 1.6;
-}
-.versionHistoryList {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.versionHistoryEntry {
-  border: 1px solid var(--line, #50545c);
-  border-radius: 10px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.025);
-}
-.versionHistoryEntryHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 6px;
-}
-.versionHistoryEntryTitle {
-  margin: 0;
-  font-size: calc(16px * var(--opsix-text-scale));
-  font-weight: 650;
-}
-.versionHistoryBadge {
-  padding: 4px 9px;
-  border-radius: 20px;
-  background: rgba(53, 193, 106, 0.15);
-  color: var(--green, #35c16a);
-  font-size: calc(11px * var(--opsix-text-scale));
-  font-weight: 650;
-}
-.versionHistoryDate {
-  display: block;
-  margin-bottom: 12px;
-  font-size: calc(12px * var(--opsix-text-scale));
-  color: var(--muted, #cfcfcf);
-}
-.versionHistoryDescription {
-  margin: 0;
-  font-size: calc(14px * var(--opsix-text-scale));
-  line-height: 1.7;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-.versionHistoryStatus {
-  margin: 0;
-  font-size: calc(13px * var(--opsix-text-scale));
-  line-height: 1.6;
-  color: var(--muted, #cfcfcf);
-}
-.versionHistoryFooter {
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 24px 20px;
-}
-.versionHistoryOk {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 8px;
-  background: var(--green, #35c16a);
-  color: #111;
-  font: inherit;
-  font-size: calc(14px * var(--opsix-text-scale));
-  font-weight: 650;
-  cursor: pointer;
-}
-.versionHistoryOk:hover {
-  background: var(--greenHover, #2fb45f);
-}
-.versionHistoryBtn:focus-visible,
-.versionHistoryClose:focus-visible,
-.versionHistoryOk:focus-visible {
-  outline: 2px solid var(--accent, #8fb0ff);
-  outline-offset: 3px;
-}
-@media (max-width: 560px) {
-  #opsixFooterActions {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-@media (max-width: 560px) {
-  #opsixFooterActions .feedbackBtn {
-    margin-left: 0;
-  }
-}
-@media (max-width: 560px) {
-  .versionHistoryHeader,
-.versionHistoryBody {
-    padding: 18px;
-  }
-}
-@media (max-width: 560px) {
-  .versionHistoryFooter {
-    padding: 0 18px 18px;
-  }
-}
-@media (max-width: 720px) {
-  .wrap,
-.card,
-#mainContent,
-#sharedBottom,
-#sharedEquipmentBlock,
-.accessGroup {
-    min-width: 0;
-    max-width: 100%;
-  }
-}
-@media (max-width: 720px) {
-  .doctorRow {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    width: 100%;
-    max-width: 100%;
-  }
-}
-@media (max-width: 720px) {
-  .doctorRow > input,
-.doctorRow > .phoneInput {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-  }
-}
-@media (max-width: 720px) {
-  #tilgangerDynamicBody,
-#tilgangerDynamicBody tr,
-#tilgangerDynamicBody td,
-#utstyrDynamicBody {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-  }
-}
-@media (max-width: 720px) {
-  #tilgangerDynamicBody .dynamicRow,
-#utstyrDynamicBody .dynamicRow {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-}
-@media (max-width: 720px) {
-  #tilgangerDynamicBody .dynamicRow input[type="text"],
-#utstyrDynamicBody .dynamicRow input[type="text"] {
-    flex: 1 1 0 !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-  }
-}
-@media (max-width: 720px) {
-  .chipRow,
-.smLine,
-.accessChipRow,
-.binaryRow,
-.spesialtransportRow {
-    max-width: 100%;
-  }
-}
-@media (max-width: 720px) {
-  .caveRow {
-    flex-wrap: wrap;
-  }
-}
-@media (max-width: 720px) {
-  .specialGroup .specLabel::after {
-    display: none;
-  }
-}
-@media (max-width: 720px) {
-  h1 {
-    overflow-wrap: anywhere;
-    font-size: clamp(calc(19px * var(--opsix-text-scale)), calc(5vw * var(--opsix-text-scale)), calc(30px * var(--opsix-text-scale)));
-  }
-}
-input.kliniskUgyldig {
-  color: #b91c1c !important;
-  border: 2px solid #dc2626 !important;
-  background: #fff1f2 !important;
-}
-.vpGcsField {
-  width: 190px;
-  flex: 0 0 190px;
-}
-.vpGcsField input {
-  padding-left: 46px;
-}
-@media (max-width: 720px) {
-  .vpGcsField {
-    width: 100%;
-    flex: 1 1 100%;
-  }
-}
-.pageHeader {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-.pageHeader #pageTitle {
-  flex: 1 1 auto;
-  min-width: 0;
-  text-align: center;
-  margin: 6px 0 28px;
-}
-.themeToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  flex: 0 0 auto;
-  min-width: 86px;
-  min-height: 38px;
-  padding: 7px 12px;
-  margin: 4px 0 0;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.18);
-  background: #2b2f36;
-  color: #f1f5f9;
-  font: inherit;
-  font-size: calc(13px * var(--opsix-text-scale));
-  font-weight: 700;
-  cursor: pointer;
-}
-.themeToggle:hover {
-  background: #424955;
-}
-.themeToggle:focus-visible {
-  outline: 3px solid #8fb0ff;
-  outline-offset: 3px;
-}
-.themeIcon {
-  font-size: calc(17px * var(--opsix-text-scale));
-  line-height: 1;
-}
-@media (max-width: 720px) {
-  .pageHeader {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-}
-@media (max-width: 720px) {
-  .pageHeader #pageTitle {
-    flex-basis: 100%;
-    order: 2;
-    margin: 4px 0 20px;
-  }
-}
-@media (max-width: 720px) {
-  .themeToggle {
-    order: 1;
-    margin-top: 0;
-  }
-}
-.theme-light .themeToggle {
-  border-color: #b8c3cf;
-}
-.theme-light .medChip:not(:has(input:checked)),
-.theme-light .followChip:not(:has(input:checked)),
-.theme-light .spedChip:not(:has(input:checked)),
-.theme-light .smChip:not(:has(input:checked)),
-.theme-light .binaryOpt:not(:has(input:checked)),
-.theme-light .specialGroup .specCell:not(.active):not(:has(input:checked)),
-.theme-light .airwayRow .binaryOpt:not(:has(input:checked)) {
-  background: #f5f7fa !important;
-  color: #1f2a3d !important;
-  border: 1px solid #bcc8d4 !important;
-}
-.theme-light .medChip:not(:has(input:checked)) span,
-.theme-light .followChip:not(:has(input:checked)) span,
-.theme-light .spedChip:not(:has(input:checked)) span,
-.theme-light .binaryOpt:not(:has(input:checked)) span,
-.theme-light .specialGroup .specCell:not(.active):not(:has(input:checked)) span,
-.theme-light .airwayRow .binaryOpt:not(:has(input:checked)) span {
-  color: #233044 !important;
-  font-weight: 500;
-}
-.theme-light .medChip:not(:has(input:checked)):hover,
-.theme-light .followChip:not(:has(input:checked)):hover,
-.theme-light .binaryOpt:not(:has(input:checked)):hover,
-.theme-light .specialGroup .specCell:not(:has(input:checked)):hover {
-  background: #e7edf4 !important;
-  border-color: #9fb0c3 !important;
-}
-body.theme-light {
-  --bg: #dfe5eb;
-  --panel: #eaf0f4;
-  --text: #202b39;
-  --muted: #536172;
-  --field: #ffffff;
-  --fieldText: #202b39;
-  --line: #bdc9d4;
-  --accent: #526a84;
-  background: var(--bg);
-  color: var(--text);
-}
-.theme-light .card {
-  background: var(--panel);
-  border: 1px solid #c5d0da;
-  box-shadow: 0 2px 9px rgba(32, 43, 57, 0.045);
-}
-.theme-light .pageHeader #pageTitle,
-.theme-light .hasteLabel,
-.theme-light .section,
-.theme-light .bigSection,
-.theme-light .minorTitle,
-.theme-light .vpTitle {
-  color: #202b39;
-}
-.theme-light .medGroupTitle {
-  color: #48586b;
-  opacity: 1;
-}
-.theme-light .medGroup,
-.theme-light .accessGroup,
-.theme-light .doctorGroup,
-.theme-light .infoGroup {
-  background: transparent;
-  border-color: #c8d2dc;
-}
-.theme-light .accessGroup .toggleCell {
-  background: rgba(255,255,255,0.18);
-  border-color: #cbd5df;
-}
-.theme-light input:not([type="checkbox"]):not([type="radio"]):not(.kliniskUgyldig),
-.theme-light textarea,
-.theme-light select {
-  background: #ffffff;
-  color: #202b39;
-  border-color: #aebecb;
-}
-.theme-light input::placeholder,
-.theme-light textarea::placeholder {
-  color: #68788a;
-  opacity: 1;
-}
-.theme-light input:focus-visible,
-.theme-light textarea:focus-visible,
-.theme-light select:focus-visible {
-  outline: 2px solid #526a84;
-  outline-offset: 1px;
-}
-.theme-light input.kliniskUgyldig {
-  color: #b91c1c !important;
-  background: #fff1f2 !important;
-  border: 2px solid #dc2626 !important;
-}
-.theme-light .themeToggle {
-  background: #dbe4eb;
-  color: #202b39;
-  border: 1px solid #adbcc9;
-  box-shadow: none;
-}
-.theme-light .themeToggle:hover {
-  background: #cddbe5;
-}
-.theme-light .hasteGrid .hasteCard:not(.active) {
-  background: #edf1f4 !important;
-  color: #202b39 !important;
-  box-shadow: 0 2px 6px rgba(32,43,57,0.055);
-}
-.theme-light .hasteGrid .hasteCard:not(.active) .hasteCardText {
-  color: #48586b;
-}
-.theme-light .hasteGrid .hasteCard {
-  border-width: 2px !important;
-  border-style: solid !important;
-}
-.theme-light .hasteGrid .hasteCard.haste-akutt {
-  border-color: #de4549 !important;
-}
-.theme-light .hasteGrid .hasteCard.haste-haster {
-  border-color: #c79400 !important;
-}
-.theme-light .hasteGrid .hasteCard.haste-samme {
-  border-color: #5c946c !important;
-}
-.theme-light .hasteGrid .hasteCard.haste-planlagt {
-  border-color: #27663f !important;
-}
-.theme-light .hasteGrid .hasteCard.haste-planlagt.active,
-.theme-light .hasteGrid .hasteCard.haste-planlagt.active .hasteCardTitle,
-.theme-light .hasteGrid .hasteCard.haste-planlagt.active .hasteCardText {
-  color: #ffffff !important;
-}
-.theme-light .medChip,
-.theme-light .followChip,
-.theme-light .spedChip,
-.theme-light .smChip,
-.theme-light .binaryOpt,
-.theme-light .airwayRow .binaryOpt,
-.theme-light .specialGroup .specCell,
-.theme-light #trachWrap .toggleCell,
-.theme-light #acuteTrachWrap .toggleCell {
-  background: #ffffff !important;
-  color: #1c2634 !important;
-  border: 1px solid #b2beca !important;
-  box-shadow: none !important;
-}
-.theme-light .medChip span,
-.theme-light .followChip span,
-.theme-light .spedChip span,
-.theme-light .smChip span,
-.theme-light .binaryOpt span,
-.theme-light .airwayRow .binaryOpt span,
-.theme-light .specialGroup .specCell span,
-.theme-light #trachWrap .toggleCell span,
-.theme-light #acuteTrachWrap .toggleCell span {
-  color: #1c2634 !important;
-}
-.theme-light .medChip:has(input:checked),
-.theme-light .followChip:has(input:checked),
-.theme-light .spedChip:has(input:checked),
-.theme-light .smChip:has(input:checked),
-.theme-light .binaryOpt:has(input:checked),
-.theme-light .airwayRow .binaryOpt:has(input:checked),
-.theme-light .specialGroup .specCell.active,
-.theme-light .specialGroup .specCell:has(input:checked),
-.theme-light #trachWrap .toggleCell:has(input:checked),
-.theme-light #acuteTrachWrap .toggleCell:has(input:checked) {
-  background: #ffffff !important;
-  color: #1c2634 !important;
-  border: 2px solid #50647a !important;
-  box-shadow: 0 2px 6px rgba(35,51,69,0.12),
-    inset 0 0 0 1px rgba(80,100,122,0.10) !important;
-  font-weight: 750 !important;
-}
-.theme-light .medChip:has(input:checked) span,
-.theme-light .followChip:has(input:checked) span,
-.theme-light .spedChip:has(input:checked) span,
-.theme-light .smChip:has(input:checked) span,
-.theme-light .binaryOpt:has(input:checked) span,
-.theme-light .airwayRow .binaryOpt:has(input:checked) span,
-.theme-light .specialGroup .specCell.active span,
-.theme-light .specialGroup .specCell:has(input:checked) span,
-.theme-light #trachWrap .toggleCell:has(input:checked) span,
-.theme-light #acuteTrachWrap .toggleCell:has(input:checked) span {
-  color: #1c2634 !important;
-  font-weight: 750 !important;
-}
-.theme-light .medChip:hover,
-.theme-light .followChip:hover,
-.theme-light .binaryOpt:hover,
-.theme-light .specialGroup .specCell:hover,
-.theme-light #trachWrap .toggleCell:hover,
-.theme-light #acuteTrachWrap .toggleCell:hover {
-  background: #f1f5f8 !important;
-}
-.theme-light .medChip:has(input:checked):hover,
-.theme-light .followChip:has(input:checked):hover,
-.theme-light .binaryOpt:has(input:checked):hover,
-.theme-light .specialGroup .specCell.active:hover,
-.theme-light .specialGroup .specCell:has(input:checked):hover {
-  background: #ffffff !important;
-}
-.theme-light #weightWrap {
-  background: rgba(222,69,73,0.055);
-  border-color: #cf777d;
-}
-.theme-light #weightWrap label {
-  color: #8f3038;
-}
-.theme-light #weightWrap input {
-  background: #ffffff;
-}
-.theme-light .feedbackBtn {
-  background: #dee7ee;
-  color: #202b39;
-  border-color: #b2bfcb;
-}
-.theme-light .feedbackBtn:hover {
-  background: #d4e0e9;
-  color: #202b39;
-}
-.theme-light .versionHistoryBtn {
-  color: #345574;
-}
-.theme-light .versionHistoryBtn:hover {
-  color: #233e57;
-}
-.theme-light .versionHistoryStatus,
-.theme-light .versionHistoryDate {
-  color: #536172;
-}
-.theme-light .versionHistoryEntry {
-  border-color: #c5d0da;
-}
-.theme-light .versionHistoryEntryTitle {
-  color: #202b39;
-}
-@media (max-width: 720px) {
-  .intubRow {
-    flex-wrap: wrap;
-  }
-}
-@media (max-width: 720px) {
-  .intubRow .unitInputWrap {
-    flex: 1 1 140px;
-    width: auto;
-    min-width: 0;
-    max-width: 100%;
-  }
-}
-#resetBtn .trashIcon {
-  display: block;
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  flex-shrink: 0;
-  fill: none;
-  stroke: currentColor;
-}
-#resetBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-body .wrap > .opsix-footer {
-  display: block !important;
-  position: relative;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 18px auto 24px !important;
-  padding: 0 12px !important;
-  box-sizing: border-box;
-  text-align: center !important;
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--muted, #aaa);
-  opacity: 0.65;
-}
-body.opsix-akutt .pumpRow {
-  display: flex;
-  align-items: center;
-}
-body.opsix-akutt #utstyrDynamicBody .dynamicRow.hidden {
-  display: none !important;
-}
-#opsixFooterActions a.feedbackBtn {
-  position: static;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 14px;
-  border: 1px solid var(--line, #50545c);
-  border-radius: 8px;
-  background: var(--panel, #3a3d43);
-  color: var(--text, #f1f1f1);
-  font-family: inherit;
-  font-size: calc(13px * var(--opsix-text-scale));
-  font-weight: 600;
-  line-height: 1.4;
-  text-decoration: none;
-  cursor: pointer;
-}
-#opsixFooterActions a.feedbackBtn:hover {
-  border-color: var(--accent, #8fb0ff);
-}
-#opsixFooterActions a.feedbackBtn:focus-visible {
-  outline: 2px solid var(--accent, #8fb0ff);
-  outline-offset: 3px;
-}
-#opsixFooterActions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 16px;
-}
-#opsixFooterActions .versionInfo {
-  margin-right: auto;
-}
-#opsixFooterActions .feedbackBtn {
-  margin-left: auto;
-}
-:root {
-  --v110-bg: #222a33;
-  --v110-panel: #303b47;
-  --v110-border: #4c5c6b;
-  --v110-title: #d9e9f5;
-  --v110-choice: #303a46;
-  --v110-selected: #4c6f8d;
-  --v110-muted-panel: #2a333e;
-  --v110-muted-border: #42505f;
-  --v110-focus: #a2cef7;
-  --v110-foreground: #f1f5f9;
-  --v110-subtle-text: #c4d0da;
-}
-body.theme-light {
-  --v110-bg: #dfe5eb;
-  --v110-panel: #edf1f4;
-  --v110-border: #b3c1ce;
-  --v110-title: #233b50;
-  --v110-choice: #ffffff;
-  --v110-selected: #d7e7f3;
-  --v110-muted-panel: #e0e5e9;
-  --v110-muted-border: #c7d0d9;
-  --v110-focus: #2d5684;
-  --v110-foreground: #202c38;
-  --v110-subtle-text: #4b5c6e;
-}
-body.opsix-test-mode {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--v110-bg);
-  color: var(--v110-foreground);
-}
-body.opsix-test-mode .wrap {
-  max-width: 1680px;
-  padding: clamp(10px, 1.75vw, 24px);
-}
-body.opsix-test-mode .card {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  box-shadow: none;
-}
-body.opsix-test-mode .pageHeader {
-  align-items: center;
-}
-body.opsix-test-mode #pageTitle {
-  letter-spacing: -.02em;
-}
-body.opsix-test-mode .opsix-columns {
-  display: grid;
-  align-items: start;
-}
-body.opsix-test-mode .opsix-column,
-body.opsix-test-mode .opsix-report-panel {
-  background: var(--v110-panel);
-  border: 1px solid var(--v110-border);
-  box-shadow: 0 2px 12px rgba(0,0,0,.08);
-  min-width: 0;
-}
-body.opsix-test-mode .opsix-column-title {
-  letter-spacing: -.015em;
-  color: var(--v110-title);
-  border-bottom: 1px solid var(--v110-border);
-  margin: 0 0 18px;
-  padding: 0 0 14px;
-}
-body.opsix-test-mode .opsix-operativ > .hasteLabel {
-  color: var(--v110-foreground);
-  letter-spacing: 0;
-}
-body.opsix-test-mode .opsix-operativ .hasteGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  margin: 0 0 23px;
-}
-body.opsix-test-mode .opsix-operativ .hasteCard {
-  min-width: 0;
-  box-shadow: none;
-}
-body.opsix-test-mode .formGroup,
-body.opsix-test-mode .accessGroup,
-body.opsix-test-mode .doctorGroup,
-body.opsix-test-mode .infoGroup {
-  min-width: 0;
-}
-body.opsix-test-mode .opsix-column .minorTitle,
-body.opsix-test-mode .opsix-column .bigSection,
-body.opsix-test-mode .opsix-column .section {
-  color: var(--v110-foreground);
-  border-color: var(--v110-border);
-}
-body.opsix-test-mode .opsix-operativ .formGroup > .section:first-child {
-  margin-top: 0;
-}
-body.opsix-test-mode .opsix-column input:not([type="radio"]):not([type="checkbox"]),
-body.opsix-test-mode .opsix-column textarea,
-body.opsix-test-mode .opsix-column select {
-  max-width: 100%;
-  min-width: 0;
-  font-family: inherit;
-}
-body.opsix-test-mode input:focus-visible,
-body.opsix-test-mode select:focus-visible,
-body.opsix-test-mode textarea:focus-visible,
-body.opsix-test-mode button:focus-visible,
-body.opsix-test-mode a:focus-visible {
-  outline: 3px solid var(--v110-focus) !important;
-  outline-offset: 3px !important;
-}
-body.opsix-test-mode .followRow,
-body.opsix-test-mode .chipRow,
-body.opsix-test-mode .smLine,
-body.opsix-test-mode .airwayRow,
-body.opsix-test-mode .accessChipRow,
-body.opsix-test-mode .spesialtransportRow {
-  flex-wrap: wrap !important;
-  overflow: visible;
-}
-body.opsix-test-mode .medChip,
-body.opsix-test-mode .binaryOpt,
-body.opsix-test-mode .followChip,
-body.opsix-test-mode .spedChip,
-body.opsix-test-mode .smChip,
-body.opsix-test-mode .specialGroup .specCell {
-  margin-right: 0;
-  text-align: center;
-}
-body.opsix-test-mode .inlineVitals {
-  justify-content: flex-start;
-}
-body.opsix-test-mode .vpField,
-body.opsix-test-mode .btMini {
-  min-width: 0;
-}
-body.opsix-test-mode .vpField {
-  flex: 1 1 84px;
-}
-body.opsix-test-mode .btWrap {
-  flex-wrap: wrap;
-  max-width: 100%;
-}
-body.opsix-test-mode .btMini {
-  flex: 0 1 82px;
-}
-body.opsix-test-mode .vpGcsField {
-  flex: 1 1 160px;
-}
-body.opsix-test-mode .doctorRow {
-  width: 100%;
-  max-width: 100%;
-  grid-template-columns: minmax(0, 1fr) minmax(90px, 135px);
-}
-body.opsix-test-mode .accessDynamic .dynamicRow,
-body.opsix-test-mode .medDynamic .dynamicRow,
-body.opsix-test-mode #tilgangerDynamicBody .dynamicRow {
-  max-width: 100% !important;
-  min-width: 0 !important;
-  width: 100% !important;
-}
-body.opsix-test-mode #tilgangerDynamicBody .dynamicRow input[type="text"] {
-  min-width: 0 !important;
-  width: auto !important;
-  flex: 1 1 0 !important;
-}
-body.opsix-test-mode .inlineSelect,
-body.opsix-test-mode .pvkSelect {
-  max-width: 100%;
-}
-body.opsix-test-mode #rapport {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: none;
-  border: 1px solid var(--v110-border);
-  border-radius: 12px;
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: calc(14px * var(--opsix-text-scale));
-  line-height: 1.5;
-  overflow-y: auto;
-}
-body.opsix-test-mode #copyMsg {
-  min-width: 110px;
-}
-body.opsix-test-mode #copyMsg:not(:empty) {
-  padding: 9px 12px;
-  border: 1px solid #4fa876;
-  border-radius: 8px;
-  background: rgba(53,193,106,.12);
-  color: var(--v110-foreground);
-}
-body.opsix-test-mode #opsixFooterActions {
-  border-top: 1px solid var(--v110-border);
-  padding: 16px 3px 0;
-}
-body.opsix-test-mode .opsix-optional:not(.opsix-optional-filled) > .section,
-body.opsix-test-mode .opsix-optional:not(.opsix-optional-filled) > .minorTitle,
-body.opsix-test-mode .opsix-optional:not(.opsix-optional-filled) > label {
-  color: var(--v110-subtle-text) !important;
-}
-body.opsix-test-mode .opsix-optional-filled {
-  border-color: var(--v110-border);
-  background: transparent;
-}
-body.opsix-test-mode .opsix-gcs-toggle {
-  background: transparent;
-  color: var(--v110-foreground);
-  border: 1px solid var(--v110-border);
-  border-radius: 9px;
-  font-weight: 600;
-}
-body.opsix-test-mode .opsix-gcs-details {
-  padding: 12px;
-  margin-top: 10px;
-  border: 1px solid var(--v110-border);
-  border-radius: 12px;
-  background: var(--v110-muted-panel);
-}
-body.opsix-test-mode .opsix-gcs-label {
-  display: block;
-  font-weight: 600;
-  font-size: calc(13px * var(--opsix-text-scale));
-  margin: 9px 0 6px;
-  color: var(--v110-foreground);
-}
-body.opsix-test-mode .opsix-gcs-select {
-  display: block;
-  width: 100%;
-  max-width: 480px;
-  margin: 6px 0;
-}
-body.opsix-test-mode .opsix-gcs-note {
-  font-size: calc(12px * var(--opsix-text-scale));
-  line-height: 1.5;
-  color: var(--v110-subtle-text);
-  margin-bottom: 0;
-}
-body.opsix-test-mode .opsix-confirm-reset {
-  max-width: min(440px, calc(100% - 30px));
-  padding: 0;
-  background: var(--v110-panel);
-  color: var(--v110-foreground);
-  border: 1px solid var(--v110-border);
-  border-radius: 16px;
-  box-shadow: 0 24px 64px rgba(0,0,0,.4);
-}
-body.opsix-test-mode .opsix-confirm-reset::backdrop {
-  background: rgba(0,0,0,.7);
-}
-body.opsix-test-mode .opsix-confirm-body {
-  padding: 24px;
-}
-body.opsix-test-mode .opsix-confirm-body h2 {
-  margin: 0 0 10px;
-  font-size: calc(20px * var(--opsix-text-scale));
-}
-body.opsix-test-mode .opsix-confirm-body p {
-  line-height: 1.55;
-}
-body.opsix-test-mode .opsix-confirm-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  margin-top: 24px;
-}
-body.opsix-test-mode .opsix-cancel,
-body.opsix-test-mode .opsix-danger {
-  padding: 12px 14px;
-  border-radius: 9px;
-  min-height: 44px;
-}
-body.opsix-test-mode .opsix-cancel {
-  background: #d6dde4;
-  color: #1e293b;
-}
-body.opsix-test-mode .opsix-danger {
-  background: #d33d45;
-  color: white;
-}
-body.opsix-no-haste .opsix-medisinsk,
-body.opsix-no-haste .opsix-andre,
-body.opsix-no-haste .opsix-report-panel,
-body.opsix-no-haste .opsix-operativ > :not(.opsix-column-title):not(.hasteLabel):not(.hasteGrid) {
-  display: none !important;
-}
-body.theme-light.opsix-test-mode .opsix-column,
-body.theme-light.opsix-test-mode .opsix-report-panel {
-  background: var(--v110-panel);
-  color: var(--v110-foreground);
-}
-body.theme-light.opsix-test-mode .opsix-optional-filled {
-  background: transparent;
-}
-@media (max-width: 1199px) and (min-width: 800px) {
-  body.opsix-test-mode .opsix-columns {
-    grid-template-columns: minmax(0,35fr) minmax(0,65fr);
-  }
-}
-@media (max-width: 1199px) and (min-width: 800px) {
-  body.opsix-test-mode .opsix-andre {
-    grid-column: 1 / -1;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .opsix-columns {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 10px;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .opsix-column,
-body.opsix-test-mode .opsix-report-panel {
-    padding: 15px;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .opsix-operativ .hasteGrid {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .doctorRow {
-    grid-template-columns: minmax(0,1fr);
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .vpField {
-    flex: 1 1 98px;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode input:not([type=checkbox]):not([type=radio]),
-body.opsix-test-mode textarea,
-body.opsix-test-mode select {
-    font-size: calc(16px * var(--opsix-text-scale));
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .intubRow {
-    flex-wrap: wrap;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .intubRow .unitInputWrap {
-    flex: 1 1 130px;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .binaryRow {
-    flex-wrap: wrap;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode #reportActions .actionBtn {
-    width: 100%;
-  }
-}
-@media (max-width: 390px) {
-  body.opsix-test-mode .opsix-operativ .hasteGrid {
-    grid-template-columns: minmax(0,1fr);
-  }
-}
-@media (max-width: 390px) {
-  body.opsix-test-mode .opsix-column,
-body.opsix-test-mode .opsix-report-panel {
-    padding: 12px;
-  }
-}
-body.opsix-test-mode #copyMsg.opsix-copy-failed {
-  border-color: #df7373;
-  background: rgba(194, 54, 61, .14);
-  color: var(--v110-foreground);
-}
-@media (min-width: 1200px) {
-  body.opsix-test-mode .wrap {
-    max-width: 1920px;
-    padding: 10px 14px;
-  }
-}
-@media (min-width: 1200px) {
-  body.opsix-test-mode .opsix-columns {
-    grid-template-columns: minmax(0, 26fr) minmax(0, 42fr) minmax(0, 32fr);
-    gap: 10px;
-  }
-}
-body.opsix-test-mode .pageHeader {
-  margin-bottom: 6px;
-  padding: 0 2px;
-}
-body.opsix-test-mode #pageTitle {
-  margin: 0 0 5px;
-  font-size: clamp(calc(20px * var(--opsix-text-scale)), calc(1.8vw * var(--opsix-text-scale)), calc(27px * var(--opsix-text-scale)));
-}
-body.opsix-test-mode .opsix-column {
-  border-radius: 12px;
-}
-body.opsix-test-mode .opsix-report-panel {
-  padding: clamp(11px, 1.05vw, 16px);
-  border-radius: 12px;
-}
-body.opsix-test-mode .opsix-column .section {
-  padding-top: 6px;
-}
-body.opsix-test-mode .opsix-operativ > .hasteLabel {
-  margin: 3px 0 6px;
-  font-size: calc(14px * var(--opsix-text-scale));
-}
-body.opsix-test-mode .opsix-operativ .hasteGrid {
-  gap: 6px;
-  margin-bottom: 10px;
-}
-body.opsix-test-mode .opsix-operativ .hasteCard {
-  min-height: 66px;
-  padding: 7px 9px;
-  gap: 3px;
-  border-radius: 9px;
-}
-body.opsix-test-mode .hasteCardTitle {
-  font-size: calc(12px * var(--opsix-text-scale));
-}
-body.opsix-test-mode .hasteCardText {
-  font-size: calc(10px * var(--opsix-text-scale));
-  line-height: 1.18;
-}
-body.opsix-test-mode .followRow,
-body.opsix-test-mode .chipRow,
-body.opsix-test-mode .smLine,
-body.opsix-test-mode .airwayRow,
-body.opsix-test-mode .accessChipRow {
-  margin-top: 4px;
-  margin-bottom: 5px;
-}
-body.opsix-test-mode .spesialtransportRow {
-  gap: 5px !important;
-  margin-top: 4px;
-  margin-bottom: 5px;
-}
-body.opsix-test-mode .medChip,
-body.opsix-test-mode .binaryOpt,
-body.opsix-test-mode .followChip,
-body.opsix-test-mode .spedChip,
-body.opsix-test-mode .smChip,
-body.opsix-test-mode .specialGroup .specCell {
-  min-height: 32px !important;
-  padding: 5px 9px !important;
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  line-height: 1.2 !important;
-  border-radius: 8px !important;
-  white-space: normal;
-}
-body.opsix-test-mode .medGroup {
-  padding: 8px 10px;
-  margin-top: 7px;
-  border-radius: 10px;
-}
-body.opsix-test-mode .medGroupTitle {
-  font-size: calc(11px * var(--opsix-text-scale));
-  margin-bottom: 5px;
-}
-body.opsix-test-mode .accessGroup .toggleCell {
-  min-height: 30px;
-  padding: 4px 7px;
-  border-radius: 7px;
-}
-body.opsix-test-mode .accessGroup .toggleInner {
-  gap: 5px;
-  min-height: 26px;
-}
-body.opsix-test-mode .opsix-optional {
-  margin: 6px 0;
-  border-radius: 9px;
-}
-body.opsix-test-mode .opsix-column textarea {
-  min-height: 62px;
-  padding: 8px 10px;
-}
-body.opsix-test-mode .opsix-column input:not([type=checkbox]):not([type=radio]) {
-  border-radius: 8px;
-}
-body.opsix-test-mode .vpField {
-  flex-basis: 73px;
-  max-width: 112px;
-}
-body.opsix-test-mode .btMini {
-  flex-basis: 66px;
-}
-body.opsix-test-mode .vpGcsField {
-  flex-basis: 110px;
-  max-width: 150px;
-}
-body.opsix-test-mode .opsix-gcs-toggle {
-  min-height: 31px;
-  padding: 5px 9px;
-  font-size: calc(12px * var(--opsix-text-scale));
-}
-body.opsix-test-mode #rapport {
-  min-height: 115px;
-}
-body.opsix-test-mode #reportActions {
-  margin-top: 8px;
-}
-body.opsix-test-mode #opsixFooterActions {
-  margin-top: 8px;
-  padding-top: 9px;
-}
-body.opsix-test-mode #weightWrap,
-body.theme-light.opsix-test-mode #weightWrap {
-  max-width: none;
-  margin-top: 7px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-body.opsix-test-mode #weightWrap label,
-body.theme-light.opsix-test-mode #weightWrap label {
-  color: var(--v110-foreground);
-  margin: 0 0 5px;
-}
-body.opsix-test-mode #weightWrap #vekt,
-body.theme-light.opsix-test-mode #weightWrap #vekt {
-  width: min(100%, 150px);
-  margin: 0;
-  border: 1px solid var(--v110-border);
-  box-shadow: none;
-}
-body.opsix-test-mode #weightWrap #vekt:focus {
-  border-color: var(--v110-focus);
-  box-shadow: none;
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .medChip,
-body.opsix-test-mode .binaryOpt,
-body.opsix-test-mode .followChip,
-body.opsix-test-mode .spedChip,
-body.opsix-test-mode .smChip,
-body.opsix-test-mode .specialGroup .specCell {
-    min-height: 40px !important;
-    padding: 8px 10px !important;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .opsix-operativ .hasteCard,
-body.opsix-test-mode .opsix-column textarea {
-    min-height: 78px;
-  }
-}
-body.opsix-no-haste.opsix-test-mode .opsix-columns {
-  grid-template-columns: minmax(0, 26fr) minmax(0, 42fr) minmax(0, 32fr);
-}
-body.opsix-no-haste.opsix-test-mode .opsix-operativ > :not(.opsix-column-title):not(.hasteLabel):not(.hasteGrid) {
-  display: revert !important;
-}
-body.opsix-no-haste.opsix-test-mode .opsix-medisinsk,
-body.opsix-no-haste.opsix-test-mode .opsix-andre {
-  display: block !important;
-}
-body.opsix-no-haste.opsix-test-mode .opsix-medisinsk,
-body.opsix-no-haste.opsix-test-mode .opsix-andre {
-  border-color: var(--v110-muted-border);
-}
-body.opsix-no-haste.opsix-test-mode .opsix-medisinsk .opsix-column-title,
-body.opsix-no-haste.opsix-test-mode .opsix-andre .opsix-column-title {
-  color: var(--v110-subtle-text);
-}
-body.opsix-no-haste.opsix-test-mode #rapport {
-  opacity: .8;
-}
-@media (min-width:800px) and (max-width:1199px) {
-  body.opsix-no-haste.opsix-test-mode .opsix-columns {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-}
-@media (max-width:799px) {
-  body.opsix-no-haste.opsix-test-mode .opsix-columns {
-    grid-template-columns: minmax(0,1fr);
-  }
-}
-body.opsix-test-mode .opsix-column textarea.opsix-four-lines {
-  min-height: 98px !important;
-  line-height: 1.45;
-  resize: vertical;
-  overflow-y: auto;
-}
-body.opsix-test-mode .opsix-column textarea.opsix-one-line {
-  min-height: 36px !important;
-  line-height: 1.35;
-  resize: vertical;
-  overflow-y: hidden;
-}
-body.opsix-test-mode .opsix-andre .accessGroup,
-body.opsix-test-mode .opsix-andre .infoGroup,
-body.opsix-test-mode .opsix-andre .medGroup {
-  margin-top: 6px;
-  margin-bottom: 8px;
-}
-body.opsix-test-mode .opsix-andre .accessDynamic,
-body.opsix-test-mode .opsix-andre .medDynamic,
-body.opsix-test-mode .opsix-andre .dynamicRow {
-  margin-top: 3px !important;
-  margin-bottom: 4px !important;
-}
-body.opsix-test-mode .opsix-andre input[type="text"] {
-  margin-bottom: 5px;
-}
-body.theme-dim {
-  --bg: #46535e;
-  --panel: #5b6873;
-  --text: #f7f9fb;
-  --muted: #e1e7ec;
-  --field: #e5e9ed;
-  --fieldText: #202b35;
-  --line: #84939f;
-  --v110-bg: #46535e;
-  --v110-panel: #5b6873;
-  --v110-border: #8394a2;
-  --v110-title: #ffffff;
-  --v110-choice: #45525e;
-  --v110-selected: #237bb9;
-  --v110-muted-panel: #52616d;
-  --v110-muted-border: #8a9aa6;
-  --v110-focus: #d4edff;
-  --v110-foreground: #ffffff;
-  --v110-subtle-text: #f0f4f7;
-}
-body.theme-dim.opsix-test-mode .opsix-column,
-body.theme-dim.opsix-test-mode .opsix-report-panel {
-  background: var(--v110-panel);
-  color: var(--v110-foreground);
-  border-color: var(--v110-border);
-}
-body.theme-dim.opsix-test-mode input:not([type="checkbox"]):not([type="radio"]),
-body.theme-dim.opsix-test-mode textarea,
-body.theme-dim.opsix-test-mode select {
-  background: #e5e9ed;
-  color: #202b35;
-  border-color: #aab8c3;
-}
-body.theme-dim.opsix-test-mode input::placeholder,
-body.theme-dim.opsix-test-mode textarea::placeholder {
-  color: #586775;
-  opacity: 1;
-}
-body.theme-dim.opsix-test-mode .medGroup,
-body.theme-dim.opsix-test-mode .accessGroup,
-body.theme-dim.opsix-test-mode .infoGroup {
-  border-color: #8495a2;
-}
-body.theme-dim.opsix-test-mode .medGroupTitle {
-  color: #f3f7fa;
-}
-body.opsix-test-mode #hovedproblem,
-body.opsix-test-mode #acuteHovedproblem {
-  height: auto;
-  line-height: 1.4;
-  margin-top: 5px;
-  margin-bottom: 9px;
-  resize: vertical;
-}
-body.opsix-test-mode textarea.opsix-four-lines {
-  min-height: 0 !important;
-  height: auto;
-  line-height: 1.4;
-  margin-top: 5px;
-  margin-bottom: 9px;
-  resize: vertical;
-}
-body.opsix-test-mode #hovedproblem,
-body.opsix-test-mode #acuteHovedproblem {
-  min-height: 61px !important;
-}
-body.opsix-test-mode #tidligere,
-body.opsix-test-mode textarea.opsix-one-line {
-  min-height: 37px !important;
-  margin-top: 4px;
-  margin-bottom: 8px;
-  line-height: 1.4;
-  resize: vertical;
-}
-@media (min-width: 1200px) {
-  body.opsix-test-mode .opsix-medisinsk .airwayRow {
-    display: flex;
-    flex-wrap: nowrap !important;
-    align-items: stretch;
-    gap: 4px !important;
-    overflow-x: auto;
-    padding-bottom: 3px;
-    scrollbar-width: thin;
-  }
-}
-@media (min-width: 1200px) {
-  body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt {
-    flex: 0 0 auto;
-    white-space: nowrap !important;
-    min-height: 32px !important;
-    padding: 5px 7px !important;
-    font-size: calc(11px * var(--opsix-text-scale)) !important;
-    border-radius: 7px !important;
-    margin: 0 !important;
-  }
-}
-body.opsix-test-mode .opsix-medisinsk .airwaySection ~ .airwayRow + div,
-body.opsix-test-mode .opsix-medisinsk .airwaySection ~ .airwayRow + .inlineRow {
-  margin-top: 5px;
-}
-body.opsix-test-mode .opsix-medisinsk #intubWrap,
-body.opsix-test-mode .opsix-medisinsk #trachWrap,
-body.opsix-test-mode .opsix-medisinsk #nivWrap,
-body.opsix-test-mode .opsix-medisinsk #o2Wrap,
-body.opsix-test-mode .opsix-medisinsk #highFlowWrap,
-body.opsix-test-mode .opsix-medisinsk #acuteIntubWrap,
-body.opsix-test-mode .opsix-medisinsk #acuteTrachWrap {
-  margin-top: 5px;
-  margin-bottom: 6px;
-}
-body.opsix-test-mode .inlineVitals {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-body.opsix-test-mode .inlineVitals .vpField {
-  flex: 0 0 106px;
-  width: 106px;
-}
-body.opsix-test-mode .inlineVitals .btWrap {
-  flex: 0 0 auto;
-  max-width: 100%;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 4px;
-}
-body.opsix-test-mode .inlineVitals .btMini {
-  flex: 0 0 84px;
-  width: 84px;
-  max-width: none;
-}
-body.opsix-test-mode .inlineVitals .vpGcsField {
-  flex: 0 0 156px;
-  width: 156px;
-  max-width: none;
-}
-body.opsix-test-mode .inlineVitals .vpField input,
-body.opsix-test-mode .inlineVitals .btMini input {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  font-variant-numeric: tabular-nums;
-  padding-right: 5px;
-  font-size: calc(14px * var(--opsix-text-scale));
-  text-align: right;
-}
-body.opsix-test-mode .inlineVitals .vpField input {
-  padding-left: 43px;
-}
-body.opsix-test-mode .inlineVitals .btMini input {
-  padding-left: 40px;
-}
-body.opsix-test-mode .inlineVitals .vpGcsField input {
-  padding-left: 43px;
-  text-align: right;
-}
-body.opsix-test-mode .inlineVitals .vpField span,
-body.opsix-test-mode .inlineVitals .btMini span {
-  left: 8px;
-  font-size: calc(12px * var(--opsix-text-scale));
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .opsix-medisinsk .airwayRow {
-    flex-wrap: wrap !important;
-    overflow: visible;
-  }
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode .inlineVitals .vpField {
-    flex: 1 1 106px;
-  }
-}
-body.opsix-test-mode #pvkAntall,
-body.opsix-test-mode #cvkLumen {
-  box-sizing: border-box !important;
-  flex: 0 0 auto !important;
-  width: 92px !important;
-  min-width: 92px !important;
-  max-width: 92px !important;
-  height: 34px !important;
-  min-height: 34px !important;
-  max-height: 34px !important;
-  margin: 0 !important;
-  padding: 3px 22px 3px 9px !important;
-  border-radius: 8px !important;
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  font-weight: 600;
-  line-height: 1.2 !important;
-  box-shadow: none !important;
-  vertical-align: middle !important;
-}
-body.opsix-test-mode .opsix-andre .inlineSelect,
-body.opsix-test-mode .opsix-andre .pvkSelect,
-body.opsix-test-mode .opsix-andre .accessChipRow select,
-body.opsix-test-mode .opsix-andre .utstyrChipRow select {
-  box-sizing: border-box !important;
-  flex: 0 0 auto !important;
-  width: 92px !important;
-  min-width: 92px !important;
-  max-width: 92px !important;
-  height: 34px !important;
-  min-height: 34px !important;
-  max-height: 34px !important;
-  margin: 0 !important;
-  padding: 3px 22px 3px 9px !important;
-  border: 1px solid var(--v110-border) !important;
-  border-radius: 8px !important;
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  font-weight: 600;
-  line-height: 1.2 !important;
-  background-color: var(--v110-field) !important;
-  color: var(--v110-field-text) !important;
-  box-shadow: none !important;
-  vertical-align: middle !important;
-}
-body.opsix-test-mode .opsix-andre .accessChipRow,
-body.opsix-test-mode .opsix-andre .utstyrChipRow {
-  gap: 5px !important;
-  align-items: center !important;
-}
-body.opsix-test-mode .opsix-andre .accessChipRow select,
-body.opsix-test-mode .opsix-andre .utstyrChipRow select {
-  align-self: center;
-}
-@media (max-width: 799px) {
-  body.opsix-test-mode #pvkAntall,
-body.opsix-test-mode #cvkLumen,
-body.opsix-test-mode .opsix-andre .inlineSelect,
-body.opsix-test-mode .opsix-andre .pvkSelect,
-body.opsix-test-mode .opsix-andre .accessChipRow select,
-body.opsix-test-mode .opsix-andre .utstyrChipRow select {
-    height: 40px !important;
-    min-height: 40px !important;
-    max-height: 40px !important;
-    font-size: calc(14px * var(--opsix-text-scale)) !important;
-  }
-}
-body.opsix-test-mode {
-  --opsix-field-h: 40px;
-  --opsix-gap: 7px;
-}
-body.opsix-test-mode .opsix-column-title {
-  font-weight: 750;
-  line-height: 1.3;
-}
-body.opsix-test-mode .opsix-column .bigSection,
-body.opsix-test-mode .opsix-column .section,
-body.opsix-test-mode .opsix-column .minorTitle,
-body.opsix-test-mode .opsix-column .vpTitle {
-  font-weight: 700;
-}
-body.opsix-test-mode .opsix-column .medGroupTitle {
-  font-weight: 650;
-}
-body.opsix-test-mode .opsix-column .specLabel {
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  font-weight: 650;
-}
-body.opsix-test-mode .opsix-column input:not([type=checkbox]):not([type=radio]):not([type=hidden]) {
-  box-sizing: border-box;
-  min-height: var(--opsix-field-h);
-  border-radius: 8px;
-  font-size: calc(13px * var(--opsix-text-scale));
-}
-body.opsix-test-mode .opsix-column select {
-  font-size: calc(13px * var(--opsix-text-scale));
-}
-body.opsix-test-mode .opsix-column textarea {
-  box-sizing: border-box;
-  border-radius: 8px;
-  font-size: calc(13px * var(--opsix-text-scale));
-}
-body.opsix-test-mode .chipRow,
-body.opsix-test-mode .followRow,
-body.opsix-test-mode .smLine,
-body.opsix-test-mode .accessChipRow,
-body.opsix-test-mode .airwayRow {
-  gap: var(--opsix-gap) !important;
-  align-items: center;
-}
-body.opsix-test-mode label.medChip,
-body.opsix-test-mode label.binaryOpt,
-body.opsix-test-mode label.followChip,
-body.opsix-test-mode label.spedChip,
-body.opsix-test-mode label.smChip {
-  box-sizing: border-box;
-  min-height: 36px !important;
-  padding: 7px 10px !important;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-body.opsix-test-mode label.medChip input,
-body.opsix-test-mode label.binaryOpt input,
-body.opsix-test-mode label.followChip input,
-body.opsix-test-mode label.spedChip input,
-body.opsix-test-mode label.smChip input {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  clip-path: inset(50%) !important;
-  white-space: nowrap !important;
-  display: block !important;
-  opacity: 0 !important;
-}
-body.opsix-test-mode label.medChip:focus-within,
-body.opsix-test-mode label.binaryOpt:focus-within,
-body.opsix-test-mode label.followChip:focus-within,
-body.opsix-test-mode label.spedChip:focus-within,
-body.opsix-test-mode label.smChip:focus-within {
-  outline: 3px solid #83baff !important;
-  outline-offset: 2px;
-}
-body.opsix-test-mode .transportRow label.medChip {
-  min-height: 36px !important;
-  width: auto !important;
-  flex: 0 0 auto !important;
-}
-body.opsix-test-mode .hasteGrid .hasteCard {
-  position: relative;
-}
-body.opsix-test-mode .hasteGrid .hasteCardTitle {
-  font-weight: 800 !important;
-  line-height: 1.25;
-}
-body.opsix-test-mode .hasteGrid .hasteCard.active::after {
-  position: absolute;
-  right: 7px;
-  top: 5px;
-  place-items: center;
-  width: 19px;
-  height: 19px;
-  border-radius: 50%;
-  background: #fff;
-  color: #182635;
-  font-size: calc(13px * var(--opsix-text-scale));
-  font-weight: 900;
-}
-body.opsix-test-mode .hasteGrid .hasteCard.haste-planlagt.active {
-  color: #fff !important;
-}
-body.opsix-test-mode .opsix-optional,
-body.theme-light.opsix-test-mode .opsix-optional,
-body.theme-dim.opsix-test-mode .opsix-optional {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  padding: 5px 0 !important;
-  opacity: 1 !important;
-}
-body.opsix-test-mode .opsix-optional-label {
-  display: inline-flex;
-  margin: 3px 0 7px;
-  padding: 3px 8px;
-  border: 1px solid currentColor;
-  border-radius: 5px;
-  color: var(--muted);
-  font-size: calc(11px * var(--opsix-text-scale));
-  font-weight: 750;
-  letter-spacing: .01em;
-}
-body.opsix-test-mode .opsix-optional-label[hidden] {
-  display: none !important;
-}
-body.opsix-test-mode .opsix-report-layout {
-  display: grid;
-  align-items: start;
-}
-body.opsix-test-mode .opsix-report-layout #rapport {
-  margin-top: 0;
-  width: 100%;
-  min-width: 0;
-}
-body.opsix-test-mode .opsix-report-tools {
-  display: flex;
-  flex-direction: column;
-}
-body.opsix-test-mode .opsix-report-tools #reportActions,
-body.opsix-test-mode .opsix-report-tools #opsixFooterActions {
-  display: flex !important;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-  width: 100%;
-  margin: 0;
-}
-body.opsix-test-mode .opsix-report-tools .actionBtn,
-body.opsix-test-mode .opsix-report-tools .feedbackBtn,
-body.opsix-test-mode .opsix-report-tools .versionHistoryBtn {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 !important;
-}
-body.opsix-test-mode .opsix-report-tools .versionInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: stretch;
-}
-body.opsix-test-mode .inlineVitals {
-  gap: 7px !important;
-}
-body.opsix-test-mode .inlineVitals .vpField {
-  min-width: 94px;
-  max-width: none;
-}
-body.opsix-test-mode .inlineVitals .btMini {
-  min-width: 82px;
-}
-body.opsix-test-mode .inlineVitals .vpGcsField {
-  min-width: 130px;
-}
-body.opsix-test-mode .inlineVitals input {
-  min-width: 0;
-  font-variant-numeric: tabular-nums;
-}
-@media (max-width: 850px) {
-  body.opsix-test-mode .opsix-report-layout {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 850px) {
-  body.opsix-test-mode .opsix-report-tools {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
-body.opsix-test-mode {
-  --opsix-input-height: 42px;
-}
-body.opsix-test-mode .opsix-column input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
-body.opsix-test-mode .opsix-column select,
-body.opsix-test-mode .opsix-column .vpField,
-body.opsix-test-mode .opsix-column .btMini,
-body.opsix-test-mode .opsix-column .unitInputWrap {
-  box-sizing: border-box !important;
-  height: var(--opsix-input-height) !important;
-  min-height: var(--opsix-input-height) !important;
-  max-height: var(--opsix-input-height) !important;
-  border-radius: 8px !important;
-}
-body.opsix-test-mode .opsix-column .vpField input,
-body.opsix-test-mode .opsix-column .btMini input,
-body.opsix-test-mode .opsix-column .unitInputWrap input {
-  height: 100% !important;
-  min-height: 0 !important;
-  max-height: 100% !important;
-  margin: 0 !important;
-}
-body.opsix-test-mode .opsix-medisinsk #acuteSpontO2Wrap,
-body.opsix-test-mode .opsix-medisinsk #acuteHighFlowWrap,
-body.opsix-test-mode .opsix-medisinsk #acuteNivWrap,
-body.opsix-test-mode .opsix-medisinsk #acuteIntubWrap,
-body.opsix-test-mode .opsix-medisinsk #acuteTrachWrap {
-  margin: 3px 0 5px !important;
-  padding: 0 !important;
-}
-body.opsix-test-mode .opsix-medisinsk .intubRow,
-body.opsix-test-mode .opsix-medisinsk #highFlowWrap .inlineRow,
-body.opsix-test-mode .opsix-medisinsk #intubWrap .inlineRow,
-body.opsix-test-mode .opsix-medisinsk #nivWrap .inlineRow {
-  margin-top: 3px !important;
-  margin-bottom: 0 !important;
-  gap: 8px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .unitInputWrap,
-body.opsix-test-mode .opsix-medisinsk .airwayRow {
-  margin-bottom: 0 !important;
-}
-body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt input {
-  display: block !important;
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  opacity: 0 !important;
-  clip-path: inset(50%) !important;
-}
-body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:focus-within {
-  outline: 3px solid #83baff !important;
-  outline-offset: 2px;
-}
-body.opsix-test-mode {
-  --opsix-control-h: 42px;
-  --opsix-chip-h: 36px;
-  --opsix-control-gap: 7px;
-}
-body.opsix-test-mode .opsix-columns {
-  grid-template-columns: minmax(0,27fr) minmax(0,43fr) minmax(0,30fr);
-  gap: 12px;
-}
-body.opsix-test-mode .opsix-column {
-  padding: clamp(13px,1.35vw,19px);
-}
-body.opsix-test-mode .opsix-column-title {
-  font-size: calc(17px * var(--opsix-text-scale)) !important;
-  margin-bottom: 13px !important;
-  padding-bottom: 11px !important;
-}
-body.opsix-test-mode .opsix-column .minorTitle,
-body.opsix-test-mode .opsix-column .bigSection,
-body.opsix-test-mode .opsix-column .section,
-body.opsix-test-mode .opsix-column .vpTitle {
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-  line-height: 1.35 !important;
-  margin-top: 14px !important;
-  margin-bottom: 7px !important;
-}
-body.opsix-test-mode .opsix-column .medGroupTitle {
-  font-size: calc(11px * var(--opsix-text-scale)) !important;
-  letter-spacing: .045em;
-}
-body.opsix-test-mode .hasteGrid .hasteCard {
-  min-height: 79px !important;
-  padding: 10px 11px !important;
-  border-width: 2px !important;
-  transition: border-color .12s ease, box-shadow .12s ease;
-}
-body.opsix-test-mode .hasteGrid .hasteCard.active {
-  outline: 3px solid #80b8f6 !important;
-  outline-offset: 1px;
-  box-shadow: 0 0 0 2px rgba(15,23,42,.32) inset !important;
-}
-body.opsix-test-mode .hasteGrid .hasteCardTitle {
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-}
-body.opsix-test-mode .hasteGrid .hasteCardText {
-  font-size: calc(11px * var(--opsix-text-scale)) !important;
-  line-height: 1.3 !important;
-}
-body.opsix-test-mode .opsix-operativ .followRow {
-  display: grid !important;
-  gap: 7px !important;
-  align-items: stretch !important;
-  margin-bottom: 10px !important;
-}
-body.opsix-test-mode .opsix-operativ .followRow .followChip {
-  display: flex !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  min-height: var(--opsix-chip-h) !important;
-  margin: 0 !important;
-  padding: 7px 9px !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-}
-@media (min-width:800px) and (max-width:1199px) {
-  body.opsix-test-mode .opsix-operativ .followRow {
-    grid-template-columns: 1fr !important;
-  }
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals {
-  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals > .vpField,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals > .btWrap {
-  box-sizing: border-box !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  height: var(--opsix-control-h) !important;
-  min-height: var(--opsix-control-h) !important;
-  margin: 0 !important;
-  flex: none !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals > .btWrap {
-  grid-column: span 2;
-  display: grid !important;
-  grid-template-columns: minmax(0,1fr) 12px minmax(0,1fr) minmax(0,1fr);
-  gap: 5px !important;
-  align-items: center;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .btWrap .btMini,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .btWrap .vpField {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  height: var(--opsix-control-h) !important;
-  flex: none !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .btSlash {
-  width: 12px !important;
-  min-width: 12px !important;
-  margin: 0 !important;
-  text-align: center;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpField input,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .btMini input {
-  box-sizing: border-box !important;
-  width: 100% !important;
-  height: var(--opsix-control-h) !important;
-  min-height: var(--opsix-control-h) !important;
-  max-height: var(--opsix-control-h) !important;
-  padding-left: 36px !important;
-  padding-right: 7px !important;
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-  text-align: right !important;
-  font-variant-numeric: tabular-nums;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpField span,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .btMini span {
-  left: 7px !important;
-  font-size: calc(11px * var(--opsix-text-scale)) !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpGcsField {
-  grid-column: auto;
-  min-width: 0 !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpGcsField input {
-  padding-left: 36px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals + * {
-  margin-top: 6px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .airwayRow {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  overflow: visible !important;
-  gap: 6px !important;
-  margin: 6px 0 7px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt {
-  flex: 0 1 auto !important;
-  min-height: var(--opsix-chip-h) !important;
-  padding: 7px 9px !important;
-  white-space: normal !important;
-  text-align: center;
-}
-body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt span {
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  line-height: 1.2 !important;
-}
-body.opsix-test-mode .opsix-medisinsk #spontO2Wrap,
-body.opsix-test-mode .opsix-medisinsk #highFlowWrap,
-body.opsix-test-mode .opsix-medisinsk #nivWrap,
-body.opsix-test-mode .opsix-medisinsk #intubWrap,
-body.opsix-test-mode .opsix-medisinsk #trachWrap {
-  margin: 5px 0 7px !important;
-  padding: 0 !important;
-}
-body.opsix-test-mode .opsix-medisinsk #spontO2Wrap input,
-body.opsix-test-mode .opsix-medisinsk #highFlowWrap input,
-body.opsix-test-mode .opsix-medisinsk #nivWrap input,
-body.opsix-test-mode .opsix-medisinsk #intubWrap input,
-body.opsix-test-mode .opsix-medisinsk #trachWrap input {
-  height: var(--opsix-control-h) !important;
-  min-height: var(--opsix-control-h) !important;
-  max-height: var(--opsix-control-h) !important;
-  border-radius: 8px !important;
-}
-body.opsix-test-mode .opsix-andre .smLine {
-  gap: 7px !important;
-  margin: 6px 0 !important;
-}
-body.opsix-test-mode .opsix-andre .smLine .smChip {
-  flex: 0 0 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  padding: 7px 10px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .medGroup {
-  padding: 9px 11px !important;
-  margin: 6px 0 !important;
-  border-radius: 10px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .medGroup .medChip {
-  min-height: var(--opsix-chip-h) !important;
-}
-body.opsix-test-mode .opsix-medisinsk .medGroup input[type=text],
-body.opsix-test-mode .opsix-andre .accessGroup input[type=text] {
-  min-height: var(--opsix-control-h) !important;
-}
-body.opsix-test-mode .opsix-report-layout {
-  grid-template-columns: minmax(0,1fr) 180px !important;
-  gap: 14px !important;
-}
-body.opsix-test-mode .opsix-report-tools {
-  gap: 8px !important;
-}
-body.opsix-test-mode .opsix-report-tools .copyMsg:empty {
-  display: none !important;
-}
-body.opsix-test-mode .opsix-report-panel {
-  margin-top: 12px !important;
-}
-body.theme-light.opsix-test-mode .hasteGrid .hasteCard.active,
-body.theme-dim.opsix-test-mode .hasteGrid .hasteCard.active {
-  outline-color: #205c9a !important;
-}
-body.opsix-test-mode label:has(input:focus-visible),
-body.opsix-test-mode .hasteCard:focus-visible {
-  outline: 3px solid #7eb8fa !important;
-  outline-offset: 2px !important;
-}
-@media (max-width:1199px) {
-  body.opsix-test-mode .opsix-columns {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-}
-@media (max-width:1199px) {
-  body.opsix-test-mode .opsix-medisinsk {
-    grid-column: span 1;
-  }
-}
-@media (max-width:799px) {
-  body.opsix-test-mode .opsix-columns {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width:799px) {
-  body.opsix-test-mode .opsix-operativ .followRow {
-    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-  }
-}
-@media (max-width:799px) {
-  body.opsix-test-mode .opsix-report-layout {
-    grid-template-columns: 1fr !important;
-  }
-}
-body.opsix-test-mode .opsix-medisinsk .vpGcsField {
-  position: relative !important;
-  min-width: 0 !important;
-}
-body.opsix-test-mode .opsix-medisinsk .vpGcsField input {
-  padding-right: 76px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .vpGcsField .opsix-gcs-toggle {
-  position: absolute !important;
-  top: 50% !important;
-  right: 5px !important;
-  transform: translateY(-50%) !important;
-  margin: 0 !important;
-  min-height: 29px !important;
-  height: 29px !important;
-  padding: 4px 7px !important;
-  font-size: calc(11px * var(--opsix-text-scale)) !important;
-  border-radius: 7px !important;
-  white-space: nowrap;
-  z-index: 2;
-}
-body.opsix-test-mode .opsix-gcs-controls {
-  margin: 4px 0 8px !important;
-}
-body.opsix-test-mode .opsix-gcs-controls:has(.opsix-gcs-details.hidden) {
-  display: none !important;
-}
-body.opsix-test-mode #transportWrap .transportRow {
-  overflow: visible !important;
-}
-body.opsix-test-mode #transportWrap .transportRow > label.medChip {
-  display: inline-flex !important;
-  flex: 0 0 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: none !important;
-  padding: 7px 10px !important;
-  margin: 0 !important;
-  border-radius: 8px !important;
-  justify-content: center !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
-}
-body.opsix-test-mode #transportWrap .transportRow > label.medChip span {
-  width: auto !important;
-  padding: 0 !important;
-  line-height: 1.2 !important;
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-}
-body.opsix-test-mode .opsix-theme-control {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  flex: 0 0 auto;
-}
-body.opsix-test-mode .opsix-theme-caption {
-  font-size: calc(12px * var(--opsix-text-scale));
-  font-weight: 650;
-  color: var(--text);
-  opacity: .86;
-}
-body.opsix-test-mode .opsix-theme-select {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  width: 132px !important;
-  min-height: 38px !important;
-  padding: 7px 34px 7px 13px !important;
-  border: 1px solid #66778a !important;
-  border-radius: 12px !important;
-  color: #f7fafc !important;
-  background-color: #354353 !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23e5edf6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-position: right 11px center !important;
-  background-size: 14px !important;
-  font-size: calc(13px * var(--opsix-text-scale)) !important;
-  font-weight: 650 !important;
-  cursor: pointer;
-}
-body.theme-light.opsix-test-mode .opsix-theme-select {
-  background-color: #f5f7fa !important;
-  color: #18293c !important;
-  border-color: #8498ac !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23233850' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
-}
-body.theme-dim.opsix-test-mode .opsix-theme-select {
-  background-color: #445362 !important;
-}
-body.opsix-test-mode .opsix-theme-select:focus-visible,
-body.opsix-test-mode .opsix-medisinsk .vpGcsField .opsix-gcs-toggle:focus-visible,
-body.opsix-test-mode label:has(> input:focus-visible) {
-  outline: 3px solid #86bbff !important;
-  outline-offset: 2px !important;
-}
-body.opsix-test-mode .opsix-column .medChip:has(input:checked),
-body.opsix-test-mode #transportWrap .medChip:has(input:checked) {
-  background-color: #245b9e !important;
-  border-color: #86baff !important;
-  color: #fff !important;
-}
-body.theme-light.opsix-test-mode .opsix-column .medChip:has(input:checked),
-body.theme-light.opsix-test-mode #transportWrap .medChip:has(input:checked) {
-  background-color: #205b9e !important;
-  border-color: #174475 !important;
-  color: #fff !important;
-}
-body.opsix-test-mode .opsix-column .medChip:has(input:checked) span {
-  color: #fff !important;
-}
-@media (max-width: 550px) {
-  body.opsix-test-mode .opsix-theme-caption {
-    display: none;
-  }
-}
-@media (max-width: 550px) {
-  body.opsix-test-mode .opsix-theme-select {
-    width: 105px !important;
-  }
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  gap: 7px !important;
-  overflow: visible !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row {
-  display: grid !important;
-  align-items: center !important;
-  gap: 7px !important;
-  width: 100% !important;
-  min-width: 0 !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row > .vpField,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row > .btWrap {
-  display: flex !important;
-  position: relative !important;
-  box-sizing: border-box !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  height: 42px !important;
-  min-height: 42px !important;
-  margin: 0 !important;
-  flex: none !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
-  display: grid !important;
-  grid-template-columns: minmax(0,1fr) 10px minmax(0,1fr) !important;
-  gap: 3px !important;
-  align-items: center !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary .btMini {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  height: 42px !important;
-  margin: 0 !important;
-  flex: none !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary .btSlash {
-  width: 10px !important;
-  min-width: 10px !important;
-  margin: 0 !important;
-  text-align: center !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .vpField input,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .btMini input {
-  width: 100% !important;
-  min-width: 0 !important;
-  height: 42px !important;
-  min-height: 42px !important;
-  max-height: 42px !important;
-  padding: 0 7px 0 31px !important;
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-  text-align: right !important;
-  font-variant-numeric: tabular-nums;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .vpField > span,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .btMini > span {
-  left: 6px !important;
-  font-size: calc(10px * var(--opsix-text-scale)) !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
-  padding-right: 82px !important;
-  padding-left: 38px !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField .opsix-gcs-toggle {
-  position: absolute !important;
-  right: 5px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  margin: 0 !important;
-  width: auto !important;
-  min-width: 66px !important;
-  height: 30px !important;
-  min-height: 30px !important;
-  padding: 4px 7px !important;
-  font-size: calc(11px * var(--opsix-text-scale)) !important;
-  z-index: 3;
-}
-@media (max-width: 540px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
-    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
-  }
-}
-@media (max-width: 540px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
-    grid-column: 1 / -1;
-    max-width: 230px !important;
-  }
-}
-@media (max-width: 540px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
-    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-  }
-}
-@media (max-width: 540px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpGcsField {
-    grid-column: 1 / -1;
-    max-width: 250px !important;
-  }
-}
-body.opsix-test-mode #transportWrap .transportRow {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 6px !important;
-  align-items: center !important;
-}
-body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip {
-  display: inline-flex !important;
-  flex: 0 0 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: none !important;
-  padding: 7px 10px !important;
-  margin: 0 !important;
-  border-radius: 8px !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip span {
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  line-height: 1.2 !important;
-  width: auto !important;
-  padding: 0 !important;
-}
-/* Antallsmenyene bruker lyse feltfarger med mÃ¸rk tekst i Natt og Dempet. */
-body.opsix-test-mode:not(.theme-light) .opsix-andre :is(#cvkLumen,#pvkAntall,#utstPumpeAntall) {
-  color: #1b2a3c !important;
-  background-color: var(--field) !important;
-  border: 1px solid #718296 !important;
-  color-scheme: light;
-}
-body.opsix-test-mode:not(.theme-light) .opsix-andre :is(#cvkLumen,#pvkAntall,#utstPumpeAntall) option {
-  color: #1b2a3c !important;
-  background-color: #ffffff !important;
-}
-body.theme-light.opsix-test-mode #cvkLumen,
-body.theme-light.opsix-test-mode #pvkAntall,
-body.theme-light.opsix-test-mode .pvkSelect {
-  color: #1b2a3c !important;
-  background-color: #f7f9fc !important;
-  border-color: #92a3b5 !important;
-  color-scheme: light;
-}
-body.theme-light.opsix-test-mode #cvkLumen option,
-body.theme-light.opsix-test-mode #pvkAntall option,
-body.theme-light.opsix-test-mode .pvkSelect option {
-  color: #1b2a3c !important;
-  background-color: #ffffff !important;
-}
-body.opsix-test-mode .opsix-gcs-action {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  min-width: 0;
-  height: 42px;
-}
-body.opsix-test-mode .opsix-gcs-action .opsix-gcs-toggle {
-  position: static !important;
-  transform: none !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  min-height: 42px !important;
-  height: 42px !important;
-  min-width: 85px !important;
-  padding: 7px 10px !important;
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  white-space: nowrap;
-}
-body.opsix-test-mode .opsix-gcs-details[hidden],
-body.opsix-test-mode .opsix-gcs-details.hidden {
-  display: none !important;
-}
-body.opsix-test-mode .hasteGrid .hasteCard.active::after {
-  content: none !important;
-  display: none !important;
-}
-body.opsix-test-mode .hasteGrid .hasteCard.active::before {
-  content: none !important;
-}
-body.opsix-test-mode .opsix-column .followChip:has(input:checked),
-body.opsix-test-mode .opsix-column .followChip:has(input:checked) span,
-body.theme-light.opsix-test-mode .opsix-column .followChip:has(input:checked),
-body.theme-light.opsix-test-mode .opsix-column .followChip:has(input:checked) span {
-  color: #fff !important;
-}
-body.opsix-test-mode .opsix-column .followChip:has(input:checked) {
-  background: #245b9e !important;
-  border-color: #86baff !important;
-}
-@media (max-width:540px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
-    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-  }
-}
-@media (max-width:540px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField {
-    grid-column: auto !important;
-  }
-}
-@media (max-width:540px) {
-  body.opsix-test-mode .opsix-gcs-action {
-    grid-column: 1 / -1;
-  }
-}
-@media (min-width: 1000px) {
-  body.opsix-test-mode .opsix-columns,
-body.opsix-no-haste.opsix-test-mode .opsix-columns {
-    display: grid !important;
-    grid-template-columns: minmax(0,27fr) minmax(0,43fr) minmax(0,30fr) !important;
-    gap: 12px !important;
-  }
-}
-@media (min-width: 1000px) {
-  body.opsix-test-mode .opsix-columns > .opsix-column,
-body.opsix-no-haste.opsix-test-mode .opsix-columns > .opsix-column {
-    display: block !important;
-    grid-column: auto !important;
-    min-width: 0 !important;
-  }
-}
-@media (max-width:999px) {
-  body.opsix-test-mode .opsix-columns,
-body.opsix-no-haste.opsix-test-mode .opsix-columns {
-    display: grid !important;
-    grid-template-columns: minmax(0,1fr) !important;
-  }
-}
-@media (max-width:999px) {
-  body.opsix-test-mode .opsix-columns > .opsix-column {
-    grid-column: auto !important;
-    display: block !important;
-  }
-}
-body.opsix-test-mode .opsix-report-panel,
-body.opsix-no-haste.opsix-test-mode .opsix-report-panel {
-  display: block !important;
-}
-body.opsix-test-mode .opsix-operativ > .formGroup,
-body.opsix-test-mode .opsix-operativ > #weightWrap,
-body.opsix-test-mode .opsix-operativ > .minorTitle,
-body.opsix-test-mode .opsix-operativ > .specialGroup {
-  display: revert !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,2.3fr) !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1.5fr) auto !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField,
-body.opsix-test-mode .opsix-gcs-action {
-  grid-column: auto !important;
-}
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
-  padding: 0 8px 0 37px !important;
-}
-@media (max-width:600px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
-    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
-  }
-}
-@media (max-width:600px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
-    grid-column: 1 / -1;
-  }
-}
-@media (max-width:600px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
-    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-  }
-}
-@media (max-width:600px) {
-  body.opsix-test-mode .opsix-gcs-action {
-    grid-column: auto !important;
-  }
-}
-body.opsix-test-mode .opsix-acute-section > .opsix-acute-heading {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  width: 100%;
-  margin: 10px 0 7px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--text);
-  font: inherit;
-  font-size: calc(14px * var(--opsix-text-scale));
-  font-weight: 700;
-  text-align: left;
-  cursor: default;
-}
-body.opsix-test-mode .opsix-acute-section .opsix-acute-note {
-  font-size: calc(11px * var(--opsix-text-scale));
-  font-weight: 500;
-  opacity: .75;
-  margin-left: auto;
-}
-body.opsix-test-mode .opsix-acute-section .opsix-acute-note[hidden],
-body.opsix-test-mode .opsix-acute-section .opsix-acute-content[hidden] {
-  display: none !important;
-}
-body.opsix-test-mode .opsix-acute-section .opsix-acute-indicator {
-  display: none;
-}
-body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-heading {
-  cursor: pointer;
-  padding: 9px 10px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: transparent;
-  margin-bottom: 7px;
-}
-body.opsix-test-mode .opsix-acute-collapsible .opsix-acute-indicator {
-  display: inline;
-  font-size: calc(15px * var(--opsix-text-scale));
-  opacity: .85;
-  transition: transform .15s ease;
-}
-body.opsix-test-mode .opsix-acute-collapsible .opsix-acute-heading[aria-expanded="false"] .opsix-acute-indicator {
-  transform: rotate(-90deg);
-}
-body.opsix-test-mode .opsix-acute-heading:focus-visible {
-  outline: 3px solid #84baff;
-  outline-offset: 2px;
-}
-body.opsix-test-mode .opsix-operativ #vektLabel,
-body.opsix-test-mode .opsix-operativ .section,
-body.opsix-test-mode .opsix-operativ .minorTitle,
-body.opsix-test-mode .opsix-operativ .weightLabel,
-body.opsix-test-mode .opsix-acute-heading {
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-  font-weight: 700 !important;
-  line-height: 1.35 !important;
-}
-body.opsix-test-mode .hasteCard::before,
-body.opsix-test-mode .hasteCard::after,
-body.opsix-test-mode .hasteCard.active::before,
-body.opsix-test-mode .hasteCard.active::after {
-  content: none !important;
-  display: none !important;
-}
-body.opsix-test-mode .opsix-operativ #weightWrap {
-  margin-bottom: 22px !important;
-}
-body.opsix-test-mode .opsix-operativ #weightWrap #vekt {
-  margin-bottom: 0 !important;
-}
-body.opsix-test-mode .opsix-operativ .followRow {
-  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-}
-body.opsix-test-mode .opsix-acute-pump-area {
-  margin: 12px 0 18px;
-}
-body.opsix-test-mode .opsix-acute-pump-area[hidden] {
-  display: none !important;
-}
-body.opsix-test-mode .opsix-acute-pump-heading {
-  font-size: calc(14px * var(--opsix-text-scale));
-  font-weight: 700;
-  margin-bottom: 9px;
-}
-body.opsix-test-mode .opsix-acute-pump-area .inlineSelect {
-  min-width: 82px;
-}
-@media (max-width:420px) {
-  body.opsix-test-mode .opsix-operativ .followRow {
-    grid-template-columns: 1fr !important;
-  }
-}
-body.opsix-test-mode .opsix-acute-section:not(.opsix-acute-collapsible) > .opsix-acute-heading,
-body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .accessGroup > .minorTitle,
-body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .minorTitle,
-body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .section,
-body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .bigSection {
-  display: none !important;
-}
-.opsix-theme-picker {
-  display: inline-flex;
-  align-items: center;
-  flex: 0 0 auto;
-}
-.opsix-theme-picker select {
-  appearance: auto;
-  -webkit-appearance: menulist;
-  min-height: 40px;
-  padding: 7px 12px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--panel);
-  color: var(--text);
-  font: inherit;
-  font-size: calc(14px * var(--opsix-text-scale));
-  font-weight: 650;
-  cursor: pointer;
-  color-scheme: dark;
-}
-body.theme-light .opsix-theme-picker select {
-  background: #fff;
-  color: #172333;
-  color-scheme: light;
-}
-body.theme-dim .opsix-theme-picker select {
-  background: #46535e;
-  color: #fff;
-  color-scheme: dark;
-}
-.opsix-theme-picker select:focus-visible {
-  outline: 3px solid #86baff;
-  outline-offset: 2px;
-}
-.opsix-visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
-}
-body.opsix-test-mode .opsix-andre .smLine,
-body.opsix-test-mode .opsix-andre .chipRow,
-body.opsix-test-mode .opsix-andre .accessChipRow,
-body.opsix-test-mode .opsix-medisinsk .chipRow,
-body.opsix-test-mode .opsix-operativ .smLine,
-body.opsix-test-mode .opsix-operativ .chipRow {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  column-gap: 10px !important;
-  row-gap: 10px !important;
-  margin-top: 9px !important;
-  margin-bottom: 9px !important;
-}
-body.opsix-test-mode .opsix-andre .smLine .smChip {
-  min-height: var(--opsix-chip-h) !important;
-}
-body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area #utstPumpeAntall:not(.hidden) {
-  display: inline-block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  min-width: 90px !important;
-}
-body.opsix-test-mode .opsix-acute-pump-area .pumpRow {
-  display: flex !important;
-  align-items: center !important;
-  flex-wrap: wrap !important;
-}
-body.opsix-test-mode :is(.medChip,.followChip,.binaryOpt,.smChip,.spedChip,.specCell,.toggleCell) input:is([type="radio"],[type="checkbox"]) {
-  display: block !important;
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  min-width: 1px !important;
-  min-height: 1px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  clip-path: inset(50%) !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  border: 0 !important;
-}
-body.opsix-test-mode :is(.medChip,.followChip,.binaryOpt,.smChip,.spedChip,.specCell,.toggleCell) {
-  position: relative;
-}
-body.opsix-test-mode :is(.medChip,.followChip,.binaryOpt,.smChip,.spedChip,.specCell,.toggleCell):has(input:focus-visible) {
-  outline: 3px solid #86baff !important;
-  outline-offset: 3px !important;
-  box-shadow: 0 0 0 2px rgba(0,0,0,.55) !important;
-}
-body.theme-light.opsix-test-mode :is(.medChip,.followChip,.binaryOpt,.smChip,.spedChip,.specCell,.toggleCell):has(input:focus-visible) {
-  outline-color: #064a95 !important;
-  box-shadow: 0 0 0 2px #ffffff !important;
-}
-body.opsix-test-mode .opsix-acute-pump-area .pumpRow {
-  gap: 10px !important;
-}
-body.opsix-test-mode .opsix-operativ > .followRow {
-  display: grid !important;
-  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-  gap: 10px !important;
-}
-body.opsix-test-mode :is(.chipRow,.smLine,.airwayRow,.accessChipRow,.followRow,.transportRow) > label {
-  margin: 0 !important;
-}
-body.opsix-test-mode :is(.chipRow,.smLine,.airwayRow,.accessChipRow,.followRow,.transportRow) {
-  column-gap: 10px !important;
-  row-gap: 10px !important;
-}
-@media (max-width:420px) {
-  body.opsix-test-mode .opsix-operativ > .followRow {
-    grid-template-columns: 1fr !important;
-  }
-}
-body.opsix-test-mode .opsix-operativ .followRow > label:has(input[value="Anestesi-/intensivsykepleier"]) {
-  grid-column: span 2;
-}
-body.opsix-test-mode .opsix-operativ .followRow > label:has(input[value="Anestesi-/intensivsykepleier"]) span {
-  overflow-wrap: normal;
-  word-break: normal;
-}
-@media (max-width:420px) {
-  body.opsix-test-mode .opsix-operativ .followRow > label:has(input[value="Anestesi-/intensivsykepleier"]) {
-    grid-column: auto;
-  }
-}
-body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area {
-  display: block;
-  margin: 18px 0 22px !important;
-  padding: 0 !important;
-}
-body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area .pumpRow {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-}
-body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area .pumpRow > label {
-  margin: 0 !important;
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary,
-body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) 10px minmax(0, 1fr) !important;
-    column-gap: 7px !important;
-  }
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
-    grid-column: 4 / 7 !important;
-    grid-template-columns: minmax(0, 1fr) 10px minmax(0, 1fr) !important;
-    gap: 7px !important;
-  }
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpField:first-child {
-    grid-column: 1 !important;
-  }
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpField:nth-child(2) {
-    grid-column: 2 !important;
-  }
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpGcsField {
-    grid-column: 3 !important;
-  }
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .opsix-gcs-action {
-    grid-column: 4 !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    justify-content: stretch !important;
-  }
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .opsix-gcs-action .opsix-gcs-toggle {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    padding: 6px 3px !important;
-    font-size: calc(11px * var(--opsix-text-scale)) !important;
-  }
-}
-@media (min-width: 601px) {
-  body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
-    padding-left: 29px !important;
-    padding-right: 4px !important;
-    font-size: clamp(calc(11px * var(--opsix-text-scale)), calc(0.95vw * var(--opsix-text-scale)), calc(14px * var(--opsix-text-scale))) !important;
-  }
-}
-body.opsix-test-mode .opsix-gcs-scale-title {
-  margin: 0 0 9px;
-  font-size: calc(14px * var(--opsix-text-scale));
-  font-weight: 750;
-  color: var(--v110-foreground, var(--text));
-}
-body.opsix-test-mode .opsix-gcs-level-label {
-  display: block;
-  padding: 8px 10px 10px;
-  border: 1px solid var(--v110-border, var(--line));
-  border-radius: 10px;
-  margin: 0 0 12px;
-}
-body.opsix-test-mode .opsix-gcs-level-label[hidden],
-body.opsix-test-mode .opsix-gcs-level-label.hidden {
-  display: none !important;
-}
-body.opsix-test-mode .opsix-gcs-select:disabled {
-  opacity: .56;
-  cursor: not-allowed;
-}
-body.opsix-test-mode .opsix-gcs-recheck {
-  padding: 9px 12px;
-  margin: 8px 0 12px;
-  border: 1px solid #d6a449;
-  border-radius: 10px;
-  background: rgba(178,118,24,.13);
-  color: var(--v110-foreground, var(--text));
-  font-size: calc(13px * var(--opsix-text-scale));
-  line-height: 1.45;
-}
-body.opsix-test-mode .opsix-gcs-recheck[hidden],
-body.opsix-test-mode .opsix-gcs-recheck.hidden {
-  display: none !important;
-}
-body.opsix-test-mode .opsix-gcs-select:focus-visible,
-body.opsix-test-mode .opsix-gcs-toggle:focus-visible {
-  outline: 3px solid #7eb8fa !important;
-  outline-offset: 2px !important;
-}
-body.opsix-test-mode .wrap > .opsix-footer {
-  display: block !important;
-  position: static !important;
-  width: 100% !important;
-  margin: 18px auto 22px !important;
-  padding: 0 12px !important;
-  text-align: center !important;
-  font-family: inherit !important;
-  font-size: calc(12px * var(--opsix-text-scale)) !important;
-  font-weight: 400 !important;
-  line-height: 1.5 !important;
-  letter-spacing: 0 !important;
-  color: var(--v110-subtle-text, var(--muted)) !important;
-  opacity: .88 !important;
-}
-body.opsix-test-mode {
-  --opsix-heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --opsix-subheading-size: calc(14px * var(--opsix-text-scale));
-  --opsix-subheading-weight: 700;
-}
-body.opsix-test-mode .opsix-columns > .opsix-column > .opsix-column-title {
-  font-family: var(--opsix-heading-font) !important;
-  font-size: clamp(calc(18px * var(--opsix-text-scale)), calc(1.2vw * var(--opsix-text-scale)), calc(20px * var(--opsix-text-scale))) !important;
-  font-weight: 800 !important;
-  line-height: 1.35 !important;
-  letter-spacing: 0 !important;
-  color: var(--v110-title, var(--text)) !important;
-  opacity: 1 !important;
-  margin: 0 0 16px !important;
-  padding: 0 0 12px !important;
-  border-bottom: 2px solid var(--v110-border, var(--line)) !important;
-}
-body.opsix-test-mode .opsix-columns .opsix-column .hasteLabel,
-body.opsix-test-mode .opsix-columns .opsix-column .minorTitle,
-body.opsix-test-mode .opsix-columns .opsix-column .bigSection,
-body.opsix-test-mode .opsix-columns .opsix-column .section,
-body.opsix-test-mode .opsix-columns .opsix-column .vpTitle,
-body.opsix-test-mode .opsix-columns .opsix-column #vektLabel,
-body.opsix-test-mode .opsix-columns .opsix-column .weightLabel,
-body.opsix-test-mode .opsix-columns .opsix-column #spedbarnExtraWrap > .specLabel,
-body.opsix-test-mode .opsix-columns .opsix-column .opsix-acute-heading,
-body.opsix-test-mode .opsix-columns .opsix-column .opsix-acute-pump-heading {
-  font-family: var(--opsix-heading-font) !important;
-  font-size: var(--opsix-subheading-size) !important;
-  font-weight: var(--opsix-subheading-weight) !important;
-  font-style: normal !important;
-  line-height: 1.35 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  color: var(--v110-foreground, var(--text)) !important;
-  opacity: 1 !important;
-  text-shadow: none !important;
-}
-body.opsix-test-mode .opsix-columns .opsix-column .section,
-body.opsix-test-mode .opsix-columns .opsix-column .vpTitle {
-  padding-top: 0 !important;
-  border-top: none !important;
-}
-body.opsix-test-mode .opsix-columns .opsix-column #spedbarnExtraWrap > .specLabel {
-  display: inline-flex;
-  margin: 14px 0 7px !important;
-}
-body.opsix-test-mode .opsix-columns .opsix-column #weightWrap #vektLabel {
-  display: block;
-  margin: 0 0 7px !important;
-}
+<!doctype html>
+<html lang="no">
 
-/* ==== OPSIX DESIGN SYSTEM Ã¢â‚¬â€œ TYPOGRAFI ==== */
-body.opsix-test-mode {
-  --opsix-heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --opsix-colheading-size: calc(20px * var(--opsix-text-scale));
-  --opsix-subheading-size: calc(18px * var(--opsix-text-scale));
-  --opsix-heading-color: var(--v110-foreground, var(--text));
-}
-body.opsix-test-mode .opsix-columns > .opsix-column > .opsix-column-title {
-  font-family: var(--opsix-heading-font) !important;
-  font-size: var(--opsix-colheading-size) !important;
-  font-weight: 800 !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0 !important;
-  color: var(--opsix-heading-color) !important;
-  padding-bottom: 12px !important;
-  border-bottom: 2px solid var(--v110-border, var(--line)) !important;
-}
-body.opsix-test-mode .opsix-columns .opsix-column :is(.hasteLabel,.minorTitle,.bigSection,.section,.vpTitle,.opsix-acute-heading,.opsix-acute-pump-heading,#vektLabel,#spedbarnExtraWrap>.specLabel) {
-  font-family: var(--opsix-heading-font) !important;
-  font-size: var(--opsix-subheading-size) !important;
-  font-weight: 700 !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  color: var(--opsix-heading-color) !important;
-  text-shadow: none !important;
-}
-body.opsix-test-mode .opsix-columns .opsix-column :is(.section,.vpTitle) {
-  border-top: 0 !important;
-  padding-top: 0 !important;
-}
-/* Den siste deklarasjonen for kolonneproporsjon gjelder alltid pÃƒÂ¥ desktop. */
-@media (min-width: 1201px) {
- body.opsix-test-mode .opsix-columns,
- body.opsix-no-haste.opsix-test-mode .opsix-columns {
-   grid-template-columns: minmax(0,27fr) minmax(0,43fr) minmax(0,30fr) !important;
- }
-}
-/* Synlig fokus pÃƒÂ¥ reelle input-elementer og tilhÃƒÂ¸rende chips. */
-body.opsix-test-mode :is(.medChip,.spedChip,.followChip,.binaryOpt,.smChip):focus-within,
-body.opsix-test-mode .specialGroup .specCell:focus-within {
-  outline: 3px solid #7eb8fa !important;
-  outline-offset: 2px !important;
-}
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-/* =============================================================
-   OPSIX V1.1.0 Ã¢â‚¬â€œ MEDIKAMENT-FRITEKST SOM REDIGERBARE CHIPS
-   Utelukkende Sedasjon / Pressor / Andre. Tilganger og Utstyr
-   beholder sine eksisterende fritekstfelt.
-============================================================= */
-body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody).medDynamic {
-  display: flex !important;
-  flex-flow: row wrap !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  align-content: flex-start !important;
-  column-gap: 8px !important;
-  row-gap: 8px !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  margin-top: 9px !important;
-}
-body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) .opsix-medication-chip-row {
-  display: inline-flex !important;
-  flex: 0 1 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  gap: 0 !important;
-  align-items: stretch !important;
-}
-body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) .opsix-medication-chip-row > input[type="checkbox"] {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) textarea.opsix-medication-chip-input {
-  display: block !important;
-  flex: 0 1 auto !important;
-  width: 160px;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  min-height: 40px !important;
-  height: 40px;
-  margin: 0 !important;
-  padding: 10px 14px !important;
-  box-sizing: border-box !important;
-  border: 1px solid var(--v110-muted-border, #637182) !important;
-  border-radius: 12px !important;
-  background: var(--v110-choice, #394553) !important;
-  color: #fff !important;
-  font: 500 calc(14px * var(--opsix-text-scale))/calc(20px * var(--opsix-text-scale)) system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
-  letter-spacing: 0 !important;
-  resize: none !important;
-  overflow: hidden !important;
-  white-space: pre-wrap !important;
-  overflow-wrap: anywhere !important;
-  word-break: break-word !important;
-  caret-color: #fff !important;
-  box-shadow: none !important;
-}
-body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) textarea.opsix-medication-chip-input::placeholder {
-  color: #fff !important;
-  opacity: .92 !important;
-}
-body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) textarea.opsix-medication-chip-input:focus-visible {
-  outline: 2px solid var(--v110-focus, #9dc7ff) !important;
-  outline-offset: 2px !important;
-  border-color: var(--v110-focus, #9dc7ff) !important;
-}
+    <meta name="robots" content="noindex, nofollow, nosnippet, noarchive">
 
-/* =====================================================
-   OPSIX V1.1.0 Ã¢â‚¬â€œ TILGANGER OG UTSTYR: FRITEKSTCHIPS
-   Bruk samme utforming og dynamikk som medikamentchips.
-===================================================== */
-body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody).accessDynamic {
-  display: flex !important;
-  flex-flow: row wrap !important;
-  gap: 8px !important;
-  align-items: flex-start !important;
-  align-content: flex-start !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  margin-top: 9px !important;
-}
-body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) .opsix-custom-chip-row {
-  display: inline-flex !important;
-  flex: 0 1 auto !important;
-  width: auto !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  gap: 0 !important;
-}
-body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) .opsix-custom-chip-row > input[type="checkbox"] {
-  position: absolute !important;
-  opacity: 0 !important;
-  width: 1px !important;
-  height: 1px !important;
-  pointer-events: none !important;
-}
-body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) textarea.opsix-custom-chip-input {
-  display: block !important;
-  flex: 0 1 auto !important;
-  width: 160px;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  min-height: 40px !important;
-  height: 40px;
-  margin: 0 !important;
-  padding: 10px 14px !important;
-  box-sizing: border-box !important;
-  border: 1px solid var(--v110-muted-border, #637182) !important;
-  border-radius: 12px !important;
-  background: var(--v110-choice, #394553) !important;
-  color: #fff !important;
-  font: 500 calc(14px * var(--opsix-text-scale))/calc(20px * var(--opsix-text-scale)) system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
-  resize: none !important;
-  overflow: hidden !important;
-  white-space: pre-wrap !important;
-  overflow-wrap: anywhere !important;
-  word-break: break-word !important;
-  caret-color: #fff !important;
-  box-shadow: none !important;
-}
-body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) textarea.opsix-custom-chip-input::placeholder {
-  color: #fff !important;
-  opacity: .92 !important;
-}
-body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) textarea.opsix-custom-chip-input:focus-visible {
-  outline: 2px solid var(--v110-focus, #9dc7ff) !important;
-  outline-offset: 2px !important;
-}
+    <title>Intensiv- og helikoptertransport – V1.1.0 TEST</title>
+<link rel="stylesheet" href="./style.css?v=20261113-3">
+  </head>
+
+  <body>
+
+    <div class="wrap"><div class="card">
+
+        <div class="pageHeader">
+
+          <h1 id="pageTitle">
+            Intensiv- og helikoptertransport
+          </h1>
+
+          <div class="opsix-display-controls">
+            <label class="opsix-theme-picker" for="opsixThemeSelect">
+              <span class="opsix-visually-hidden">Visningsmodus</span>
+              <select id="opsixThemeSelect" aria-label="Velg visningsmodus">
+                <option value="day">☀ Dag</option>
+                <option value="dim">◐ Dempet</option>
+                <option value="night" selected>☾ Natt</option>
+              </select>
+            </label>
+            <label class="opsix-theme-picker" for="opsixTextSize">
+              <select id="opsixTextSize" aria-label="Tekststørrelse">
+                <option value="normal">Tekst 100 %</option>
+                <option value="large">Tekst 115 %</option>
+                <option value="extra-large">Tekst 130 %</option>
+              </select>
+            </label>
+          </div>
+
+        </div>
+        <div class="hasteLabel">Rekvirert hastegrad</div>
+
+        <div class="hasteGrid">
+
+          <button type="button" class="hasteCard haste-akutt" data-haste="Akutt">
+            <span class="hasteCardTitle">Akutt</span>
+            <span class="hasteCardText">Umiddelbar intervensjon eller kritisk tidsvindu.</span>
+          </button>
+
+          <button type="button" class="hasteCard haste-haster" data-haste="Haster">
+            <span class="hasteCardTitle">Haster</span>
+            <span class="hasteCardText">Vurdering for intervensjon. Transport så raskt som mulig.</span>
+          </button>
+
+          <button type="button" class="hasteCard haste-samme" data-haste="Vanlig 1">
+            <span class="hasteCardTitle">Vanlig 1</span>
+            <span class="hasteCardText">Transport bør gjennomføres samme dag.</span>
+          </button>
+
+          <button type="button" class="hasteCard haste-planlagt" data-haste="Vanlig 2 (planlagt)">
+            <span class="hasteCardTitle">Vanlig 2</span>
+            <span class="hasteCardText">Transport som kan planlegges frem i tid.</span>
+          </button>
+
+        </div>
+
+        <div id="mainContent" class="hidden">
+
+          <label class="minorTitle">Anbefalt følgebehov fra rekvirent</label>
+
+          <div class="followRow">
+
+            <label class="followChip">
+              <input type="checkbox" name="followNeed" id="follow_none" value="Ikke behov">
+              <span>Ikke behov</span>
+            </label>
+
+            <label class="followChip">
+              <input
+                type="checkbox"
+                name="followNeed"
+                value="Ambulansepersonell"
+              >
+              <span>Ambulansepersonell</span>
+            </label>
+
+            <label class="followChip">
+              <input
+                type="checkbox"
+                name="followNeed"
+                value="Anestesi-/intensivsykepleier"
+              >
+              <span>Anestesi-/intensivsykepleier</span>
+            </label>
+
+            <label class="followChip">
+              <input
+                type="checkbox"
+                name="followNeed"
+                value="Anestesilege"
+              >
+              <span>Anestesilege</span>
+            </label>
+
+            <label class="followChip">
+              <input
+                type="checkbox"
+                name="followNeed"
+                value="Jordmor"
+              >
+              <span>Jordmor</span>
+            </label>
+
+          </div>
+
+          <div class="formGroup specialGroup">
+            <label class="minorTitle">Spesialtransport</label>
+
+            <div class="table spesialtransportRow">
+
+              <div class="specCell toggleCell toggleInner" data-toggle="spec_ingen">
+                <input
+                  id="spec_ingen"
+                  class="chk spec specChoice"
+                  type="checkbox"
+                  value="Ikke aktuelt"
+                  data-spec="Ikke aktuelt"
+                >
+                <span class="specLabel">Ikke aktuelt</span>
+              </div>
+
+              <div class="specCell toggleCell toggleInner" data-toggle="spec_ecmo">
+                <input id="spec_ecmo" class="chk spec specChoice" type="checkbox" value="ECMO" data-spec="ECMO">
+                <span class="specLabel" data-tooltip="Ekstrakorporal membranoksygeneringen">ECMO</span>
+              </div>
+
+              <div class="specCell toggleCell toggleInner" data-toggle="spec_iabp">
+                <input id="spec_iabp" class="chk spec specChoice" type="checkbox" value="IABP" data-spec="IABP">
+                <span class="specLabel" data-tooltip="Intra-Aorta ballongpumpe">IABP</span>
+              </div>
+
+              <div class="specCell toggleCell toggleInner" data-toggle="spec_impella">
+                <input id="spec_impella" class="chk spec specChoice" type="checkbox" value="Impella" data-spec="Impella">
+                <span class="specLabel" data-tooltip="Intrakardiell mekanisk sirkulasjonsstøtte">Impella</span>
+              </div>
+
+              <div class="specCell toggleCell toggleInner" data-toggle="spec_no">
+                <input id="spec_no" class="chk spec specChoice" type="checkbox" value="NO" data-spec="NO">
+                <span class="specLabel" data-tooltip="Nitrogenmonoksid">NO</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="formGroup">
+
+            <div class="section">Pasientkategori</div>
+
+            <div class="smLine">
+
+              <label class="medChip spedChip">
+                <input type="radio" name="spedbarn" class="spedRadio" data-value="Nei" id="spedbarn_nei">
+                <span>Voksen</span>
+              </label>
+
+              <label class="medChip spedChip childTooltip" data-tooltip="0–4uker">
+                <input type="radio" name="spedbarn" class="spedRadio" data-value="Nyfødt" id="spedbarn_nyfodt">
+                <span>Nyfødt</span>
+              </label>
+
+              <label class="medChip spedChip childTooltip" data-tooltip="1mnd–1år">
+                <input type="radio" name="spedbarn" class="spedRadio" data-value="Spedbarn" id="spedbarn_spedbarn">
+                <span>Spedbarn</span>
+              </label>
+
+              <label class="medChip spedChip childTooltip" data-tooltip="1–18år">
+                <input type="radio" name="spedbarn" class="spedRadio" data-value="Barn" id="spedbarn_barn">
+                <span>Barn</span>
+              </label>
+
+            </div>
+
+            <div id="spedbarnExtraWrap" class="hidden">
+
+              <label class="specLabel" data-tooltip="Gestasjonsalder">GA</label>
+
+              <div class="gestWrap">
+
+                <div class="gestField">
+                  <span>Uker</span>
+                  <input id="gestasjonsUker" type="text" inputmode="numeric" maxlength="2">
+                </div>
+
+                <div class="gestField">
+                  <span>Dager</span>
+                  <input id="gestasjonsDager" type="text" inputmode="numeric" maxlength="1">
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="transportWrap" class="hidden">
+
+              <div class="section">Transportform</div>
+
+              <div class="smLine transportRow">
+
+                <label class="medChip spedChip">
+                  <input
+                    type="radio"
+                    name="transport"
+                    class="chk binOpt"
+                    data-group="transport"
+                    data-value="Kuvøse"
+                    id="transport_kuvose"
+                  >
+                  <span>Kuvøse</span>
+                </label>
+
+                <label class="medChip spedChip hidden" id="transport_bare_label">
+                  <input type="radio" name="transport" class="chk binOpt" data-group="transport" data-value="Båre" id="transport_bare">
+                  <span>Båre</span>
+                </label>
+
+                <label class="medChip spedChip">
+                  <input
+                    type="radio"
+                    name="transport"
+                    class="chk binOpt"
+                    data-group="transport"
+                    data-value="Pedimate"
+                    id="transport_pedimate"
+                  >
+                  <span>Pedimate</span>
+                </label>
+
+                <label class="medChip spedChip">
+                  <input
+                    type="radio"
+                    name="transport"
+                    class="chk binOpt"
+                    data-group="transport"
+                    data-value="Barn i bag"
+                    id="transport_barnibag"
+                  >
+                  <span>Barn i bag</span>
+                </label>
+
+                <label class="medChip spedChip">
+                  <input
+                    type="radio"
+                    name="transport"
+                    class="chk binOpt"
+                    data-group="transport"
+                    data-value="Kengufix"
+                    id="transport_kengufix"
+                  >
+                  <span>Kengufix</span>
+                </label>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div id="weightWrap">
+            <label id="vektLabel" for="vekt">Vekt</label>
+            <div class="weightInputRow">
+              <input id="vekt" type="number" inputmode="decimal" min="0" step="any">
+              <div class="weightUnits" role="group" aria-label="Vektenhet">
+                <button type="button" data-weight-unit="kg" aria-pressed="true">kg</button>
+                <button type="button" data-weight-unit="g" aria-pressed="false">gram</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="acuteTop" class="hidden">
+
+            <label class="bigSection" for="acuteHovedproblem">Aktuelt</label>
+            <textarea id="acuteHovedproblem" class="autoGrow"></textarea>
+
+            <div class="section airwaySection">Luftveier</div>
+
+            <div class="binaryRow airwayRow">
+
+              <label class="binaryOpt">
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Spontan u/O2" id="acute_air_spont_uten">
+                <span>Spontan u/O₂</span>
+              </label>
+
+              <label class="binaryOpt">
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Spontan m/O2" id="acute_air_spont_med">
+                <span>Spontan m/O₂</span>
+              </label>
+
+              <label class="binaryOpt">
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Spontant med high flow" id="acute_air_highflow">
+                <span>Spontant med high flow</span>
+              </label>
+
+              <label class="binaryOpt">
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="CPAP" id="acute_air_niv">
+                 <span>CPAP</span>
+               </label>
+
+               <label class="binaryOpt">
+                 <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="BiPAP" id="acute_air_bipap">
+                 <span>BiPAP</span>
+               </label>
+
+              <label class="binaryOpt">
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Intubert" id="acute_air_intubert">
+                <span>Intubert</span>
+              </label>
+
+              <label class="binaryOpt">
+                <input type="radio" name="acuteAirway" class="chk binOpt" data-group="acuteAirway" data-value="Trakeostomi" id="acute_air_trach">
+                <span>Trakeostomi</span>
+              </label>
+
+            </div>
+
+            <div id="acuteSpontO2Wrap" class="hidden">
+
+              <div class="inlineRow" style="margin-top:10px;">
+
+                <div class="unitInputWrap">
+                  <input id="acuteSpontO2Liter" type="text" inputmode="decimal">
+                  <span>l/min</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="acuteHighFlowWrap" class="hidden">
+
+              <div class="inlineRow" style="margin-top:10px; gap:14px; flex-wrap:wrap;">
+
+                <div class="unitInputWrap">
+                  <input
+                    id="acuteHighFlowFio2"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>% FiO₂</span>
+                </div>
+
+                <div class="unitInputWrap">
+                  <input
+                    id="acuteHighFlowFlow"
+                    type="text"
+                    inputmode="numeric"
+                  >
+                  <span>l/min</span>
+                </div>
+
+              </div>
+
+            </div>
+
+             <div id="acuteNivWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap"><input id="acuteCpapPressure" type="text" inputmode="decimal" aria-label="CPAP-trykk i cmH2O"><span>cmH₂O</span></div>
+                 <div class="unitInputWrap"><input id="acuteNivFio2" type="text" inputmode="decimal" aria-label="CPAP FiO2 prosent"><span>% FiO₂</span></div>
+               </div>
+             </div>
+             <div id="acuteBiPAPWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap"><input id="acuteBiPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O" aria-description="Innåndingstrykk"><span class="pressureTooltip" data-tooltip="Innåndingstrykk">IPAP</span></div>
+                 <div class="unitInputWrap"><input id="acuteBiPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O" aria-description="Utåndingstrykk"><span class="pressureTooltip" data-tooltip="Utåndingstrykk">EPAP</span></div>
+                 <div class="unitInputWrap"><input id="acuteBiPAPFio2" type="text" inputmode="decimal" aria-label="BiPAP FiO2 prosent"><span>% FiO₂</span></div>
+               </div>
+             </div>
+
+            <div id="acuteIntubWrap" class="hidden">
+
+              <div class="intubRow" style="margin-top:10px;">
+
+                <div class="unitInputWrap">
+                  <input
+                    id="acuteIntubFio2"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>% FiO₂</span>
+                </div>
+
+                <div class="unitInputWrap">
+                  <input
+                    id="acuteIntubPeep"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>PEEP</span>
+                </div>
+
+                <div class="unitInputWrap">
+                  <input
+                    id="acuteIntubTopp"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>Topptrykk</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="acuteTrachWrap" class="hidden">
+
+              <table class="table">
+                <tbody>
+
+                  <tr>
+                    <td class="toggleCell" data-toggle="acute_tr_spont">
+                      <div class="toggleInner">
+                        <input id="acute_tr_spont" name="acuteTrach" class="chk acuteTrachOpt" type="radio" data-name="Spontan pust via trakeostomi">
+                        <span>Spontan pust via trakeostomi</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="toggleCell" data-toggle="acute_tr_o2">
+                      <div class="toggleInner">
+                        <input id="acute_tr_o2" name="acuteTrach" class="chk acuteTrachOpt" type="radio" data-name="O2 via trakeostomi">
+                        <span>O₂ via trakeostomi</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="toggleCell" data-toggle="acute_tr_vent">
+                      <div class="toggleInner">
+                        <input id="acute_tr_vent" name="acuteTrach" class="chk acuteTrachOpt" type="radio" data-name="Koblet til respirator">
+                        <span>Koblet til respirator</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <div id="acuteTrachO2Wrap" class="hidden">
+
+                <div class="inlineRow" style="margin-top:10px;">
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="acuteTrachO2Liter"
+                      type="text"
+                      inputmode="numeric"
+                    >
+                    <span>l/min</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div id="acuteTrachVentWrap" class="hidden">
+
+                <div class="intubRow" style="margin-top:10px;">
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="acuteTrachVentFio2"
+                      type="text"
+                      inputmode="decimal"
+                    >
+                    <span>% FiO₂</span>
+                  </div>
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="acuteTrachVentPeep"
+                      type="text"
+                      inputmode="decimal"
+                    >
+                    <span>PEEP</span>
+                  </div>
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="acuteTrachVentTopp"
+                      type="text"
+                      inputmode="decimal"
+                    >
+                    <span>Topptrykk</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div> <!-- acuteTrachWrap -->
+
+          </div> <!-- acuteTop -->
+
+          <div id="fullTop" class="hidden">
+
+            <div class="formGroup">
+              <label class="bigSection" for="hovedproblem">Aktuelt</label>
+              <textarea id="hovedproblem" class="autoGrow"></textarea>
+
+              <label>Tidligere</label>
+              <textarea id="tidligere" class="autoGrow"></textarea>
+            </div>
+
+            <div class="section airwaySection">Luftveier</div>
+
+            <div class="binaryRow airwayRow">
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan u/O2" id="air_spont_uten"><span>Spontan u/O₂</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontan m/O2" id="air_spont_med"><span>Spontan m/O₂</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Spontant m/high flow" id="air_highflow"><span>Spontant m/high flow</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="CPAP" id="air_niv"><span>CPAP</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="BiPAP" id="air_bipap"><span>BiPAP</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Intubert" id="air_intubert"><span>Intubert</span></label>
+              <label class="binaryOpt"><input type="radio" name="airwayMain" class="chk binOpt" data-group="airwayMain" data-value="Trakeostomi" id="air_trach"><span>Trakeostomi</span></label>
+            </div>
+
+            <div id="spontO2Wrap" class="hidden">
+              <div class="intubRow" style="margin-top:10px;">
+                <span>Antall liter O₂</span>
+                <div class="unitInputWrap">
+                  <input id="spontO2Liter" type="text" inputmode="decimal" placeholder=" ">
+                  <span>l/min</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="highFlowWrap" class="hidden">
+
+              <div class="inlineRow" style="margin-top:10px; gap:14px; flex-wrap:wrap;">
+
+                <div class="unitInputWrap">
+                  <input
+                    id="highFlowFio2"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>% FiO₂</span>
+                </div>
+
+                <div class="unitInputWrap">
+                  <input
+                    id="highFlowFlow"
+                    type="text"
+                    inputmode="numeric"
+                  >
+                  <span>l/min</span>
+                </div>
+
+              </div>
+
+            </div>
+
+             <div id="nivWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap">
+                   <input id="cpapPressure" type="text" inputmode="decimal" aria-label="CPAP-trykk i cmH2O">
+                   <span>cmH₂O</span>
+                 </div>
+                 <div class="unitInputWrap">
+                   <input id="nivFio2" type="text" inputmode="decimal" aria-label="CPAP FiO2 prosent">
+                   <span>% FiO₂</span>
+                 </div>
+               </div>
+             </div>
+             <div id="biPAPWrap" class="hidden">
+               <div class="inlineRow" style="margin-top:10px;">
+                 <div class="unitInputWrap"><input id="biPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O" aria-description="Innåndingstrykk"><span class="pressureTooltip" data-tooltip="Innåndingstrykk">IPAP</span></div>
+                 <div class="unitInputWrap"><input id="biPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O" aria-description="Utåndingstrykk"><span class="pressureTooltip" data-tooltip="Utåndingstrykk">EPAP</span></div>
+                 <div class="unitInputWrap"><input id="biPAPFio2" type="text" inputmode="decimal" aria-label="BiPAP FiO2 prosent"><span>% FiO₂</span></div>
+               </div>
+             </div>
+
+            <div id="intubWrap" class="hidden">
+
+              <div class="intubRow" style="margin-top:10px;">
+                <div class="unitInputWrap">
+                  <input
+                    id="intubFio2"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>% FiO₂</span>
+                </div>
+
+                <div class="unitInputWrap">
+                  <input
+                    id="intubPeep"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>PEEP</span>
+                </div>
+
+                <div class="unitInputWrap">
+                  <input
+                    id="intubTopp"
+                    type="text"
+                    inputmode="decimal"
+                  >
+                  <span>Topptrykk</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="trachWrap" class="hidden">
+
+              <div class="chipRow">
+
+                <label class="medChip">
+                  <input
+                    id="tr_spont"
+                    name="trachType"
+                    class="chk trachOpt"
+                    type="radio"
+                    data-name="Spontan pust via trakeostomi"
+                  >
+                  <span>Spontan pust via trakeostomi</span>
+                </label>
+
+                <label class="medChip">
+                  <input
+                    id="tr_o2"
+                    name="trachType"
+                    class="chk trachOpt"
+                    type="radio"
+                    data-name="O2 via trakeostomi"
+                  >
+                  <span>O₂ via trakeostomi</span>
+                </label>
+
+                <label class="medChip">
+                  <input
+                    id="tr_vent"
+                    name="trachType"
+                    class="chk trachOpt"
+                    type="radio"
+                    data-name="Koblet til respirator"
+                  >
+                  <span>Koblet til respirator</span>
+                </label>
+
+              </div>
+
+              <div id="trachO2Wrap" class="hidden">
+
+                <div class="inlineRow" style="margin-top:10px;">
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="trachO2Liter"
+                      type="text"
+                      inputmode="numeric"
+                    >
+                    <span>l/min</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div id="trachVentWrap" class="hidden">
+
+                <div class="intubRow" style="margin-top:10px;">
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="trachVentFio2"
+                      type="text"
+                      inputmode="decimal"
+                    >
+                    <span>% FiO₂</span>
+                  </div>
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="trachVentPeep"
+                      type="text"
+                      inputmode="decimal"
+                    >
+                    <span>PEEP</span>
+                  </div>
+
+                  <div class="unitInputWrap">
+                    <input
+                      id="trachVentTopp"
+                      type="text"
+                      inputmode="decimal"
+                    >
+                    <span>Topptrykk</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="section vpTitle">Vitalparametre</div>
+            <div class="inlineVitals" aria-label="Vitalparametre">
+              <div class="opsix-vitals-row opsix-vitals-primary">
+                <div class="vpField"><span>RF</span><input id="rf" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
+                <div class="vpField"><span>SpO₂</span><input id="spo2" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
+                <div class="vpField"><span>Puls</span><input id="puls" type="text" inputmode="numeric" maxlength="3" autocomplete="off"></div>
+                <div class="btWrap" aria-label="Blodtrykk">
+                  <div class="btMini"><span>SYS</span><input id="btSys" maxlength="3" inputmode="numeric" aria-label="Systolisk blodtrykk"></div>
+                  <div class="btSlash" aria-hidden="true">/</div>
+                  <div class="btMini"><span>DIA</span><input id="btDia" maxlength="3" inputmode="numeric" aria-label="Diastolisk blodtrykk"></div>
+                </div>
+              </div>
+              <div class="opsix-vitals-row opsix-vitals-secondary">
+                <div class="vpField"><span>MAP</span><input id="map" maxlength="3" inputmode="numeric"></div>
+                <div class="vpField"><span>Tmp</span><input id="temp" type="text" maxlength="4" autocomplete="off"></div>
+                <div class="vpField vpGcsField">
+                  <span title="GCS: totalskår 3–15 eller tre siffer for øye, verbal og motorisk respons">GCS</span>
+                  <input id="gcs" type="text" inputmode="numeric" autocomplete="off"
+                    aria-label="GCS. Totalskår 3 til 15 eller tre siffer for øye, verbal og motorisk respons.">
+                </div>
+              </div>
+            </div>
+          </div> <!-- fullTop -->
+
+          <div class="minorTitle">Medikamenter og infusjoner</div>
+
+          <div class="medGroup">
+            <div class="medGroupTitle">Sedasjon</div>
+            <div class="chipRow">
+              <label class="medChip"><input id="sed_nei" class="sed" type="checkbox" data-name="Nei"><span>Nei</span></label>
+              <label class="medChip"><input id="sed_fentanyl" class="sed" type="checkbox" data-name="Fentanyl"><span>Fentanyl</span></label>
+              <label class="medChip"><input id="sed_ketamin" class="sed" type="checkbox" data-name="Ketamin"><span>Ketamin</span></label>
+              <label class="medChip"><input id="sed_midazolam" class="sed" type="checkbox" data-name="Midazolam"><span>Midazolam</span></label>
+              <label class="medChip"><input id="sed_sufentanil" class="sed" type="checkbox" data-name="Sufentanil"><span>Sufentanil</span></label>
+              <label class="medChip"><input id="sed_propofol" class="sed" type="checkbox" data-name="Propofol"><span>Propofol</span></label>
+            </div>
+            <div id="sedDynamicBody" class="medDynamic"></div>
+          </div>
+
+          <div class="medGroup">
+            <div class="medGroupTitle">Pressor</div>
+            <div class="chipRow">
+              <label class="medChip">
+                <input id="pre_nei" class="pre" type="checkbox" data-name="Nei">
+                <span>Nei</span>
+              </label>
+              <label class="medChip"><input id="pre_adrenalin" class="pre" type="checkbox" data-name="Adrenalin"><span>Adrenalin</span></label>
+              <label class="medChip"><input id="pre_noradrenalin" class="pre" type="checkbox" data-name="Noradrenalin"><span>Noradrenalin</span></label>
+              <label class="medChip"><input id="pre_dobutamin" class="pre" type="checkbox" data-name="Dobutamin"><span>Dobutamin</span></label>
+              <label class="medChip"><input id="pre_vasopressin" class="pre" type="checkbox" data-name="Vasopressin"><span>Vasopressin</span></label>
+            </div>
+            <div id="pressorDynamicBody" class="medDynamic"></div>
+          </div>
+
+          <div class="medGroup">
+            <div class="medGroupTitle">Andre medikamenter</div>
+
+            <div class="chipRow medicationOtherRow">
+              <label class="medChip">
+                <input type="checkbox" name="medicationOther" value="Nei">
+                <span>Nei</span>
+              </label>
+
+              <label class="medChip">
+                <input type="checkbox" name="medicationOther" value="Ringer">
+                <span>Ringer</span>
+              </label>
+
+              <label class="medChip">
+                <input type="checkbox" name="medicationOther" value="NaCl">
+                <span>NaCl</span>
+              </label>
+
+              <label class="medChip">
+                <input type="checkbox" name="medicationOther" value="Blod">
+                <span>Blod</span>
+              </label>
+
+              <label class="medChip">
+                <input type="checkbox" name="medicationOther" value="Plasma">
+                <span>Plasma</span>
+              </label>
+            </div>
+
+            <div id="andreInfBody" class="medDynamic"></div>
+          </div>
+
+          <div id="sharedEquipmentBlock" class="hidden">
+
+            <div class="accessGroup">
+
+              <label class="minorTitle">Tilganger</label>
+
+              <div class="accessChipRow">
+
+                <label class="medChip">
+                  <input id="til_ingen" class="chk til" type="checkbox" data-name="Ingen tilganger">
+                  <span>Ingen tilganger</span>
+                </label>
+
+                <div class="equipmentPair">
+                  <label class="medChip">
+                    <input id="til_cvk" class="chk til" type="checkbox" data-name="CVK">
+                    <span>CVK</span>
+                  </label>
+
+                  <div id="cvkWrap" class="hidden">
+                    <select id="cvkLumen" class="pvkSelect" aria-label="Antall lumen for CVK">
+                      <option value="">Lumen</option>
+                      <option value="1 lumen">1 lumen</option>
+                      <option value="2 lumen">2 lumen</option>
+                      <option value="3 lumen">3 lumen</option>
+                      <option value="4 lumen">4 lumen</option>
+                      <option value="5 lumen">5 lumen</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="equipmentPair">
+                  <label class="medChip">
+                    <input id="til_pvk" class="chk til" type="checkbox" data-name="PVK">
+                    <span>PVK</span>
+                  </label>
+
+                  <div id="pvkWrap" class="hidden">
+                    <select id="pvkAntall" class="pvkSelect" aria-label="Antall PVK">
+                      <option value="">Antall</option>
+                      <option value="1">1 stk</option>
+                      <option value="2">2 stk</option>
+                      <option value="3">3 stk</option>
+                      <option value="4">4 stk</option>
+                      <option value="5">5 stk</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+
+              <div id="tilgangerDynamicBody" class="accessDynamic"></div>
+
+            </div> <!-- accessGroup Tilganger -->
+
+            <div class="accessGroup">
+
+              <label class="minorTitle">Utstyr</label>
+
+              <div class="utstyrGroup">
+
+                <div class="chipRow utstyrChipRow">
+
+                  <div class="pumpRow equipmentPair">
+                    <label class="medChip">
+                      <input
+                        id="utst_pumper"
+                        class="chk dren"
+                        type="checkbox"
+                        data-name="Sprøytepumper"
+                      >
+                      <span>Sprøytepumper</span>
+                    </label>
+
+                    <select id="utstPumpeAntall" class="inlineSelect hidden" aria-label="Antall sprøytepumper">
+                      <option value="">Antall</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                    </select>
+                  </div>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input
+                      id="utst_ingen"
+                      class="chk dren"
+                      type="checkbox"
+                      data-name="Ingen utstyr"
+                    >
+                    <span>Ingen utstyr</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="utst_arterie" class="chk dren" type="checkbox" data-name="Arteriekran">
+                    <span>Arteriekran</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="dren_thorax" class="chk dren" type="checkbox" data-name="Thoraxdren">
+                    <span>Thoraxdren</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="utst_ventrikkelsonde" class="chk dren" type="checkbox" data-name="Ventrikkelsonde">
+                    <span>Ventrikkelsonde</span>
+                  </label>
+
+                  <label class="medChip akuttSkjulUtstyr">
+                    <input id="utst_urinkateter" class="chk dren" type="checkbox" data-name="Urinkateter">
+                    <span>Urinkateter</span>
+                  </label>
 
 
-/* =============================================================
-   OPSIX V1.1.0 Ã¢â‚¬â€œ UTFYLTE FRITEKSTCHIPS SOM VALGTE CHIPS
-   Underliggende avkryssing styres fortsatt av eksisterende JS.
-   Tomme reservechips beholder ordinÃƒÂ¦r, nÃƒÂ¸ytral bakgrunn.
-============================================================= */
-body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
-  .opsix-medication-chip-row:has(> input[type="checkbox"]:checked)
-  > textarea.opsix-medication-chip-input,
-body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
-  .opsix-custom-chip-row:has(> input[type="checkbox"]:checked)
-  > textarea.opsix-custom-chip-input {
-  background-color: #245b9e !important;
-  border-color: #86baff !important;
-  color: #fff !important;
-}
-body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
-  .opsix-medication-chip-row:has(> input[type="checkbox"]:checked)
-  > textarea.opsix-medication-chip-input,
-body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
-  .opsix-custom-chip-row:has(> input[type="checkbox"]:checked)
-  > textarea.opsix-custom-chip-input {
-  background-color: #205b9e !important;
-  border-color: #174475 !important;
-  color: #fff !important;
-}
+                </div> <!-- chipRow -->
 
+                <div id="utstyrDynamicBody" class="accessDynamic"></div>
 
-/* =============================================================
-   OPSIX V1.1.0 Ã¢â‚¬â€œ LESBARE FRITEKSTCHIPS I DAGVISNING
-   Samme tekstfarge som ÃƒÂ¸vrige lyse input/valg.
-   Natt og dempet modus er uendret.
-============================================================= */
-body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
-  textarea.opsix-medication-chip-input,
-body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
-  textarea.opsix-custom-chip-input {
-  color: #111827 !important;
-  caret-color: #111827 !important;
-  background-color: #ffffff !important;
-  border-color: #8793a1 !important;
-}
-body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
-  textarea.opsix-medication-chip-input::placeholder,
-body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
-  textarea.opsix-custom-chip-input::placeholder {
-  color: #111827 !important;
-  opacity: .85 !important;
-}
-body.theme-light.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody)
-  .opsix-medication-chip-row:has(> input[type="checkbox"]:checked)
-  > textarea.opsix-medication-chip-input,
-body.theme-light.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody)
-  .opsix-custom-chip-row:has(> input[type="checkbox"]:checked)
-  > textarea.opsix-custom-chip-input {
-  background-color: #a9cffd !important;
-  border-color: #2563a6 !important;
-  color: #111827 !important;
-  caret-color: #111827 !important;
-}
-/* ==============================================================
-   OPSIX V1.1.0 TEST â€“ avtalte justeringer 09.11.2026
-   MÃ¥lrettet tilleggs-CSS for nye felt. Andre temaer uendret.
-============================================================== */
-body.opsix-test-mode :is(#biPAPWrap,#acuteBiPAPWrap) {
-  margin-top: 10px;
-  padding: 8px 0;
-  background: transparent;
-  border: 0;
-  max-width: 560px;
-}
-body.opsix-test-mode :is(#biPAPWrap,#acuteBiPAPWrap) .unitInputWrap {
-  flex: 1 1 125px;
-  min-width: 125px;
-  max-width: 170px;
-}
-body.opsix-test-mode :is(#biPAPWrap,#acuteBiPAPWrap) .inlineRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-body.opsix-test-mode .opsix-report-tools :is(#copyBtn,#resetBtn,#opsixFooterActions .feedbackBtn) {
-  width: 100% !important;
-  min-width: 0 !important;
-  min-height: 52px !important;
-  border-radius: 14px !important;
-  padding: 0 18px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font: 700 calc(14px * var(--opsix-text-scale))/1.2 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
-  box-sizing: border-box !important;
-  text-align: center !important;
-}
-body.opsix-test-mode .opsix-report-tools #opsixFooterActions .feedbackBtn {
-  background: #366a91;
-  color: #fff;
-  text-decoration: none;
-}
-body.theme-light.opsix-test-mode .opsix-report-tools #opsixFooterActions .feedbackBtn {
-  background: #d5e5f2;
-  color: #162534;
-}
-body.opsix-test-mode .opsix-report-tools #opsixFooterActions {
-  gap: 12px;
-}
-body.opsix-test-mode .opsix-report-tools #opsixFooterActions > .feedbackBtn {
-  order: -1;
-}
-/* OPSIX â€“ ferdigutfylte felt. Fargevalg fÃ¸lger aktivt tema.
-   Ingen andre chips, rapportfelt eller datakilder omfattes. */
-body.opsix-test-mode {
-  --opsix-complete-bg: #344f68;
-  --opsix-complete-border: #79aee2;
-  --opsix-complete-text: #f8fbff;
-  --opsix-complete-label: #e1ebf5;
-  --opsix-edit-bg: #ffffff;
-  --opsix-edit-border: #79aee2;
-  --opsix-edit-text: #17283a;
-  --opsix-edit-label: #526173;
-}
-body.theme-light.opsix-test-mode {
-  --opsix-complete-bg: #e0e6ec;
-  --opsix-complete-border: #a9b8c5;
-  --opsix-complete-text: #263442;
-  --opsix-complete-label: #536273;
-  --opsix-edit-bg: #ffffff;
-  --opsix-edit-border: #526a84;
-  --opsix-edit-text: #202b39;
-  --opsix-edit-label: #68788a;
-}
-body.theme-dim.opsix-test-mode {
-  --opsix-complete-bg: #3c4d5d;
-  --opsix-complete-border: #8092a3;
-  --opsix-complete-text: #ffffff;
-  --opsix-complete-label: #c1ced9;
-  --opsix-edit-bg: #e5e9ed;
-  --opsix-edit-border: #aab8c3;
-  --opsix-edit-text: #202b35;
-  --opsix-edit-label: #586775;
-}
-body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs,.opsix-airway-entry).opsix-filled-entry:not(.kliniskUgyldig):not(:focus) {
-  background: var(--opsix-complete-bg) !important;
-  border-color: var(--opsix-complete-border) !important;
-  color: var(--opsix-complete-text) !important;
-  caret-color: var(--opsix-complete-text);
-}
-/* Fokus viser pÃ¥gÃ¥ende redigering; natt er hvit, dag/dempet har egne farger. */
-body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs,.opsix-airway-entry):focus {
-  background: var(--opsix-edit-bg) !important;
-  border-color: var(--opsix-edit-border) !important;
-  color: var(--opsix-edit-text) !important;
-  caret-color: var(--opsix-edit-text);
-}
-/* RF, SpO2, Puls, SYS, DIA, MAP, Tmp og GCS forblir lesbare inne i ruten. */
-body.opsix-test-mode .inlineVitals :is(.vpField,.btMini):has(> input.opsix-filled-entry:not(.kliniskUgyldig):not(:focus)) > span {
-  color: var(--opsix-complete-label) !important;
-}
-body.opsix-test-mode .inlineVitals :is(.vpField,.btMini):has(> input:focus) > span {
-  color: var(--opsix-edit-label) !important;
-}
-/* Klinisk ugyldig verdi skal aldri gis ferdigutfylt-fargen. */
-body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs,.opsix-airway-entry).kliniskUgyldig:not(:focus) {
-  background: #fff1f2 !important;
-  border: 2px solid #dc2626 !important;
-  color: #b91c1c !important;
-}
-body.opsix-test-mode .opsix-recheck-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-  padding: 8px;
-  border: 1px solid #a58e65;
-  border-radius: 10px;
-}
-body.opsix-test-mode .opsix-recheck-row button {
-  min-height: 36px;
-  padding: 6px 12px;
-  background: #4b6e92;
-  color: #fff;
-}
-/* Â«Ingen utstyrÂ» / Â«Ingen tilgangerÂ» deaktiverer presentasjon,
-   men sletter ikke tidligere angitte verdier. */
-body.opsix-test-mode:has(#utst_ingen:checked) :is(#utstyrDynamicBody,.utstyrChipRow label:not(:has(#utst_ingen)),.utstyrChipRow .pumpRow) {
-  opacity: .52;
-}
-body.opsix-test-mode:has(#til_ingen:checked) :is(#tilgangerDynamicBody,.accessChipRow label:not(:has(#til_ingen))) {
-  opacity: .52;
-}
+              </div> <!-- utstyrGroup -->
 
-/* ==============================================================
-   OPSIX V1.1.0 TEST â€“ godkjent fargejustering, 09.11.2026
-   Kun valgt luftveischip i Dag: samme blÃ¥ som Ã¸vrige valgte chips.
-   Natt/Dempet og luftveislogikk endres ikke.
-============================================================== */
-body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(input:checked),
-body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(input:checked):hover {
-  background: #205b9e !important;
-  border-color: #174475 !important;
-  color: #ffffff !important;
-  box-shadow: none !important;
-}
-body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(input:checked) span {
-  color: #ffffff !important;
-}
+            </div> <!-- accessGroup Utstyr -->
 
-/* TekststÃ¸rrelse. Behold temaet og gi stÃ¸rre tekst plass i eksisterende rader. */
-.opsix-display-controls {
-  display: flex;
-  flex: 0 0 auto;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0 8px;
-  max-width: 100%;
-}
-body[data-opsix-text-size="large"] {
-  --opsix-text-scale: 1.15;
-}
-body[data-opsix-text-size="extra-large"] {
-  --opsix-text-scale: 1.3;
-}
-body.opsix-test-mode[data-opsix-text-size] {
-  font-size: calc(1rem * var(--opsix-text-scale));
-}
-body.opsix-test-mode[data-opsix-text-size] .opsix-operativ .followRow {
-  grid-template-columns: minmax(0,1fr) !important;
-}
-body.opsix-test-mode[data-opsix-text-size] .opsix-operativ .followRow > label:has(input[value="Anestesi-/intensivsykepleier"]) {
-  grid-column: auto;
-}
-body.opsix-test-mode[data-opsix-text-size] .opsix-column .unitInputWrap input {
-  padding-right: calc(70px * var(--opsix-text-scale));
-}
-body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-row :is(.vpField,.btMini) input {
-  padding-left: calc(31px * var(--opsix-text-scale)) !important;
-}
-body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
-  padding-right: 4px !important;
-  font-size: calc(14px * var(--opsix-text-scale)) !important;
-}
+          </div> <!-- sharedEquipmentBlock -->
 
-@media (max-width: 600px), (min-width: 1000px) and (max-width: 1450px) {
-  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
-    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
-  }
-  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
-    grid-column: 1 / -1 !important;
-    max-width: none !important;
-  }
-  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
-    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-  }
-  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpGcsField {
-    grid-column: 1 !important;
-  }
-  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .opsix-gcs-action {
-    grid-column: 2 !important;
-  }
-}
+          <div id="safetyBlock" class="hidden">
 
-/* Skjemafelt som hÃ¸rer sammen, flyttes samlet ved smalere visning. */
-body.opsix-test-mode .equipmentPair,
-body.opsix-test-mode .opsix-acute-pump-area .pumpRow.equipmentPair {
-  display: inline-flex !important;
-  align-items: center !important;
-  flex: 0 1 auto;
-  flex-wrap: nowrap !important;
-  gap: 8px !important;
-  max-width: 100%;
-  min-width: 0;
-}
-body.opsix-test-mode .equipmentPair > .medChip {
-  flex: 0 1 auto !important;
-  min-width: 0 !important;
-  min-height: var(--opsix-chip-h) !important;
-  margin: 0 !important;
-  padding: 7px 10px !important;
-}
-body.opsix-test-mode .equipmentPair > .medChip span {
-  overflow-wrap: anywhere;
-}
-body.opsix-test-mode .equipmentPair > :is(#cvkWrap,#pvkWrap) {
-  flex: 0 0 auto;
-  margin: 0;
-}
-body.opsix-test-mode .equipmentPair select:is(#cvkLumen,#pvkAntall,#utstPumpeAntall),
-body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area #utstPumpeAntall:not(.hidden) {
-  flex: 0 0 auto;
-  width: calc(92px * var(--opsix-text-scale)) !important;
-  min-width: 0 !important;
-  max-width: calc(92px * var(--opsix-text-scale)) !important;
-  height: var(--opsix-chip-h) !important;
-  min-height: var(--opsix-chip-h) !important;
-  max-height: var(--opsix-chip-h) !important;
-  margin: 0 !important;
-  padding: 0 6px;
-  color-scheme: dark;
-}
-body.theme-light.opsix-test-mode .equipmentPair select {
-  color-scheme: light;
-}
-body.opsix-test-mode .equipmentPair select option {
-  background: var(--field);
-  color: var(--fieldText);
-}
-body.opsix-test-mode .equipmentPair select:is(#cvkLumen,#pvkAntall,#utstPumpeAntall).quantitySelected,
-body.opsix-test-mode .weightUnits button[aria-pressed="true"] {
-  background: #245b9e !important;
-  border-color: #86baff !important;
-  color: #fff !important;
-}
-body.theme-light.opsix-test-mode .equipmentPair select:is(#cvkLumen,#pvkAntall,#utstPumpeAntall).quantitySelected,
-body.theme-light.opsix-test-mode .weightUnits button[aria-pressed="true"] {
-  background: #205b9e !important;
-  border-color: #174475 !important;
-}
-.weightInputRow {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 8px;
-}
-body.opsix-test-mode #weightWrap .weightInputRow #vekt,
-body.theme-light.opsix-test-mode #weightWrap .weightInputRow #vekt {
-  width: 100%;
-  min-width: 0;
-}
-.weightUnits {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 3px;
-}
-.weightUnits button {
-  padding: 0 8px;
-  min-height: var(--opsix-chip-h);
-  border: 1px solid var(--v110-border, var(--line));
-  border-radius: 8px;
-  background: var(--v110-choice, var(--panel));
-  color: var(--v110-foreground, var(--text));
-  font: inherit;
-  font-size: calc(13px * var(--opsix-text-scale));
-  cursor: pointer;
-}
-.weightUnits button:focus-visible {
-  outline: 2px solid var(--v110-focus, #86baff);
-  outline-offset: 2px;
-}
-body.opsix-test-mode .unitInputWrap:has(> .opsix-airway-entry.opsix-filled-entry:not(.kliniskUgyldig):not(:focus)) > span {
-  color: var(--opsix-complete-label) !important;
-}
-body.opsix-test-mode .unitInputWrap:has(> .opsix-airway-entry:focus) > span {
-  color: var(--opsix-edit-label) !important;
-}
+            <div class="infoGroup">
+              <label class="minorTitle">Smitte</label>
 
-body.opsix-test-mode .pageHeader {
-  display: grid;
-  grid-template-columns: minmax(12rem, 1fr) minmax(0, auto) minmax(12rem, 1fr);
-  grid-template-areas: ". title controls";
-}
-body.opsix-test-mode .pageHeader #pageTitle {
-  grid-area: title;
-  justify-self: center;
-  margin: 0;
-}
-body.opsix-test-mode .pageHeader .opsix-display-controls {
-  grid-area: controls;
-  justify-self: end;
-}
-@media (max-width: 800px) {
-  body.opsix-test-mode .pageHeader {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "controls" "title";
-  }
-}
+              <div class="smLine">
 
-.unitInputWrap > .pressureTooltip {
-  cursor: help;
-}
-.pressureTooltip::after {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  right: 0;
-  z-index: 2;
-  padding: 6px 8px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--panel);
-  color: var(--text);
-  font-size: calc(12px * var(--opsix-text-scale));
-  white-space: nowrap;
-  pointer-events: none;
-}
-.pressureTooltip:hover::after,
-.unitInputWrap > input:focus-visible + .pressureTooltip::after {
-  content: attr(data-tooltip);
-}
+                <label class="followChip smChip">
+                  <input type="radio" class="chk smitteBase" name="smitteBase" data-name="Ingen kjente" id="sm_ingen">
+                  <span>Ingen kjente</span>
+                </label>
+
+                <label class="followChip">
+                  <input type="radio" class="chk smitteBase" name="smitteBase" data-name="Kontaktsmitte" id="sm_kontakt">
+                  <span>Kontaktsmitte</span>
+                </label>
+
+                <label class="followChip">
+                  <input type="radio" class="chk smitteBase" name="smitteBase" data-name="Dråpesmitte" id="sm_draape">
+                  <span>Dråpesmitte</span>
+                </label>
+
+                <label class="followChip">
+                  <input type="radio" class="chk smitteBase" name="smitteBase" data-name="Luftsmitte" id="sm_luft">
+                  <span>Luftsmitte</span>
+                </label>
+
+                <label class="followChip smChip bloodChip">
+                  <input type="checkbox" class="chk smitteBlood" data-name="Blodsmitte" id="sm_blod">
+                  <span>Blodsmitte</span>
+                </label>
+
+              </div>
+
+              <div id="smitteSpesWrap" class="hidden">
+                <input
+                  id="smitteSpes"
+                  type="text"
+                  placeholder="Spesifiser smitte"
+                  aria-label="Spesifiser valgte smittetyper"
+                  autocomplete="off"
+                >
+              </div>
+
+            </div> <!-- Avslutter smitte sin infoGroup -->
+
+            <div class="infoGroup">
+              <label class="minorTitle">CAVE?</label>
+
+              <div class="chipRow caveRow">
+                <label class="medChip">
+                  <input
+                    type="radio"
+                    name="cave"
+                    value="Nei"
+                    data-value="Nei"
+                    class="chk caveRadio"
+                  >
+
+                  <span>Nei</span>
+                </label>
+
+                <label class="medChip">
+                  <input
+                    type="radio"
+                    name="cave"
+                    value="Ja"
+                    data-value="Ja"
+                    class="chk caveRadio"
+                  >
+                  <span>Ja</span>
+                </label>
+              </div>
+
+              <div id="caveTextWrap" class="hidden">
+                <input id="caveText" placeholder="Spesifiser CAVE">
+              </div>
+            </div>
+
+            <div class="infoGroup">
+              <label class="minorTitle">HLR og respirator</label>
+
+              <div class="chipRow caveRow">
+
+                <label class="medChip">
+                  <input type="radio" name="hlrStatus" value="Ja" class="chk hlrRadio">
+                  <span>HLR +</span>
+                </label>
+
+                <label class="medChip">
+                  <input type="radio" name="hlrStatus" value="Nei" class="chk hlrRadio">
+                  <span>HLR -</span>
+                </label>
+
+                <label class="medChip">
+                  <input type="radio" name="respStatus" value="Ja" class="chk respRadio">
+                  <span>Respirator +</span>
+                </label>
+
+                <label class="medChip">
+                  <input type="radio" name="respStatus" value="Nei" class="chk respRadio">
+                  <span>Respirator -</span>
+                </label>
+
+              </div>
+
+              <div id="hlrMinusTextWrap" class="hidden doctorRow">
+                <input id="hlrMinusLege" placeholder="Lege HLR -">
+                <input id="hlrMinusDato" placeholder="Dato">
+              </div>
+
+               <div id="opsixRespRecheck" class="hidden opsix-recheck-row" role="status">
+                 <span>Respiratorstatus må bekreftes på nytt etter endret luftveisstatus.</span>
+                 <button id="opsixRespConfirm" type="button">Bekreft respiratorstatus</button>
+               </div>
+
+              <div id="respMinusTextWrap" class="hidden doctorRow">
+                <input id="respMinusLege" placeholder="Lege respirator -">
+                <input id="respMinusDato" placeholder="Dato">
+              </div>
+
+            </div>
+
+          </div> <!-- safetyBlock -->
+
+          <div id="acuteDoctorBlock" class="hidden">
+
+            <div class="doctorGroup">
+              <label class="minorTitle">Rekvirerende lege</label>
+              <div class="doctorRow">
+                <input id="acuteRekNavn" placeholder="Navn">
+                <input id="acuteRekTlf" class="phoneInput" placeholder="Tlf">
+              </div>
+            </div>
+
+          </div>
+
+          <div id="sharedBottom" class="hidden">
+
+            <div class="accessGroup">
+
+              <label class="minorTitle">Rekvirerende lege</label>
+
+              <div class="doctorRow">
+                <input id="rekNavn" placeholder="Navn">
+                <input id="rekTlf" class="phoneInput" placeholder="Tlf">
+              </div>
+
+              <label class="minorTitle">Mottakende lege</label>
+              <div class="doctorRow">
+                <input id="mottNavn" placeholder="Navn">
+                <input id="mottTlf" class="phoneInput" placeholder="Tlf">
+              </div>
+
+            </div> <!-- accessGroup lege -->
+
+          </div> <!-- sharedBottom -->
+
+          <div id="reportActions" class="btnbar">
+
+            <button id="copyBtn" type="button" class="btn-copy actionBtn">
+              <svg class="copyIcon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10V1z"/>
+                <path fill="currentColor" d="M18 5H10a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zm0 16H10V7h8v14z"/>
+              </svg>
+              <span>Kopier rapport</span>
+            </button>
+
+            <span id="copyMsg" class="copyMsg"></span>
+
+            <button
+              id="resetBtn"
+              type="button"
+              class="btn-red actionBtn push-right"
+            >
+              <svg
+                class="trashIcon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 6h18"/>
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <path d="M19 6l-1 14H6L5 6"/>
+                <path d="M10 11v6"/>
+                <path d="M14 11v6"/>
+              </svg>
+
+              <span>Tøm skjema</span>
+            </button>
+
+          </div>
+
+          <textarea id="rapport" class="report" readonly placeholder="Rapportteksten oppdateres automatisk…"></textarea>
+
+        </div> <!-- mainContent -->
+ <!-- ======================================================
+VERSJONSHISTORIKK OG TILBAKEMELDINGER
+====================================================== -->
+
+        <div id="opsixFooterActions" class="feedbackWrap">
+
+            <div class="versionInfo">
+              <span class="versionNumber">
+                Versjon
+                <span id="currentVersion" data-version="v.1.0.1">1.0.1</span>
+              </span>
+
+              <button
+                id="versionHistoryBtn"
+                type="button"
+                class="versionHistoryBtn"
+              >
+                Vis endringslogg
+              </button>
+            </div>
+
+            <a
+              class="feedbackBtn"
+              href="https://hsorhf-my.sharepoint.com/personal/b32838_ous-hf_no/_layouts/15/listforms.aspx?cid=YjNjZGVkOWYtZGYxNy00OWU0LWE1YTMtNGZhMzYxNmRjNmM4&amp;ct=1793702312339&amp;or=Teams-HL&amp;nav=Y2I2MGMyYzctMDBlMS00MjJkLWE2NDItOTRjNTk3YTdjOTE2&amp;LOF=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Tilbakemelding – åpnes i ny fane"
+            >
+              Tilbakemelding
+            </a>
+
+          </div> <!-- feedbackWrap -->
+
+      </div> <!-- Avslutter .card -->
+
+      <footer class="opsix-footer">
+        © 2026 OPSIX™ · Utviklet av Gunnar Tande
+      </footer>
+
+    </div> <!-- Avslutter .wrap -->
+
+    <!-- ======================================================
+POPUP – VERSJONSHISTORIKK
+====================================================== -->
+
+    <dialog
+      id="versionHistoryDialog"
+      class="versionHistoryDialog"
+      aria-labelledby="versionHistoryTitle"
+    >
+
+      <div class="versionHistoryHeader">
+
+        <div>
+          <h2 id="versionHistoryTitle">Versjonshistorikk</h2>
+          <p>Intensiv- og helikoptertransport</p>
+        </div>
+
+        <button
+          id="versionHistoryClose"
+          type="button"
+          class="versionHistoryClose"
+          aria-label="Lukk versjonshistorikken"
+        >
+&times;
+        </button>
+
+      </div>
+
+      <div class="versionHistoryBody">
+
+        <div class="versionHistoryIntro">
+          Her finner du oversikt over publiserte versjoner,
+          dato for publisering og hvilke endringer som er gjort.
+          Versjon 1.0.0 markerer starten på ordinær bruk.
+        </div>
+
+        <div
+          id="versionHistoryList"
+          class="versionHistoryList"
+          aria-live="polite"
+        >
+          Versjonshistorikken lastes inn…
+        </div>
+
+      </div>
+
+      <div class="versionHistoryFooter">
+
+        <button
+          id="versionHistoryOk"
+          type="button"
+          class="versionHistoryOk"
+        >
+          Lukk
+        </button>
+
+      </div>
+
+    </dialog>
+
+<script src="./script.js?v=20261113-2"></script>
+  </body>
+</html>
