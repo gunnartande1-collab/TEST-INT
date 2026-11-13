@@ -4923,7 +4923,8 @@ body.theme-light.opsix-test-mode .weightUnits button[aria-pressed="true"] {
 }
 .weightInputRow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, calc(76px * var(--opsix-text-scale))) auto;
+  justify-content: start;
   align-items: center;
   gap: 8px;
 }
@@ -4931,6 +4932,9 @@ body.opsix-test-mode #weightWrap .weightInputRow #vekt,
 body.theme-light.opsix-test-mode #weightWrap .weightInputRow #vekt {
   width: 100%;
   min-width: 0;
+  padding-inline: 7px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 .weightUnits {
   display: flex;
