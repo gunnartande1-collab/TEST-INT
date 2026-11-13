@@ -21,14 +21,23 @@
             Intensiv- og helikoptertransport
           </h1>
 
-          <label class="opsix-theme-picker" for="opsixThemeSelect">
-            <span class="opsix-visually-hidden">Visningsmodus</span>
-            <select id="opsixThemeSelect" aria-label="Velg visningsmodus">
-              <option value="night">☾ Natt</option>
-              <option value="dim">◐ Dempet</option>
-              <option value="day">☀ Dag</option>
-            </select>
-          </label>
+          <div class="opsix-display-controls">
+            <label class="opsix-theme-picker" for="opsixThemeSelect">
+              <span class="opsix-visually-hidden">Visningsmodus</span>
+              <select id="opsixThemeSelect" aria-label="Velg visningsmodus">
+                <option value="day">☀ Dag</option>
+                <option value="dim">◐ Dempet</option>
+                <option value="night" selected>☾ Natt</option>
+              </select>
+            </label>
+            <label class="opsix-theme-picker" for="opsixTextSize">
+              <select id="opsixTextSize" aria-label="Tekststørrelse">
+                <option value="normal">Tekst 100 %</option>
+                <option value="large">Tekst 115 %</option>
+                <option value="extra-large">Tekst 130 %</option>
+              </select>
+            </label>
+          </div>
 
         </div>
         <div class="hasteLabel">Rekvirert hastegrad</div>
@@ -51,7 +60,7 @@
           </button>
 
           <button type="button" class="hasteCard haste-planlagt" data-haste="Vanlig 2 (planlagt)">
-            <span class="hasteCardTitle">Vanlig 2 (planlagt)</span>
+            <span class="hasteCardTitle">Vanlig 2</span>
             <span class="hasteCardText">Transport som kan planlegges frem i tid.</span>
           </button>
 

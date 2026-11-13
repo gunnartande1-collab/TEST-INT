@@ -3,6 +3,7 @@
  * Originale tema-, responsivitets- og registreringsregler beholdt.
  */
 :root {
+  --opsix-text-scale: 1;
   --bg: #2f3136;
   --panel: #3a3d43;
   --text: #f1f1f1;
@@ -58,7 +59,7 @@ textarea {
   padding: 9px;
   background: var(--field);
   color: var(--fieldText);
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   margin-bottom: 10px;
 }
 textarea {
@@ -172,7 +173,7 @@ textarea.report {
   top: 50%;
   transform: translateY(-50%);
   color: #8c8c8c;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   pointer-events: none;
   z-index: 2;
 }
@@ -243,7 +244,7 @@ button {
   font-weight: 800;
   cursor: pointer;
   transition: .15s;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
 }
 button:hover {
   opacity: .97;
@@ -263,7 +264,7 @@ button:active {
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.08);
   font-weight: 700;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   letter-spacing: .2px;
   transition: background .18s ease,
     transform .12s ease,
@@ -304,12 +305,12 @@ button:active {
   color: #a7f3c1;
   font-weight: 700;
   min-height: 20px;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
 }
 .hasteLabel {
   display: block;
   font-weight: 900;
-  font-size: 20px;
+  font-size: calc(20px * var(--opsix-text-scale));
   letter-spacing: .6px;
   margin-top: 14px;
   margin-bottom: 12px;
@@ -351,7 +352,7 @@ button:active {
   max-width: 240px;
   background: rgba(23,27,34,.96);
   color: #f8fafc;
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
   padding: 6px 10px;
   border-radius: 10px;
   opacity: 0;
@@ -497,7 +498,7 @@ input[type=number] {
   padding-top: 16px;
   border-top: 1px solid #5a5d66;
   font-weight: 900;
-  font-size: 20px;
+  font-size: calc(20px * var(--opsix-text-scale));
   color: #fff;
   width: 100%;
 }
@@ -521,7 +522,7 @@ input[type=number] {
   margin-top: 18px;
   margin-bottom: 8px;
   line-height: 1.3;
-  font-size: 20px;
+  font-size: calc(20px * var(--opsix-text-scale));
   font-weight: 800;
   color: #f3f4f6;
 }
@@ -658,7 +659,7 @@ input[type=number] {
   text-align: center;
   color: #f1f1f1;
   font-weight: 650;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   cursor: pointer;
   transition: .15s ease;
 }
@@ -721,7 +722,7 @@ input[type=number] {
 #acuteTrachVentWrap label {
   margin-top: 0;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
   font-weight: 700;
   color: #cfcfcf;
   text-transform: uppercase;
@@ -833,7 +834,7 @@ select:focus {
   display: block;
   margin-top: 30px;
   margin-bottom: 14px;
-  font-size: 20px;
+  font-size: calc(20px * var(--opsix-text-scale));
   font-weight: 850;
   letter-spacing: .01em;
   color: #ffffff;
@@ -884,7 +885,7 @@ select {
   border: 1px solid rgba(255,255,255,0.05);
 }
 .medGroupTitle {
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   font-weight: 600;
   opacity: 0.72;
   margin-bottom: 8px;
@@ -938,7 +939,7 @@ select {
 .feedbackBtn {
   min-height: 44px;
   border: 1px solid rgba(255,255,255,0.06);
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
 }
 .feedbackBtn:hover {
   background: rgba(255,255,255,0.035);
@@ -978,13 +979,13 @@ select {
   width: 100%;
 }
 .hasteCardTitle {
-  font-size: 17px;
+  font-size: calc(17px * var(--opsix-text-scale));
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: .04em;
 }
 .hasteCardText {
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
   font-weight: 650;
   line-height: 1.35;
   opacity: .88;
@@ -1230,7 +1231,7 @@ select {
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.08);
   background: #2f333b;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
@@ -1330,7 +1331,7 @@ select {
   align-items: center;
   height: 100%;
   color: #8c8c8c;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   line-height: 1;
   pointer-events: none;
 }
@@ -1346,7 +1347,7 @@ select {
   background: #2f333b !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
   color: #f1f1f1 !important;
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
   font-weight: 500 !important;
   line-height: 1.2 !important;
 }
@@ -1373,7 +1374,7 @@ select {
   border: 1px solid rgba(255,255,255,0.08) !important;
   background: #2f333b !important;
   color: #f1f1f1 !important;
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
   font-weight: 500 !important;
   line-height: 1.2 !important;
   cursor: pointer;
@@ -1414,7 +1415,7 @@ select {
   border: 1px solid rgba(255,255,255,0.08) !important;
   background: #2f333b !important;
   color: #f1f1f1 !important;
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
   font-weight: 500 !important;
   line-height: 1.2 !important;
   cursor: pointer;
@@ -1511,7 +1512,7 @@ select {
   white-space: nowrap;
   background: rgba(20,20,20,0.96);
   color: #fff;
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
   font-weight: 600;
   padding: 6px 10px;
   border-radius: 10px;
@@ -1534,7 +1535,7 @@ select {
   min-height: 46px !important;
   padding: 0 38px 0 12px !important;
   margin: 0 !important;
-  font-size: 15px !important;
+  font-size: calc(15px * var(--opsix-text-scale)) !important;
   line-height: normal !important;
   box-sizing: border-box !important;
   vertical-align: middle;
@@ -1567,7 +1568,7 @@ select {
 }
 .feedbackDialogHeader h2 {
   margin: 0;
-  font-size: 19px;
+  font-size: calc(19px * var(--opsix-text-scale));
   font-weight: 650;
   line-height: 1.3;
   color: inherit;
@@ -1584,7 +1585,7 @@ select {
   border-radius: 8px;
   background: transparent;
   color: inherit;
-  font-size: 28px;
+  font-size: calc(28px * var(--opsix-text-scale));
   line-height: 1;
   cursor: pointer;
 }
@@ -1596,7 +1597,7 @@ select {
 }
 .feedbackDialogBody p {
   margin: 0;
-  font-size: 15px;
+  font-size: calc(15px * var(--opsix-text-scale));
   line-height: 1.7;
 }
 .feedbackDialogFooter {
@@ -1611,7 +1612,7 @@ select {
   background: var(--green, #35c16a);
   color: #111;
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   font-weight: 650;
   cursor: pointer;
 }
@@ -1630,7 +1631,7 @@ select {
   gap: 12px;
 }
 .versionNumber {
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   color: var(--muted, #cfcfcf);
   font-weight: 500;
 }
@@ -1639,7 +1640,7 @@ select {
   background: transparent;
   color: var(--accent, #8fb0ff);
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   font-weight: 500;
   cursor: pointer;
   padding: 6px 0;
@@ -1677,13 +1678,13 @@ select {
 }
 .versionHistoryHeader h2 {
   margin: 0 0 5px;
-  font-size: 21px;
+  font-size: calc(21px * var(--opsix-text-scale));
   font-weight: 650;
   color: inherit;
 }
 .versionHistoryHeader p {
   margin: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   color: var(--muted, #cfcfcf);
 }
 .versionHistoryClose {
@@ -1698,7 +1699,7 @@ select {
   border-radius: 8px;
   background: transparent;
   color: inherit;
-  font-size: 28px;
+  font-size: calc(28px * var(--opsix-text-scale));
   line-height: 1;
   cursor: pointer;
 }
@@ -1711,7 +1712,7 @@ select {
 .versionHistoryIntro {
   margin-bottom: 20px;
   color: var(--muted, #cfcfcf);
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   line-height: 1.6;
 }
 .versionHistoryList {
@@ -1735,7 +1736,7 @@ select {
 }
 .versionHistoryEntryTitle {
   margin: 0;
-  font-size: 16px;
+  font-size: calc(16px * var(--opsix-text-scale));
   font-weight: 650;
 }
 .versionHistoryBadge {
@@ -1743,25 +1744,25 @@ select {
   border-radius: 20px;
   background: rgba(53, 193, 106, 0.15);
   color: var(--green, #35c16a);
-  font-size: 11px;
+  font-size: calc(11px * var(--opsix-text-scale));
   font-weight: 650;
 }
 .versionHistoryDate {
   display: block;
   margin-bottom: 12px;
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
   color: var(--muted, #cfcfcf);
 }
 .versionHistoryDescription {
   margin: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   line-height: 1.7;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 .versionHistoryStatus {
   margin: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   line-height: 1.6;
   color: var(--muted, #cfcfcf);
 }
@@ -1777,7 +1778,7 @@ select {
   background: var(--green, #35c16a);
   color: #111;
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   font-weight: 650;
   cursor: pointer;
 }
@@ -1889,7 +1890,7 @@ select {
 @media (max-width: 720px) {
   h1 {
     overflow-wrap: anywhere;
-    font-size: clamp(19px, 5vw, 30px);
+    font-size: clamp(calc(19px * var(--opsix-text-scale)), calc(5vw * var(--opsix-text-scale)), calc(30px * var(--opsix-text-scale)));
   }
 }
 input.kliniskUgyldig {
@@ -1936,7 +1937,7 @@ input.kliniskUgyldig {
   background: #2b2f36;
   color: #f1f5f9;
   font: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   font-weight: 700;
   cursor: pointer;
 }
@@ -1948,7 +1949,7 @@ input.kliniskUgyldig {
   outline-offset: 3px;
 }
 .themeIcon {
-  font-size: 17px;
+  font-size: calc(17px * var(--opsix-text-scale));
   line-height: 1;
 }
 @media (max-width: 720px) {
@@ -2244,7 +2245,7 @@ body .wrap > .opsix-footer {
   padding: 0 12px !important;
   box-sizing: border-box;
   text-align: center !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   font-weight: 400;
   line-height: 1.5;
   color: var(--muted, #aaa);
@@ -2268,7 +2269,7 @@ body.opsix-akutt #utstyrDynamicBody .dynamicRow.hidden {
   background: var(--panel, #3a3d43);
   color: var(--text, #f1f1f1);
   font-family: inherit;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   font-weight: 600;
   line-height: 1.4;
   text-decoration: none;
@@ -2470,7 +2471,7 @@ body.opsix-test-mode #rapport {
   border: 1px solid var(--v110-border);
   border-radius: 12px;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   line-height: 1.5;
   overflow-y: auto;
 }
@@ -2514,7 +2515,7 @@ body.opsix-test-mode .opsix-gcs-details {
 body.opsix-test-mode .opsix-gcs-label {
   display: block;
   font-weight: 600;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   margin: 9px 0 6px;
   color: var(--v110-foreground);
 }
@@ -2525,7 +2526,7 @@ body.opsix-test-mode .opsix-gcs-select {
   margin: 6px 0;
 }
 body.opsix-test-mode .opsix-gcs-note {
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
   line-height: 1.5;
   color: var(--v110-subtle-text);
   margin-bottom: 0;
@@ -2547,7 +2548,7 @@ body.opsix-test-mode .opsix-confirm-body {
 }
 body.opsix-test-mode .opsix-confirm-body h2 {
   margin: 0 0 10px;
-  font-size: 20px;
+  font-size: calc(20px * var(--opsix-text-scale));
 }
 body.opsix-test-mode .opsix-confirm-body p {
   line-height: 1.55;
@@ -2628,7 +2629,7 @@ body.opsix-test-mode .opsix-report-panel {
   body.opsix-test-mode input:not([type=checkbox]):not([type=radio]),
 body.opsix-test-mode textarea,
 body.opsix-test-mode select {
-    font-size: 16px;
+    font-size: calc(16px * var(--opsix-text-scale));
   }
 }
 @media (max-width: 799px) {
@@ -2685,7 +2686,7 @@ body.opsix-test-mode .pageHeader {
 }
 body.opsix-test-mode #pageTitle {
   margin: 0 0 5px;
-  font-size: clamp(20px, 1.8vw, 27px);
+  font-size: clamp(calc(20px * var(--opsix-text-scale)), calc(1.8vw * var(--opsix-text-scale)), calc(27px * var(--opsix-text-scale)));
 }
 body.opsix-test-mode .opsix-column {
   border-radius: 12px;
@@ -2699,7 +2700,7 @@ body.opsix-test-mode .opsix-column .section {
 }
 body.opsix-test-mode .opsix-operativ > .hasteLabel {
   margin: 3px 0 6px;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
 }
 body.opsix-test-mode .opsix-operativ .hasteGrid {
   gap: 6px;
@@ -2712,10 +2713,10 @@ body.opsix-test-mode .opsix-operativ .hasteCard {
   border-radius: 9px;
 }
 body.opsix-test-mode .hasteCardTitle {
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
 }
 body.opsix-test-mode .hasteCardText {
-  font-size: 10px;
+  font-size: calc(10px * var(--opsix-text-scale));
   line-height: 1.18;
 }
 body.opsix-test-mode .followRow,
@@ -2739,7 +2740,7 @@ body.opsix-test-mode .smChip,
 body.opsix-test-mode .specialGroup .specCell {
   min-height: 32px !important;
   padding: 5px 9px !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   line-height: 1.2 !important;
   border-radius: 8px !important;
   white-space: normal;
@@ -2750,7 +2751,7 @@ body.opsix-test-mode .medGroup {
   border-radius: 10px;
 }
 body.opsix-test-mode .medGroupTitle {
-  font-size: 11px;
+  font-size: calc(11px * var(--opsix-text-scale));
   margin-bottom: 5px;
 }
 body.opsix-test-mode .accessGroup .toggleCell {
@@ -2787,7 +2788,7 @@ body.opsix-test-mode .vpGcsField {
 body.opsix-test-mode .opsix-gcs-toggle {
   min-height: 31px;
   padding: 5px 9px;
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
 }
 body.opsix-test-mode #rapport {
   min-height: 115px;
@@ -2991,7 +2992,7 @@ body.opsix-test-mode textarea.opsix-one-line {
     white-space: nowrap !important;
     min-height: 32px !important;
     padding: 5px 7px !important;
-    font-size: 11px !important;
+    font-size: calc(11px * var(--opsix-text-scale)) !important;
     border-radius: 7px !important;
     margin: 0 !important;
   }
@@ -3043,7 +3044,7 @@ body.opsix-test-mode .inlineVitals .btMini input {
   box-sizing: border-box;
   font-variant-numeric: tabular-nums;
   padding-right: 5px;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   text-align: right;
 }
 body.opsix-test-mode .inlineVitals .vpField input {
@@ -3059,7 +3060,7 @@ body.opsix-test-mode .inlineVitals .vpGcsField input {
 body.opsix-test-mode .inlineVitals .vpField span,
 body.opsix-test-mode .inlineVitals .btMini span {
   left: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
 }
 @media (max-width: 799px) {
   body.opsix-test-mode .opsix-medisinsk .airwayRow {
@@ -3085,7 +3086,7 @@ body.opsix-test-mode #cvkLumen {
   margin: 0 !important;
   padding: 3px 22px 3px 9px !important;
   border-radius: 8px !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   font-weight: 600;
   line-height: 1.2 !important;
   box-shadow: none !important;
@@ -3107,7 +3108,7 @@ body.opsix-test-mode .opsix-andre .utstyrChipRow select {
   padding: 3px 22px 3px 9px !important;
   border: 1px solid var(--v110-border) !important;
   border-radius: 8px !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   font-weight: 600;
   line-height: 1.2 !important;
   background-color: var(--v110-field) !important;
@@ -3134,7 +3135,7 @@ body.opsix-test-mode .opsix-andre .utstyrChipRow select {
     height: 40px !important;
     min-height: 40px !important;
     max-height: 40px !important;
-    font-size: 14px !important;
+    font-size: calc(14px * var(--opsix-text-scale)) !important;
   }
 }
 body.opsix-test-mode {
@@ -3155,22 +3156,22 @@ body.opsix-test-mode .opsix-column .medGroupTitle {
   font-weight: 650;
 }
 body.opsix-test-mode .opsix-column .specLabel {
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   font-weight: 650;
 }
 body.opsix-test-mode .opsix-column input:not([type=checkbox]):not([type=radio]):not([type=hidden]) {
   box-sizing: border-box;
   min-height: var(--opsix-field-h);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
 }
 body.opsix-test-mode .opsix-column select {
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
 }
 body.opsix-test-mode .opsix-column textarea {
   box-sizing: border-box;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
 }
 body.opsix-test-mode .chipRow,
 body.opsix-test-mode .followRow,
@@ -3239,7 +3240,7 @@ body.opsix-test-mode .hasteGrid .hasteCard.active::after {
   border-radius: 50%;
   background: #fff;
   color: #182635;
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   font-weight: 900;
 }
 body.opsix-test-mode .hasteGrid .hasteCard.haste-planlagt.active {
@@ -3261,7 +3262,7 @@ body.opsix-test-mode .opsix-optional-label {
   border: 1px solid currentColor;
   border-radius: 5px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: calc(11px * var(--opsix-text-scale));
   font-weight: 750;
   letter-spacing: .01em;
 }
@@ -3398,7 +3399,7 @@ body.opsix-test-mode .opsix-column {
   padding: clamp(13px,1.35vw,19px);
 }
 body.opsix-test-mode .opsix-column-title {
-  font-size: 17px !important;
+  font-size: calc(17px * var(--opsix-text-scale)) !important;
   margin-bottom: 13px !important;
   padding-bottom: 11px !important;
 }
@@ -3406,13 +3407,13 @@ body.opsix-test-mode .opsix-column .minorTitle,
 body.opsix-test-mode .opsix-column .bigSection,
 body.opsix-test-mode .opsix-column .section,
 body.opsix-test-mode .opsix-column .vpTitle {
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
   line-height: 1.35 !important;
   margin-top: 14px !important;
   margin-bottom: 7px !important;
 }
 body.opsix-test-mode .opsix-column .medGroupTitle {
-  font-size: 11px !important;
+  font-size: calc(11px * var(--opsix-text-scale)) !important;
   letter-spacing: .045em;
 }
 body.opsix-test-mode .hasteGrid .hasteCard {
@@ -3427,10 +3428,10 @@ body.opsix-test-mode .hasteGrid .hasteCard.active {
   box-shadow: 0 0 0 2px rgba(15,23,42,.32) inset !important;
 }
 body.opsix-test-mode .hasteGrid .hasteCardTitle {
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
 }
 body.opsix-test-mode .hasteGrid .hasteCardText {
-  font-size: 11px !important;
+  font-size: calc(11px * var(--opsix-text-scale)) !important;
   line-height: 1.3 !important;
 }
 body.opsix-test-mode .opsix-operativ .followRow {
@@ -3500,14 +3501,14 @@ body.opsix-test-mode .opsix-medisinsk .inlineVitals .btMini input {
   max-height: var(--opsix-control-h) !important;
   padding-left: 36px !important;
   padding-right: 7px !important;
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
   text-align: right !important;
   font-variant-numeric: tabular-nums;
 }
 body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpField span,
 body.opsix-test-mode .opsix-medisinsk .inlineVitals .btMini span {
   left: 7px !important;
-  font-size: 11px !important;
+  font-size: calc(11px * var(--opsix-text-scale)) !important;
 }
 body.opsix-test-mode .opsix-medisinsk .inlineVitals .vpGcsField {
   grid-column: auto;
@@ -3534,7 +3535,7 @@ body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt {
   text-align: center;
 }
 body.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt span {
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   line-height: 1.2 !important;
 }
 body.opsix-test-mode .opsix-medisinsk #spontO2Wrap,
@@ -3640,7 +3641,7 @@ body.opsix-test-mode .opsix-medisinsk .vpGcsField .opsix-gcs-toggle {
   min-height: 29px !important;
   height: 29px !important;
   padding: 4px 7px !important;
-  font-size: 11px !important;
+  font-size: calc(11px * var(--opsix-text-scale)) !important;
   border-radius: 7px !important;
   white-space: nowrap;
   z-index: 2;
@@ -3674,7 +3675,7 @@ body.opsix-test-mode #transportWrap .transportRow > label.medChip span {
   width: auto !important;
   padding: 0 !important;
   line-height: 1.2 !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
 }
 body.opsix-test-mode .opsix-theme-control {
   display: inline-flex;
@@ -3683,7 +3684,7 @@ body.opsix-test-mode .opsix-theme-control {
   flex: 0 0 auto;
 }
 body.opsix-test-mode .opsix-theme-caption {
-  font-size: 12px;
+  font-size: calc(12px * var(--opsix-text-scale));
   font-weight: 650;
   color: var(--text);
   opacity: .86;
@@ -3702,7 +3703,7 @@ body.opsix-test-mode .opsix-theme-select {
   background-repeat: no-repeat !important;
   background-position: right 11px center !important;
   background-size: 14px !important;
-  font-size: 13px !important;
+  font-size: calc(13px * var(--opsix-text-scale)) !important;
   font-weight: 650 !important;
   cursor: pointer;
 }
@@ -3801,14 +3802,14 @@ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .btMini in
   min-height: 42px !important;
   max-height: 42px !important;
   padding: 0 7px 0 31px !important;
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
   text-align: right !important;
   font-variant-numeric: tabular-nums;
 }
 body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .vpField > span,
 body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-row .btMini > span {
   left: 6px !important;
-  font-size: 10px !important;
+  font-size: calc(10px * var(--opsix-text-scale)) !important;
 }
 body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
   padding-right: 82px !important;
@@ -3825,7 +3826,7 @@ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpG
   height: 30px !important;
   min-height: 30px !important;
   padding: 4px 7px !important;
-  font-size: 11px !important;
+  font-size: calc(11px * var(--opsix-text-scale)) !important;
   z-index: 3;
 }
 @media (max-width: 540px) {
@@ -3871,30 +3872,24 @@ body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip {
   justify-content: center !important;
 }
 body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip span {
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   line-height: 1.2 !important;
   width: auto !important;
   padding: 0 !important;
 }
-body.opsix-test-mode #cvkLumen,
-body.opsix-test-mode #pvkAntall,
-body.opsix-test-mode #utstPumperAntall,
-body.opsix-test-mode .pvkSelect {
-  color: #f7fafc !important;
-  background-color: #334355 !important;
+/* Antallsmenyene bruker lyse feltfarger med mÃ¸rk tekst i Natt og Dempet. */
+body.opsix-test-mode:not(.theme-light) .opsix-andre :is(#cvkLumen,#pvkAntall,#utstPumpeAntall) {
+  color: #1b2a3c !important;
+  background-color: var(--field) !important;
   border: 1px solid #718296 !important;
-  color-scheme: dark;
+  color-scheme: light;
 }
-body.opsix-test-mode #cvkLumen option,
-body.opsix-test-mode #pvkAntall option,
-body.opsix-test-mode #utstPumperAntall option,
-body.opsix-test-mode .pvkSelect option {
-  color: #ffffff !important;
-  background-color: #243342 !important;
+body.opsix-test-mode:not(.theme-light) .opsix-andre :is(#cvkLumen,#pvkAntall,#utstPumpeAntall) option {
+  color: #1b2a3c !important;
+  background-color: #ffffff !important;
 }
 body.theme-light.opsix-test-mode #cvkLumen,
 body.theme-light.opsix-test-mode #pvkAntall,
-body.theme-light.opsix-test-mode #utstPumperAntall,
 body.theme-light.opsix-test-mode .pvkSelect {
   color: #1b2a3c !important;
   background-color: #f7f9fc !important;
@@ -3903,7 +3898,6 @@ body.theme-light.opsix-test-mode .pvkSelect {
 }
 body.theme-light.opsix-test-mode #cvkLumen option,
 body.theme-light.opsix-test-mode #pvkAntall option,
-body.theme-light.opsix-test-mode #utstPumperAntall option,
 body.theme-light.opsix-test-mode .pvkSelect option {
   color: #1b2a3c !important;
   background-color: #ffffff !important;
@@ -3926,7 +3920,7 @@ body.opsix-test-mode .opsix-gcs-action .opsix-gcs-toggle {
   height: 42px !important;
   min-width: 85px !important;
   padding: 7px 10px !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   white-space: nowrap;
 }
 body.opsix-test-mode .opsix-gcs-details[hidden],
@@ -4048,13 +4042,13 @@ body.opsix-test-mode .opsix-acute-section > .opsix-acute-heading {
   background: transparent;
   color: var(--text);
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   font-weight: 700;
   text-align: left;
   cursor: default;
 }
 body.opsix-test-mode .opsix-acute-section .opsix-acute-note {
-  font-size: 11px;
+  font-size: calc(11px * var(--opsix-text-scale));
   font-weight: 500;
   opacity: .75;
   margin-left: auto;
@@ -4076,7 +4070,7 @@ body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-heading {
 }
 body.opsix-test-mode .opsix-acute-collapsible .opsix-acute-indicator {
   display: inline;
-  font-size: 15px;
+  font-size: calc(15px * var(--opsix-text-scale));
   opacity: .85;
   transition: transform .15s ease;
 }
@@ -4092,7 +4086,7 @@ body.opsix-test-mode .opsix-operativ .section,
 body.opsix-test-mode .opsix-operativ .minorTitle,
 body.opsix-test-mode .opsix-operativ .weightLabel,
 body.opsix-test-mode .opsix-acute-heading {
-  font-size: 14px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
   font-weight: 700 !important;
   line-height: 1.35 !important;
 }
@@ -4119,7 +4113,7 @@ body.opsix-test-mode .opsix-acute-pump-area[hidden] {
   display: none !important;
 }
 body.opsix-test-mode .opsix-acute-pump-heading {
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   font-weight: 700;
   margin-bottom: 9px;
 }
@@ -4153,7 +4147,7 @@ body.opsix-test-mode .opsix-acute-collapsible > .opsix-acute-content > .bigSecti
   background: var(--panel);
   color: var(--text);
   font: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   font-weight: 650;
   cursor: pointer;
   color-scheme: dark;
@@ -4325,19 +4319,19 @@ body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
     min-width: 0 !important;
     max-width: 100% !important;
     padding: 6px 3px !important;
-    font-size: 11px !important;
+    font-size: calc(11px * var(--opsix-text-scale)) !important;
   }
 }
 @media (min-width: 601px) {
   body.opsix-test-mode .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
     padding-left: 29px !important;
     padding-right: 4px !important;
-    font-size: clamp(11px, 0.95vw, 14px) !important;
+    font-size: clamp(calc(11px * var(--opsix-text-scale)), calc(0.95vw * var(--opsix-text-scale)), calc(14px * var(--opsix-text-scale))) !important;
   }
 }
 body.opsix-test-mode .opsix-gcs-scale-title {
   margin: 0 0 9px;
-  font-size: 14px;
+  font-size: calc(14px * var(--opsix-text-scale));
   font-weight: 750;
   color: var(--v110-foreground, var(--text));
 }
@@ -4363,7 +4357,7 @@ body.opsix-test-mode .opsix-gcs-recheck {
   border-radius: 10px;
   background: rgba(178,118,24,.13);
   color: var(--v110-foreground, var(--text));
-  font-size: 13px;
+  font-size: calc(13px * var(--opsix-text-scale));
   line-height: 1.45;
 }
 body.opsix-test-mode .opsix-gcs-recheck[hidden],
@@ -4383,7 +4377,7 @@ body.opsix-test-mode .wrap > .opsix-footer {
   padding: 0 12px !important;
   text-align: center !important;
   font-family: inherit !important;
-  font-size: 12px !important;
+  font-size: calc(12px * var(--opsix-text-scale)) !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
   letter-spacing: 0 !important;
@@ -4392,12 +4386,12 @@ body.opsix-test-mode .wrap > .opsix-footer {
 }
 body.opsix-test-mode {
   --opsix-heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --opsix-subheading-size: 14px;
+  --opsix-subheading-size: calc(14px * var(--opsix-text-scale));
   --opsix-subheading-weight: 700;
 }
 body.opsix-test-mode .opsix-columns > .opsix-column > .opsix-column-title {
   font-family: var(--opsix-heading-font) !important;
-  font-size: clamp(18px, 1.2vw, 20px) !important;
+  font-size: clamp(calc(18px * var(--opsix-text-scale)), calc(1.2vw * var(--opsix-text-scale)), calc(20px * var(--opsix-text-scale))) !important;
   font-weight: 800 !important;
   line-height: 1.35 !important;
   letter-spacing: 0 !important;
@@ -4445,8 +4439,8 @@ body.opsix-test-mode .opsix-columns .opsix-column #weightWrap #vektLabel {
 /* ==== OPSIX DESIGN SYSTEM Ã¢â‚¬â€œ TYPOGRAFI ==== */
 body.opsix-test-mode {
   --opsix-heading-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --opsix-colheading-size: 20px;
-  --opsix-subheading-size: 18px;
+  --opsix-colheading-size: calc(20px * var(--opsix-text-scale));
+  --opsix-subheading-size: calc(18px * var(--opsix-text-scale));
   --opsix-heading-color: var(--v110-foreground, var(--text));
 }
 body.opsix-test-mode .opsix-columns > .opsix-column > .opsix-column-title {
@@ -4539,7 +4533,7 @@ body.opsix-test-mode :is(#sedDynamicBody,#pressorDynamicBody,#andreInfBody) text
   border-radius: 12px !important;
   background: var(--v110-choice, #394553) !important;
   color: #fff !important;
-  font: 500 14px/20px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+  font: 500 calc(14px * var(--opsix-text-scale))/calc(20px * var(--opsix-text-scale)) system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
   letter-spacing: 0 !important;
   resize: none !important;
   overflow: hidden !important;
@@ -4606,7 +4600,7 @@ body.opsix-test-mode :is(#tilgangerDynamicBody,#utstyrDynamicBody) textarea.opsi
   border-radius: 12px !important;
   background: var(--v110-choice, #394553) !important;
   color: #fff !important;
-  font: 500 14px/20px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+  font: 500 calc(14px * var(--opsix-text-scale))/calc(20px * var(--opsix-text-scale)) system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
   resize: none !important;
   overflow: hidden !important;
   white-space: pre-wrap !important;
@@ -4714,7 +4708,7 @@ body.opsix-test-mode .opsix-report-tools :is(#copyBtn,#resetBtn,#opsixFooterActi
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font: 700 14px/1.2 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+  font: 700 calc(14px * var(--opsix-text-scale))/1.2 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
   box-sizing: border-box !important;
   text-align: center !important;
 }
@@ -4830,4 +4824,63 @@ body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(inpu
 }
 body.theme-light.opsix-test-mode .opsix-medisinsk .airwayRow .binaryOpt:has(input:checked) span {
   color: #ffffff !important;
+}
+
+/* TekststÃ¸rrelse. Behold temaet og gi stÃ¸rre tekst plass i eksisterende rader. */
+.opsix-display-controls {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 8px;
+  max-width: 100%;
+}
+body[data-opsix-text-size="large"] {
+  --opsix-text-scale: 1.15;
+}
+body[data-opsix-text-size="extra-large"] {
+  --opsix-text-scale: 1.3;
+}
+body.opsix-test-mode[data-opsix-text-size] {
+  font-size: calc(1rem * var(--opsix-text-scale));
+}
+body.opsix-test-mode[data-opsix-text-size] .opsix-operativ .followRow {
+  grid-template-columns: minmax(0,1fr) !important;
+}
+body.opsix-test-mode[data-opsix-text-size] .opsix-operativ .followRow > label:has(input[value="Anestesi-/intensivsykepleier"]) {
+  grid-column: auto;
+}
+body.opsix-test-mode[data-opsix-text-size] .opsix-andre :is(#cvkLumen,#pvkAntall,#utstPumpeAntall) {
+  width: calc(92px * var(--opsix-text-scale)) !important;
+  min-width: calc(92px * var(--opsix-text-scale)) !important;
+  max-width: calc(92px * var(--opsix-text-scale)) !important;
+}
+body.opsix-test-mode[data-opsix-text-size] .opsix-column .unitInputWrap input {
+  padding-right: calc(70px * var(--opsix-text-scale));
+}
+body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-row :is(.vpField,.btMini) input {
+  padding-left: calc(31px * var(--opsix-text-scale)) !important;
+}
+body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary .vpGcsField input {
+  padding-right: 4px !important;
+  font-size: calc(14px * var(--opsix-text-scale)) !important;
+}
+
+@media (max-width: 600px), (min-width: 1000px) and (max-width: 1450px) {
+  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-primary {
+    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  }
+  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-primary > .btWrap {
+    grid-column: 1 / -1 !important;
+    max-width: none !important;
+  }
+  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .vpGcsField {
+    grid-column: 1 !important;
+  }
+  body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .opsix-gcs-action {
+    grid-column: 2 !important;
+  }
 }

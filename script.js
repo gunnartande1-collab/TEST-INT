@@ -2467,7 +2467,7 @@ function nullstillSkjema() {
   $("map").dataset.auto = "";
 
   // Nullstill alle nedtrekksmenyer
-  document.querySelectorAll('select:not(#opsixThemeSelect)').forEach(el => {
+  document.querySelectorAll('select:not(#opsixThemeSelect, #opsixTextSize)').forEach(el => {
     el.selectedIndex = 0;
   });
   valgtHastegrad = "";
@@ -2990,6 +2990,29 @@ function buildFollowNeedLine() {
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initThemeSelect);
   else initThemeSelect();
+})();
+
+/* OPSIX – tekststørrelse for denne siden */
+(() => {
+  const select = document.getElementById("opsixTextSize");
+  if (!select) return;
+
+  select.addEventListener("input", event => event.stopPropagation());
+  select.addEventListener("change", event => {
+    event.stopPropagation();
+    if (select.value === "normal") {
+      delete document.body.dataset.opsixTextSize;
+    } else {
+      document.body.dataset.opsixTextSize = select.value;
+    }
+
+    document.querySelectorAll(".autoGrow, #rapport").forEach(field => {
+      if (field.offsetWidth) autoGrowTextarea(field);
+    });
+    document.querySelectorAll(".opsix-medication-chip-input, .opsix-custom-chip-input").forEach(field => {
+      if (field.offsetWidth) resizeMedicationChip(field);
+    });
+  });
 })();
 
 /* ===== OPSIX V1.1.0 TESTFUNKSJONER ===== */
