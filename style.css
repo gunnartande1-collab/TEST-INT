@@ -4759,14 +4759,14 @@ body.theme-dim.opsix-test-mode {
   --opsix-edit-text: #202b35;
   --opsix-edit-label: #586775;
 }
-body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs).opsix-filled-entry:not(.kliniskUgyldig):not(:focus) {
+body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs,.opsix-airway-entry).opsix-filled-entry:not(.kliniskUgyldig):not(:focus) {
   background: var(--opsix-complete-bg) !important;
   border-color: var(--opsix-complete-border) !important;
   color: var(--opsix-complete-text) !important;
   caret-color: var(--opsix-complete-text);
 }
 /* Fokus viser pÃ¥gÃ¥ende redigering; natt er hvit, dag/dempet har egne farger. */
-body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs):focus {
+body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs,.opsix-airway-entry):focus {
   background: var(--opsix-edit-bg) !important;
   border-color: var(--opsix-edit-border) !important;
   color: var(--opsix-edit-text) !important;
@@ -4780,7 +4780,7 @@ body.opsix-test-mode .inlineVitals :is(.vpField,.btMini):has(> input:focus) > sp
   color: var(--opsix-edit-label) !important;
 }
 /* Klinisk ugyldig verdi skal aldri gis ferdigutfylt-fargen. */
-body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs).kliniskUgyldig:not(:focus) {
+body.opsix-test-mode :is(#hovedproblem,#acuteHovedproblem,#tidligere,#caveText,#smitteSpes,#rekNavn,#rekTlf,#acuteRekNavn,#acuteRekTlf,#mottNavn,#mottTlf,#hlrMinusLege,#hlrMinusDato,#respMinusLege,#respMinusDato,#vekt,#rf,#spo2,#puls,#btSys,#btDia,#map,#temp,#gcs,.opsix-airway-entry).kliniskUgyldig:not(:focus) {
   background: #fff1f2 !important;
   border: 2px solid #dc2626 !important;
   color: #b91c1c !important;
@@ -4850,11 +4850,6 @@ body.opsix-test-mode[data-opsix-text-size] .opsix-operativ .followRow {
 body.opsix-test-mode[data-opsix-text-size] .opsix-operativ .followRow > label:has(input[value="Anestesi-/intensivsykepleier"]) {
   grid-column: auto;
 }
-body.opsix-test-mode[data-opsix-text-size] .opsix-andre :is(#cvkLumen,#pvkAntall,#utstPumpeAntall) {
-  width: calc(92px * var(--opsix-text-scale)) !important;
-  min-width: calc(92px * var(--opsix-text-scale)) !important;
-  max-width: calc(92px * var(--opsix-text-scale)) !important;
-}
 body.opsix-test-mode[data-opsix-text-size] .opsix-column .unitInputWrap input {
   padding-right: calc(70px * var(--opsix-text-scale));
 }
@@ -4883,4 +4878,141 @@ body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix
   body.opsix-test-mode[data-opsix-text-size] .opsix-medisinsk .inlineVitals .opsix-vitals-secondary > .opsix-gcs-action {
     grid-column: 2 !important;
   }
+}
+
+/* Skjemafelt som hÃ¸rer sammen, flyttes samlet ved smalere visning. */
+body.opsix-test-mode .equipmentPair,
+body.opsix-test-mode .opsix-acute-pump-area .pumpRow.equipmentPair {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex: 0 1 auto;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  max-width: 100%;
+  min-width: 0;
+}
+body.opsix-test-mode .equipmentPair > .medChip {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  min-height: var(--opsix-chip-h) !important;
+  margin: 0 !important;
+  padding: 7px 10px !important;
+}
+body.opsix-test-mode .equipmentPair > .medChip span {
+  overflow-wrap: anywhere;
+}
+body.opsix-test-mode .equipmentPair > :is(#cvkWrap,#pvkWrap) {
+  flex: 0 0 auto;
+  margin: 0;
+}
+body.opsix-test-mode .equipmentPair select:is(#cvkLumen,#pvkAntall,#utstPumpeAntall),
+body.opsix-test-mode.opsix-akutt .opsix-acute-pump-area #utstPumpeAntall:not(.hidden) {
+  flex: 0 0 auto;
+  width: calc(92px * var(--opsix-text-scale)) !important;
+  min-width: 0 !important;
+  max-width: calc(92px * var(--opsix-text-scale)) !important;
+  height: var(--opsix-chip-h) !important;
+  min-height: var(--opsix-chip-h) !important;
+  max-height: var(--opsix-chip-h) !important;
+  margin: 0 !important;
+  padding: 0 6px;
+  color-scheme: dark;
+}
+body.theme-light.opsix-test-mode .equipmentPair select {
+  color-scheme: light;
+}
+body.opsix-test-mode .equipmentPair select option {
+  background: var(--field);
+  color: var(--fieldText);
+}
+body.opsix-test-mode .equipmentPair select:is(#cvkLumen,#pvkAntall,#utstPumpeAntall).quantitySelected,
+body.opsix-test-mode .weightUnits button[aria-pressed="true"] {
+  background: #245b9e !important;
+  border-color: #86baff !important;
+  color: #fff !important;
+}
+body.theme-light.opsix-test-mode .equipmentPair select:is(#cvkLumen,#pvkAntall,#utstPumpeAntall).quantitySelected,
+body.theme-light.opsix-test-mode .weightUnits button[aria-pressed="true"] {
+  background: #205b9e !important;
+  border-color: #174475 !important;
+}
+.weightInputRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+body.opsix-test-mode #weightWrap .weightInputRow #vekt,
+body.theme-light.opsix-test-mode #weightWrap .weightInputRow #vekt {
+  width: 100%;
+  min-width: 0;
+}
+.weightUnits {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3px;
+}
+.weightUnits button {
+  padding: 0 8px;
+  min-height: var(--opsix-chip-h);
+  border: 1px solid var(--v110-border, var(--line));
+  border-radius: 8px;
+  background: var(--v110-choice, var(--panel));
+  color: var(--v110-foreground, var(--text));
+  font: inherit;
+  font-size: calc(13px * var(--opsix-text-scale));
+  cursor: pointer;
+}
+.weightUnits button:focus-visible {
+  outline: 2px solid var(--v110-focus, #86baff);
+  outline-offset: 2px;
+}
+body.opsix-test-mode .unitInputWrap:has(> .opsix-airway-entry.opsix-filled-entry:not(.kliniskUgyldig):not(:focus)) > span {
+  color: var(--opsix-complete-label) !important;
+}
+body.opsix-test-mode .unitInputWrap:has(> .opsix-airway-entry:focus) > span {
+  color: var(--opsix-edit-label) !important;
+}
+
+body.opsix-test-mode .pageHeader {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(0, auto) minmax(12rem, 1fr);
+  grid-template-areas: ". title controls";
+}
+body.opsix-test-mode .pageHeader #pageTitle {
+  grid-area: title;
+  justify-self: center;
+  margin: 0;
+}
+body.opsix-test-mode .pageHeader .opsix-display-controls {
+  grid-area: controls;
+  justify-self: end;
+}
+@media (max-width: 800px) {
+  body.opsix-test-mode .pageHeader {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "controls" "title";
+  }
+}
+
+.unitInputWrap > .pressureTooltip {
+  cursor: help;
+}
+.pressureTooltip::after {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  z-index: 2;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: calc(12px * var(--opsix-text-scale));
+  white-space: nowrap;
+  pointer-events: none;
+}
+.pressureTooltip:hover::after,
+.unitInputWrap > input:focus-visible + .pressureTooltip::after {
+  content: attr(data-tooltip);
 }

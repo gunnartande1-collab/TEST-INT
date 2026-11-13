@@ -8,7 +8,7 @@
     <meta name="robots" content="noindex, nofollow, nosnippet, noarchive">
 
     <title>Intensiv- og helikoptertransport – V1.1.0 TEST</title>
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./style.css?v=20261113-2">
   </head>
 
   <body>
@@ -268,20 +268,19 @@
           </div>
 
           <div id="weightWrap">
-            <label id="vektLabel" for="vekt">Vekt (kg)</label>
-            <input
-              id="vekt"
-              type="number"
-              inputmode="decimal"
-              min="0"
-              step="0.1"
-             
-            >
+            <label id="vektLabel" for="vekt">Vekt</label>
+            <div class="weightInputRow">
+              <input id="vekt" type="number" inputmode="decimal" min="0" step="any">
+              <div class="weightUnits" role="group" aria-label="Vektenhet">
+                <button type="button" data-weight-unit="kg" aria-pressed="true">kg</button>
+                <button type="button" data-weight-unit="g" aria-pressed="false">gram</button>
+              </div>
+            </div>
           </div>
 
           <div id="acuteTop" class="hidden">
 
-            <label class="bigSection">Aktuelt</label>
+            <label class="bigSection" for="acuteHovedproblem">Aktuelt</label>
             <textarea id="acuteHovedproblem" class="autoGrow"></textarea>
 
             <div class="section airwaySection">Luftveier</div>
@@ -372,8 +371,8 @@
              </div>
              <div id="acuteBiPAPWrap" class="hidden">
                <div class="inlineRow" style="margin-top:10px;">
-                 <div class="unitInputWrap"><input id="acuteBiPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O"><span>IPAP</span></div>
-                 <div class="unitInputWrap"><input id="acuteBiPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O"><span>EPAP</span></div>
+                 <div class="unitInputWrap"><input id="acuteBiPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O" aria-description="Innåndingstrykk"><span class="pressureTooltip" data-tooltip="Innåndingstrykk">IPAP</span></div>
+                 <div class="unitInputWrap"><input id="acuteBiPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O" aria-description="Utåndingstrykk"><span class="pressureTooltip" data-tooltip="Utåndingstrykk">EPAP</span></div>
                  <div class="unitInputWrap"><input id="acuteBiPAPFio2" type="text" inputmode="decimal" aria-label="BiPAP FiO2 prosent"><span>% FiO₂</span></div>
                </div>
              </div>
@@ -507,7 +506,7 @@
           <div id="fullTop" class="hidden">
 
             <div class="formGroup">
-              <label>Aktuelt</label>
+              <label class="bigSection" for="hovedproblem">Aktuelt</label>
               <textarea id="hovedproblem" class="autoGrow"></textarea>
 
               <label>Tidligere</label>
@@ -576,8 +575,8 @@
              </div>
              <div id="biPAPWrap" class="hidden">
                <div class="inlineRow" style="margin-top:10px;">
-                 <div class="unitInputWrap"><input id="biPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O"><span>IPAP</span></div>
-                 <div class="unitInputWrap"><input id="biPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O"><span>EPAP</span></div>
+                 <div class="unitInputWrap"><input id="biPAPIPAP" type="text" inputmode="decimal" aria-label="IPAP cmH2O" aria-description="Innåndingstrykk"><span class="pressureTooltip" data-tooltip="Innåndingstrykk">IPAP</span></div>
+                 <div class="unitInputWrap"><input id="biPAPEPAP" type="text" inputmode="decimal" aria-label="EPAP cmH2O" aria-description="Utåndingstrykk"><span class="pressureTooltip" data-tooltip="Utåndingstrykk">EPAP</span></div>
                  <div class="unitInputWrap"><input id="biPAPFio2" type="text" inputmode="decimal" aria-label="BiPAP FiO2 prosent"><span>% FiO₂</span></div>
                </div>
              </div>
@@ -809,36 +808,40 @@
                   <span>Ingen tilganger</span>
                 </label>
 
-                <label class="medChip">
-                  <input id="til_cvk" class="chk til" type="checkbox" data-name="CVK">
-                  <span>CVK</span>
-                </label>
+                <div class="equipmentPair">
+                  <label class="medChip">
+                    <input id="til_cvk" class="chk til" type="checkbox" data-name="CVK">
+                    <span>CVK</span>
+                  </label>
 
-                <div id="cvkWrap" class="hidden">
-                  <select id="cvkLumen" class="pvkSelect">
-                    <option value="">Lumen</option>
-                    <option value="1 lumen">1 lumen</option>
-                    <option value="2 lumen">2 lumen</option>
-                    <option value="3 lumen">3 lumen</option>
-                    <option value="4 lumen">4 lumen</option>
-                    <option value="5 lumen">5 lumen</option>
-                  </select>
+                  <div id="cvkWrap" class="hidden">
+                    <select id="cvkLumen" class="pvkSelect" aria-label="Antall lumen for CVK">
+                      <option value="">Lumen</option>
+                      <option value="1 lumen">1 lumen</option>
+                      <option value="2 lumen">2 lumen</option>
+                      <option value="3 lumen">3 lumen</option>
+                      <option value="4 lumen">4 lumen</option>
+                      <option value="5 lumen">5 lumen</option>
+                    </select>
+                  </div>
                 </div>
 
-                <label class="medChip">
-                  <input id="til_pvk" class="chk til" type="checkbox" data-name="PVK">
-                  <span>PVK</span>
-                </label>
+                <div class="equipmentPair">
+                  <label class="medChip">
+                    <input id="til_pvk" class="chk til" type="checkbox" data-name="PVK">
+                    <span>PVK</span>
+                  </label>
 
-                <div id="pvkWrap" class="hidden">
-                  <select id="pvkAntall" class="pvkSelect">
-                    <option value="">Antall</option>
-                    <option value="1">1 stk</option>
-                    <option value="2">2 stk</option>
-                    <option value="3">3 stk</option>
-                    <option value="4">4 stk</option>
-                    <option value="5">5 stk</option>
-                  </select>
+                  <div id="pvkWrap" class="hidden">
+                    <select id="pvkAntall" class="pvkSelect" aria-label="Antall PVK">
+                      <option value="">Antall</option>
+                      <option value="1">1 stk</option>
+                      <option value="2">2 stk</option>
+                      <option value="3">3 stk</option>
+                      <option value="4">4 stk</option>
+                      <option value="5">5 stk</option>
+                    </select>
+                  </div>
                 </div>
 
               </div>
@@ -855,7 +858,7 @@
 
                 <div class="chipRow utstyrChipRow">
 
-                  <div class="pumpRow">
+                  <div class="pumpRow equipmentPair">
                     <label class="medChip">
                       <input
                         id="utst_pumper"
@@ -866,7 +869,7 @@
                       <span>Sprøytepumper</span>
                     </label>
 
-                    <select id="utstPumpeAntall" class="inlineSelect hidden">
+                    <select id="utstPumpeAntall" class="inlineSelect hidden" aria-label="Antall sprøytepumper">
                       <option value="">Antall</option>
                       <option>1</option>
                       <option>2</option>
@@ -1226,6 +1229,6 @@ POPUP – VERSJONSHISTORIKK
 
     </dialog>
 
-<script src="./script.js"></script>
+<script src="./script.js?v=20261113-2"></script>
   </body>
 </html>

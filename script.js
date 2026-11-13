@@ -13,7 +13,6 @@ const pageTitle = $("pageTitle"),
   transportWrap = $("transportWrap"),
   spedbarnExtraWrap = $("spedbarnExtraWrap"),
   rapport = $("rapport"),
-  vektLabel = $("vektLabel"),
   copyMsg = $("copyMsg");
 const biPAPWrap = $("biPAPWrap"), acuteBiPAPWrap = $("acuteBiPAPWrap");
 const spontO2Wrap = $("spontO2Wrap"),
@@ -555,15 +554,13 @@ function buildSpedbarnLine() {
   }
   const u = clean($("gestasjonsUker").value);
   const d = clean($("gestasjonsDager").value);
-  const v = clean($("vekt").value);
+  const vekt = weightReportText();
   const brukerGram = kategori === "Nyfødt" || kategori === "Spedbarn";
   const p = [kategori];
   if (brukerGram && (u || d)) {
     p.push("GA " + (u || "?") + "+" + (d || "0"));
   }
-  if (brukerGram && v !== "") {
-    p.push(Number(v) === 0 ? "Vekt: Ikke oppgitt" : "Vekt: " + v + " g");
-  }
+  if (brukerGram && vekt) p.push(vekt);
   return p.join(", ");
 }
 
@@ -673,6 +670,30 @@ function buildHlrRespLines() {
 // Bevar transportform per pasientkategori uten å endre «Kuvøse» til «Båre».
 const opsixTransportPerKategori = new Map();
 let opsixForrigeTransportKategori = "";
+function setWeightUnit(unit) {
+  const input = $("vekt");
+  const previousUnit = input.dataset.unit || "kg";
+  if (previousUnit !== unit && input.validity.badInput) return;
+  if (previousUnit !== unit && input.value !== "") {
+    const value = input.valueAsNumber;
+    const factor = unit === "g" ? 1000 : 0.001;
+    if (Number.isFinite(value)) input.value = String(Number((value * factor).toPrecision(15)));
+  }
+  input.dataset.unit = unit;
+  input.inputMode = unit === "g" ? "numeric" : "decimal";
+  input.setAttribute("aria-label", unit === "g" ? "Vekt i gram" : "Vekt i kilogram");
+  document.querySelectorAll("[data-weight-unit]").forEach(button => {
+    button.setAttribute("aria-pressed", String(button.dataset.weightUnit === unit));
+  });
+}
+
+function weightReportText() {
+  const input = $("vekt");
+  const value = clean(input.value);
+  if (!value) return "";
+  return Number(value) === 0 ? "Vekt: Ikke oppgitt" : "Vekt: " + value + " " + input.dataset.unit;
+}
+
 function updateSpedbarnUI() {
   const val = getSpedbarnValue();
   if (opsixForrigeTransportKategori !== val) {
@@ -693,7 +714,6 @@ function updateSpedbarnUI() {
   const brukerGram = val === "Nyfødt" || val === "Spedbarn";
   const viserGA = brukerGram;
   const viserTransportform = val === "Nyfødt" || val === "Spedbarn" || val === "Barn";
-  const vektInput = $("vekt");
   const weightWrap = $("weightWrap");
 
   // Vektfeltet skal alltid være synlig
@@ -706,22 +726,7 @@ function updateSpedbarnUI() {
   setHidden(transportWrap, !viserTransportform);
   // Ingen transportform får endret betydning ved bytte av pasientkategori.
 
-  /* ==========================================
-     KORREKT VEKTENHET
-  ========================================== */
-
-  const gammelEnhet = vektInput.dataset.unit;
-  const nyEnhet = brukerGram ? "g" : "kg";
-  if (gammelEnhet && gammelEnhet !== nyEnhet && clean(vektInput.value)) {
-    const gammelVekt = Number(vektInput.value);
-    const nyVekt = gammelEnhet === "g" ? gammelVekt / 1000 : gammelVekt * 1000;
-    vektInput.value = Number.isFinite(nyVekt) && nyVekt >= 0 ? String(Number(nyVekt.toFixed(6))) : "";
-  }
-  vektLabel.textContent = brukerGram ? "Vekt (gram)" : "Vekt (kg)";
-  vektInput.removeAttribute("placeholder");
-  vektInput.step = brukerGram ? "1" : "0.1";
-  vektInput.inputMode = brukerGram ? "numeric" : "decimal";
-  vektInput.dataset.unit = nyEnhet;
+  setWeightUnit(brukerGram ? "g" : "kg");
 
   /* ==========================================
      FJERN UAKTUELL TRANSPORTFORM
@@ -1276,21 +1281,23 @@ function updateMainVisibility() {
 function bindHastegradEvents() {
   function velgHastegrad(btn) {
     const neste = btn.dataset.haste;
-    if (!neste || neste === valgtHastegrad) return;
+    if (!neste) return;
 
     // Bevar innhold før feltene skifter visningsmodus.
     huskUtfylteFeltgrupper();
     forrigeHastegrad = valgtHastegrad;
-    valgtHastegrad = neste;
+    valgtHastegrad = neste === forrigeHastegrad ? "" : neste;
     syncVisibleSharedFieldsBeforeSwitch();
     document.querySelectorAll(".hasteCard").forEach(b => {
-      b.classList.toggle("active", b === btn);
-      b.setAttribute("aria-pressed", String(b === btn));
+      const active = b.dataset.haste === valgtHastegrad;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
     });
     updateMainVisibility();
     lagRapport();
   }
   document.querySelectorAll(".hasteCard").forEach(btn => {
+    btn.setAttribute("aria-pressed", "false");
     btn.addEventListener("click", () => velgHastegrad(btn));
   });
 }
@@ -1694,6 +1701,12 @@ function bindEvents() {
   bindHighFlowNumberOnly();
   // Felles bevarende logikk håndterer nå Nei-valg i alle gruppene.
   bindSpedbarnEvents();
+  document.querySelectorAll("[data-weight-unit]").forEach(button => {
+    button.addEventListener("click", () => {
+      setWeightUnit(button.dataset.weightUnit);
+      lagRapport();
+    });
+  });
   bindCaveEvents();
   bindSmitteEvents();
   bindHlrRespEvents();
@@ -2159,6 +2172,14 @@ function lagRapport() {
   oppdaterAkuttTilgangerVisning();
   oppdaterAkuttUtstyrVisning();
   oppdaterKliniskeFeltvarsler();
+  for (const id of LUFTVEI_DETALJFELTER.flat()) {
+    const field = $(id);
+    field?.classList.toggle("opsix-filled-entry", !!clean(field.value) && !field.classList.contains("kliniskUgyldig"));
+  }
+  for (const id of ["cvkLumen", "pvkAntall", "utstPumpeAntall"]) {
+    const select = $(id);
+    select.classList.toggle("quantitySelected", !!select.value);
+  }
   const h = getBinaryValue("hast");
   // Rapporten kan fylles ut også før operatøren velger hastegrad.
   const lines = [];
@@ -2324,10 +2345,8 @@ function buildAcuteReport(lines) {
   // Også ved Akutt skal tidligere opplysninger som operatøren har fylt ut rapporteres.
   const tidligere = clean($("tidligere").value);
   if (tidligere) lines.push("T: " + tidligere);
-  if (clean($("vekt").value) && !["Nyfødt", "Spedbarn"].includes(getSpedbarnValue())) {
-    const vekt = clean($("vekt").value);
-    lines.push(Number(vekt) === 0 ? "Vekt: Ikke oppgitt" : "Vekt: " + vekt + " kg");
-  }
+  const vekt = weightReportText();
+  if (vekt && !["Nyfødt", "Spedbarn"].includes(getSpedbarnValue())) lines.push(vekt);
   buildAcuteAirwayLines().forEach(l => {
     lines.push(l);
   });
@@ -2359,10 +2378,8 @@ function buildFullReport(lines) {
   if (tid) {
     lines.push("T: " + tid);
   }
-  const vekt = clean($("vekt").value);
-  if (vekt !== "" && !["Nyfødt", "Spedbarn"].includes(getSpedbarnValue())) {
-    lines.push(Number(vekt) === 0 ? "Vekt: Ikke oppgitt" : "Vekt: " + vekt + " kg");
-  }
+  const vekt = weightReportText();
+  if (vekt && !["Nyfødt", "Spedbarn"].includes(getSpedbarnValue())) lines.push(vekt);
   const airway = buildFullAirwayLine();
   if (airway) {
     lines.push(airway);
@@ -3328,7 +3345,8 @@ function buildFollowNeedLine() {
         ? "Nyfødte, særlig premature: vurder beskrivelsene med klinisk skjønn og etter lokal prosedyre."
         : isChild
           ? "Velg vurderingsnivå etter faktisk språk-/utviklingsnivå, ikke alder alene."
-          : "Registrer E, V og M hver for seg. En ikke-testbar komponent må ikke gis poeng 1.";
+          : "";
+      note.hidden = !note.textContent;
       refreshWarning();
     }
     function resetSelections() {
@@ -3436,7 +3454,12 @@ function buildFollowNeedLine() {
       $("safetyBlock")?.classList.remove("hidden");
       $("sharedBottom")?.classList.remove("hidden");
       $("bevar-full-aktuelt")?.classList.remove("hidden");
-      $("bevar-full-tidligere")?.classList.remove("hidden");
+      const previous = $("bevar-full-tidligere");
+      const current = $("bevar-full-aktuelt");
+      if (previous && current && current.nextElementSibling !== previous) {
+        current.insertAdjacentElement("afterend", previous);
+      }
+      previous?.classList.remove("hidden");
       $("bevar-full-luftveier")?.classList.remove("hidden");
       $("bevar-full-vitalparametre")?.classList.remove("hidden");
       $("bevar-full-tilganger")?.classList.remove("hidden");
@@ -3826,8 +3849,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "#smitteSpes", "#rekNavn", "#rekTlf", "#acuteRekNavn", "#acuteRekTlf",
     "#mottNavn", "#mottTlf", "#hlrMinusLege", "#hlrMinusDato",
     "#respMinusLege", "#respMinusDato",
-    "#vekt", "#rf", "#spo2", "#puls", "#btSys", "#btDia", "#map", "#temp", "#gcs"
+    "#vekt", "#rf", "#spo2", "#puls", "#btSys", "#btDia", "#map", "#temp", "#gcs",
+    ...LUFTVEI_DETALJFELTER.flat().map(id => "#" + id)
   ].join(","));
+  LUFTVEI_DETALJFELTER.flat().forEach(id => $(id)?.classList.add("opsix-airway-entry"));
   const markCompleted = field => {
     field.classList.toggle("opsix-filled-entry",
       Boolean(clean(field.value)) && !field.classList.contains("kliniskUgyldig"));
