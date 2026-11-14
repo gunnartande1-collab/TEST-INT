@@ -2030,10 +2030,10 @@ function kontrollerGcs(raw) {
 
 function formatGcsValue(raw) {
   const vurdering = kontrollerGcs(raw);
-  if (!vurdering.tekst) {
+  // Vent med å rapportere skåren når vurderingsskalaen har endret seg.
+  if (!vurdering.tekst || $("gcs")?.dataset.recheckRequired === "true") {
     return "";
   }
-  const grunntekst = vurdering.gyldig ? vurdering.tekst : vurdering.tekst + " (KONTROLLER GCS)";
   const kategori = getSpedbarnValue();
   const barneniva = $("opsixGcsLevel")?.value;
   // Oppgi vurderingsskala i rapporten slik at delskår forstås korrekt.
@@ -2042,12 +2042,7 @@ function formatGcsValue(raw) {
     : kategori === "Barn" && barneniva === "preverbal" ? " (pGCS – preverbal)"
     : kategori === "Barn" && barneniva === "verbal" ? " (GCS – verbal)"
     : "";
-  const gcsFelt = $("gcs");
-  // Når pasientkategori eller vurderingstype endres, skal gammel totalskår
-  // aldri fremstilles som en bekreftet skår etter den nye skalaen.
-  return gcsFelt?.dataset.recheckRequired === "true"
-    ? grunntekst + gcsVariant + " (KONTROLLER GCS ETTER ENDRING AV PASIENTKATEGORI/VURDERING)"
-    : grunntekst + gcsVariant;
+  return vurdering.tekst + gcsVariant;
 }
 
 /* ======================================================
