@@ -2632,6 +2632,25 @@ function buildFollowNeedLine() {
   const GITHUB_REPO = "Intensiv--og-helikoptertransport";
   const MAX_RELEASES = 100;
 
+  // Kopi av publiserte GitHub-releaser, hentet 15. november 2026.
+  const SAVED_RELEASES = [
+    {
+      "tag_name": "v.1.1.0",
+      "published_at": "2026-11-15T01:37:51Z",
+      "body": "- Skjema har fått nytt visuelt utsende. \r\n- Når man velger akutt kollapser felter man ikke trenger å spørre om sammen, men man har fortsatt tilgang på disse enkelt ved å klikke på overskriften. \r\n- GCS har også fått en knapp EVM, denne gir GCS i rullgardin slik at man kan fylle ut korrekt GCS. Ment som støtte til operatør for å huske hva det spørres om og hva scoren er. "
+    },
+    {
+      "tag_name": "v.1.0.1",
+      "published_at": "2026-11-03T11:15:17Z",
+      "body": "Lagt inn spørreskjema på tilbakemeldingsknappen. "
+    },
+    {
+      "tag_name": "v.1.0.0",
+      "published_at": "2026-10-31T20:56:37Z",
+      "body": "Versjon 1.0.0 markerer starten på ordinær bruk."
+    }
+  ];
+
   /* ====================================================
      INITIALISERING
   ==================================================== */
@@ -2648,6 +2667,7 @@ function buildFollowNeedLine() {
     }
     const currentVersion = currentVersionElement.dataset.version || "v1.0.0";
     let releasesLoaded = false;
+    let releasesLoading = false;
 
     /* ================================================
        HJELPEFUNKSJONER
@@ -2717,25 +2737,42 @@ function buildFollowNeedLine() {
        HENT RELEASES FRA GITHUB
     ================================================ */
 
+    function renderVersionHistory(releases) {
+      const publishedReleases = releases.filter(release =>
+        release && !release.draft && !release.prerelease && release.published_at
+      );
+      publishedReleases.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
+      if (publishedReleases.length === 0) {
+        setStatus("Ingen publiserte versjoner er registrert i GitHub Releases ennå. Gjeldende versjon i skjemaet er " + currentVersion + ".");
+        return;
+      }
+      list.replaceChildren(...publishedReleases.map(createReleaseEntry));
+      const currentReleaseExists = publishedReleases.some(release =>
+        normalizeVersion(release.tag_name) === normalizeVersion(currentVersion)
+      );
+      if (!currentReleaseExists) {
+        const notice = createElement("p", "versionHistoryStatus",
+          "Gjeldende versjon (" + currentVersion + ") finnes ikke i denne versjonslisten."
+        );
+        list.prepend(notice);
+      }
+    }
+
     async function loadVersionHistory() {
-      if (releasesLoaded) {
-        return;
-      }
-      const owner = GITHUB_OWNER.trim();
-      const repo = GITHUB_REPO.trim();
-      if (!owner || !repo || owner === "DITT_GITHUB_BRUKERNAVN" || repo === "DITT_REPOSITORY_NAVN") {
-        setStatus("Versjon " + currentVersion.replace(/^v/i, "") + " er angitt som gjeldende. " + "GitHub-repositoriet må konfigureres før " + "versjonshistorikken kan hentes automatisk.");
-        return;
-      }
+      if (releasesLoaded || releasesLoading) return;
+
+      const owner = encodeURIComponent(GITHUB_OWNER);
+      const repo = encodeURIComponent(GITHUB_REPO);
+      const apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/releases?per_page=" + MAX_RELEASES;
+      releasesLoading = true;
       setStatus("Henter versjonshistorikk fra GitHub…");
-      const apiUrl = "https://api.github.com/repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repo) + "/releases?per_page=" + MAX_RELEASES;
+
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 3500);
       try {
         const response = await fetch(apiUrl, {
-          method: "GET",
-          headers: {
-            "Accept": "application/vnd.github+json"
-          },
-          cache: "no-store"
+          headers: { Accept: "application/vnd.github+json" },
+          signal: controller.signal
         });
         if (!response.ok) {
           throw new Error("GitHub svarte med status " + response.status);
@@ -2744,28 +2781,17 @@ function buildFollowNeedLine() {
         if (!Array.isArray(releases)) {
           throw new Error("Ugyldig svar fra GitHub");
         }
-
-        // Vis kun publiserte, ordinære versjoner.
-        const publishedReleases = releases.filter(release => !release.draft && !release.prerelease && release.published_at);
-        publishedReleases.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
-        list.replaceChildren();
-        if (publishedReleases.length === 0) {
-          setStatus("Ingen publiserte versjoner er registrert " + "i GitHub Releases ennå. " + "Gjeldende versjon i skjemaet er " + currentVersion + ".");
-          releasesLoaded = true;
-          return;
-        }
-        publishedReleases.forEach(release => {
-          list.appendChild(createReleaseEntry(release));
-        });
-        const currentReleaseExists = publishedReleases.some(release => normalizeVersion(release.tag_name) === normalizeVersion(currentVersion));
-        if (!currentReleaseExists) {
-          const notice = createElement("p", "versionHistoryStatus", "Merk: Versjonen som er angitt som gjeldende " + "i nettsiden (" + currentVersion + ") finnes " + "ikke blant de hentede publiserte versjonene.");
-          list.prepend(notice);
-        }
+        renderVersionHistory(releases);
         releasesLoaded = true;
       } catch (error) {
-        console.error("Kunne ikke hente versjonshistorikk:", error);
-        setStatus("Kunne ikke hente versjonshistorikken fra GitHub. " + "Kontroller at repositoriet er offentlig, " + "at adressen er riktig, og at du har " + "internettforbindelse. " + "Gjeldende versjon i skjemaet er " + currentVersion + ".");
+        console.warn("Kunne ikke hente versjonshistorikk fra GitHub:", error);
+        renderVersionHistory(SAVED_RELEASES);
+        list.prepend(createElement("p", "versionHistoryStatus",
+          "Viser lagret versjonshistorikk fra 15. november 2026. GitHub kunne ikke nås."
+        ));
+      } finally {
+        window.clearTimeout(timeout);
+        releasesLoading = false;
       }
     }
 
