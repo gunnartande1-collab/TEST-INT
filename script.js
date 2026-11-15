@@ -3510,11 +3510,11 @@ function buildFollowNeedLine() {
 
   const currentVersion = $("currentVersion");
   if (currentVersion) {
-    currentVersion.textContent = "1.1.0 – TEST";
+    currentVersion.textContent = "1.1.0";
     // Behold gammel releasekilde inntil ny repo/versjonsrutine er besluttet.
     currentVersion.dataset.version = "v1.1.0";
   }
-  console.info("OPSIX V1.1.0 – testlayout aktivert. Ingen data lagres.");
+console.info("OPSIX – Skjemaet er lastet.");
 })();
 
 /* ===========================================================
