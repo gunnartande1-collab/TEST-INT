@@ -3604,6 +3604,9 @@ body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip {
   align-items: center !important;
   justify-content: center !important;
 }
+#transportWrap .transportRow > label.hidden:has(> #transport_kuvose) {
+  display: none !important;
+}
 body.opsix-test-mode #transportWrap .transportRow > label.medChip.spedChip span {
   font-size: calc(12px * var(--opsix-text-scale)) !important;
   line-height: 1.2 !important;
