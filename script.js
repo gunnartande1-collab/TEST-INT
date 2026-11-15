@@ -205,63 +205,6 @@ function visFeltgruppe(id, normaltSynlig) {
   setHidden($(id), !normaltSynlig && !brukt);
 }
 
-/* Supplerer rapporten med registreringer fra en annen hastegrad.
-   Identiske linjer legges ikke inn to ganger. */
-
-/* ======================================================
-   SIKKER SAMMENSLÅING AV RAPPORTLINJER
-
-   - Beholder primærrapportens opplysninger
-   - Unngår duplikater fra tidligere hastegrad
-   - Behandler sprøytepumper som én opplysning
-   - Bevarer øvrig utstyr ved overgang til Akutt
-====================================================== */
-
-function leggTilUnikeRapportlinjer(mal, tillegg) {
-  const finnes = new Set(mal);
-  const unikeFelt = [
-    "Aktuelt:",
-    "Luftveier:",
-    "Vekt:",
-    "Smitte:",
-    "CAVE:",
-    "Rekvirerende lege:",
-    "Mottakende lege:",
-    "Sedasjon:",
-    "Pressor:",
-    "Andre medikamenter/infusjoner:",
-    "Tilganger:",
-    "Utstyr:",
-    "Sprøytepumper:",
-    "T:"
-  ];
-  function hentFeltType(linje) {
-    return unikeFelt.find(type => linje.startsWith(type)) || "";
-  }
-  const registrerteTyper = new Set(mal.map(hentFeltType).filter(Boolean));
-  tillegg.forEach(originalLinje => {
-    if (!originalLinje) return;
-    let linje = originalLinje;
-
-    // Utstyr og sprøytepumper kommer alltid fra samme felt.
-    // En duplisert Utstyr-linje fra en tidligere hastegrad
-    // skal ikke legge til en ny kopi.
-
-    const type = hentFeltType(linje);
-    if (type && registrerteTyper.has(type)) {
-      return;
-    }
-    if (finnes.has(linje)) {
-      return;
-    }
-    mal.push(linje);
-    finnes.add(linje);
-    if (type) {
-      registrerteTyper.add(type);
-    }
-  });
-}
-
 /* ======================================================
    GENERELLE HJELPEFUNKSJONER
 ====================================================== */
@@ -1726,38 +1669,17 @@ function bindEvents() {
   bindLuftveiDetaljer();
   $("copyBtn")?.addEventListener("click", kopierRapport);
   $("resetBtn")?.addEventListener("click", nullstillSkjema);
-  document.addEventListener("input", () => {
+  function oppdaterRapportFraFelt() {
     huskUtfylteFeltgrupper();
     lagRapport();
-  });
-  document.addEventListener("change", () => {
-    huskUtfylteFeltgrupper();
-    lagRapport();
-  });
+  }
+  document.addEventListener("input", oppdaterRapportFraFelt);
+  document.addEventListener("change", oppdaterRapportFraFelt);
 }
 
 /* ======================================================
    DYNAMISKE FELTER
 ====================================================== */
-function cleanupDynamicTextRows(container, textClass, checkboxClass) {
-  const rows = Array.from(container.querySelectorAll(".dynamicRow"));
-  const blanks = rows.filter(row => {
-    const txt = row.querySelector("." + textClass);
-    const chk = row.querySelector("." + checkboxClass);
-    const val = clean(txt?.value);
-    return !val && (!chk || !chk.checked);
-  });
-  if (blanks.length <= 1) return;
-  blanks.slice(0, -1).forEach(row => {
-    const tr = row.closest("tr");
-    if (tr) {
-      tr.remove();
-    } else {
-      row.remove();
-    }
-  });
-}
-
 // OPSIX: redigerbare medikamentchips – én ledig chip per gruppe.
 // Samme CSS-klasser/checkboxer som før, slik at rapport og nullstilling
 // fortsatt bruker eksisterende medikamentkategorier.
@@ -2692,110 +2614,12 @@ function updateTilgangerUI() {
   $("pvkAntall")?.classList.remove("hidden");
 }
 
-function bindMedicationNeiLogic(groupSelector, neiSelector, dynamicBody, textClass) {
-  const nei = document.querySelector(neiSelector);
-  if (!nei) return;
-  const alle = document.querySelectorAll(groupSelector);
-  nei.addEventListener("change", () => {
-    if (nei.checked) {
-      alle.forEach(chk => {
-        if (chk !== nei) chk.checked = false;
-      });
-      if (dynamicBody) {
-        dynamicBody.innerHTML = "";
-        if (textClass === "sedText") addSedRow();
-        if (textClass === "pressorText") addPressorRow();
-        if (textClass === "andreInfText") addAndreInfRow();
-      }
-    }
-    lagRapport();
-  });
-  alle.forEach(chk => {
-    if (chk === nei) return;
-    chk.addEventListener("change", () => {
-      if (chk.checked) {
-        nei.checked = false;
-      }
-      lagRapport();
-    });
-  });
-  if (dynamicBody) {
-    dynamicBody.addEventListener("input", () => {
-      const harTekst = Array.from(dynamicBody.querySelectorAll(".opsix-medication-chip-input")).some(txt => clean(txt.value));
-      if (harTekst) {
-        nei.checked = false;
-      }
-      lagRapport();
-    });
-  }
-}
-
-function bindMedicationNeiEvents() {
-  bindMedicationNeiLogic(".sed", "#sed_nei", sedDynamicBody, "sedText");
-  bindMedicationNeiLogic(".pre", "#pre_nei", pressorDynamicBody, "pressorText");
-  bindMedicationNeiLogic('input[name="medicationOther"]', 'input[name="medicationOther"][value="Nei"]', andreInfBody, "andreInfText");
-}
-
 function buildFollowNeedLine() {
   const valgt = Array.from(document.querySelectorAll('input[name="followNeed"]:checked')).map(x => x.value);
   if (!valgt.length) return "";
   return "Følgebehov ifølge rekvirent: " + valgt.join(", ");
 }
 
-/* ======================================================
-   POPUP – TILBAKEMELDINGER OG INNSPILL
-====================================================== */
-
-(() => {
-  "use strict";
-
-  function initFeedbackDialog() {
-    const feedbackBtn = document.getElementById("feedbackBtn");
-    const feedbackDialog = document.getElementById("feedbackDialog");
-    const closeBtn = document.getElementById("feedbackDialogClose");
-    const okBtn = document.getElementById("feedbackDialogOk");
-
-    // Avslutt dersom elementene ikke finnes.
-    if (!feedbackBtn || !feedbackDialog || !closeBtn || !okBtn) {
-      return;
-    }
-
-    // Åpne popup.
-    feedbackBtn.addEventListener("click", () => {
-      if (!feedbackDialog.open) {
-        feedbackDialog.showModal();
-      }
-    });
-
-    // Lukk med X.
-    closeBtn.addEventListener("click", () => {
-      feedbackDialog.close();
-    });
-
-    // Lukk med knappen "Lukk".
-    okBtn.addEventListener("click", () => {
-      feedbackDialog.close();
-    });
-
-    // Lukk ved klikk utenfor popup-vinduet.
-    feedbackDialog.addEventListener("click", event => {
-      if (event.target === feedbackDialog) {
-        const rect = feedbackDialog.getBoundingClientRect();
-        const inside = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
-        if (!inside) {
-          feedbackDialog.close();
-        }
-      }
-    });
-
-    // Escape-tasten håndteres automatisk av dialog-elementet.
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initFeedbackDialog);
-  } else {
-    initFeedbackDialog();
-  }
-})();
 /* ======================================================
    VERSJONSHISTORIKK – GITHUB RELEASES
 ====================================================== */
@@ -3027,13 +2851,7 @@ function buildFollowNeedLine() {
   });
 })();
 
-/* ===== OPSIX V1.1.0 TESTFUNKSJONER ===== */
-/* ============================================================
-   OPSIX V1.1.0 – SEPARAT VISUELL TESTUTVIDELSE
-   Forutsetter original script.js, som lastes FØR denne filen.
-   Ingen pasientdata lagres lokalt eller sendes fra denne filen.
-   Bevarer opprinnelige ID-er og hendelsesbehandlere.
-   ============================================================ */
+/* Skjemaoppsettet flytter eksisterende felt, slik at verdier og hendelser følger med. */
 (() => {
   "use strict";
   const $ = id => document.getElementById(id);
@@ -3440,7 +3258,7 @@ function buildFollowNeedLine() {
     document.body.classList.toggle("opsix-has-haste", hasUrgency);
     // Før hastegrad velges: vis alle ordinære registreringsfelter.
     // Ingen felt deaktiveres, og ingen registrerte verdier slettes.
-    // Den kliniske rapporten genereres fortsatt først etter hastegradvalg.
+    
     if (!hasUrgency) {
       $("acuteTop")?.classList.add("hidden");
       $("acuteDoctorBlock")?.classList.add("hidden");
@@ -3721,18 +3539,9 @@ function buildFollowNeedLine() {
       if (group === 'airwayMain') window.handleAirwayChange?.();
       if (group === 'acuteAirway') window.updateAcuteAirwayDetails?.();
     });
-    ['vekt','hovedproblem','acuteHovedproblem','tidligere'].forEach(id => document.getElementById(id)?.removeAttribute('placeholder'));
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
-
-/* OPSIX: fjern kun de tre etterspurte hjelpetekstene. */
-document.addEventListener("DOMContentLoaded", () => {
-  ["vekt","hovedproblem","acuteHovedproblem","tidligere"].forEach(id => {
-    document.getElementById(id)?.removeAttribute("placeholder");
-  });
-});
-
 
 /* =============================================================
    OPSIX V1.1.0 – TASTATURBETJENING
