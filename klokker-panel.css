@@ -1,0 +1,48 @@
+#opsixToolsBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgb(0 0 0 / 40%);
+}
+
+#opsixToolsPanel {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 1001;
+  display: none;
+  width: min(100%, 520px);
+  background: #071426;
+  color: #f6f9ff;
+  box-shadow: -4px 0 24px rgb(0 0 0 / 35%);
+}
+
+#opsixToolsPanel.is-open {
+  display: flex;
+  flex-direction: column;
+}
+
+#opsixToolsPanel .opsix-tools-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+#opsixToolsPanel :is(a, button) {
+  padding: 7px 10px;
+  border: 1px solid #6981a1;
+  border-radius: 6px;
+  background: #1a2a44;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+#opsixToolsPanel iframe {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: 0;
+}
