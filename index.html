@@ -8,7 +8,7 @@
     <meta name="robots" content="noindex, nofollow, nosnippet, noarchive">
 
     <title>Intensiv- og helikoptertransport</title>
-    <link rel="stylesheet" href="./style.css?v=20261115-3">
+    <link rel="stylesheet" href="./style.css?v=20261119-1">
   </head>
 
   <body>
@@ -21,23 +21,46 @@
             Intensiv- og helikoptertransport
           </h1>
 
-          <div class="opsix-display-controls">
+          <div class="opsix-header-actions">
+            <button id="opsixClockButton" class="opsix-header-button" type="button"
+              aria-label="Åpne klokkeverktøy" title="Åpne klokkeverktøy">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+            </button>
+            <button id="opsixDisplayButton" class="opsix-header-button" type="button"
+              aria-label="Visningsinnstillinger" title="Visningsinnstillinger"
+              aria-controls="opsixDisplayControls" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m10 3-.5 2.3a7 7 0 0 0-1.6.9L5.7 5.5l-2 3.4 1.7 1.6a7 7 0 0 0 0 2.9l-1.7 1.6 2 3.4 2.2-.7a7 7 0 0 0 1.6.9L10 21h4l.5-2.4a7 7 0 0 0 1.6-.9l2.2.7 2-3.4-1.7-1.6a7 7 0 0 0 0-2.9l1.7-1.6-2-3.4-2.2.7a7 7 0 0 0-1.6-.9L14 3z"/>
+                <circle cx="12" cy="12" r="2.8"/>
+              </svg>
+            </button>
+          </div>
+
+          <div id="opsixDisplayControls" class="opsix-display-controls" hidden>
             <label class="opsix-theme-picker" for="opsixThemeSelect">
               <span class="opsix-visually-hidden">Visningsmodus</span>
-              <select id="opsixThemeSelect" aria-label="Velg visningsmodus">
+              <select id="opsixThemeSelect">
+                <option value="system" selected>Følg systemet</option>
                 <option value="day">☀ Dag</option>
                 <option value="dim">◐ Dempet</option>
-                <option value="night" selected>☾ Natt</option>
+                <option value="night">☾ Natt</option>
               </select>
             </label>
             <label class="opsix-theme-picker" for="opsixTextSize">
-              <select id="opsixTextSize" aria-label="Tekststørrelse">
-                <option value="normal">Tekst 100 %</option>
+              <span class="opsix-visually-hidden">Tekststørrelse</span>
+              <select id="opsixTextSize">
+                <option value="normal">Tekst: nettleserstandard</option>
                 <option value="large">Tekst 115 %</option>
                 <option value="extra-large">Tekst 130 %</option>
               </select>
             </label>
           </div>
+          <p id="opsixClockStatus" class="opsix-clock-status" role="status"></p>
 
         </div>
         <div class="hasteLabel">Rekvirert hastegrad</div>
@@ -1222,6 +1245,6 @@
 
     </dialog>
 
-    <script src="./script.js?v=20261115-6"></script>
+    <script src="./script.js?v=20261119-1"></script>
   </body>
 </html>

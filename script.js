@@ -2836,22 +2836,54 @@ function buildFollowNeedLine() {
   }
 })();
 
-/* OPSIX – eksplisitt temavelger med alle tre alternativer */
+/* Visningsinnstillinger og tilkobling for klokkeverktøy. */
 (() => {
-  function initThemeSelect() {
-    const select = document.getElementById("opsixThemeSelect");
-    if (!select) return;
-    function applyTheme(mode) {
-      document.body.classList.toggle("theme-light", mode === "day");
-      document.body.classList.toggle("theme-dim", mode === "dim");
-      document.documentElement.style.colorScheme = mode === "day" ? "light" : "dark";
-      select.value = mode;
-    }
-    select.addEventListener("change", () => applyTheme(select.value));
-    applyTheme("night");
+  const theme = $("opsixThemeSelect");
+  const displayButton = $("opsixDisplayButton");
+  const displayControls = $("opsixDisplayControls");
+  const clockButton = $("opsixClockButton");
+  const clockStatus = $("opsixClockStatus");
+  if (!theme || !displayButton || !displayControls || !clockButton || !clockStatus) return;
+
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function applyTheme() {
+    const mode = theme.value === "system" ? (systemTheme.matches ? "night" : "day") : theme.value;
+    document.body.classList.toggle("theme-light", mode === "day");
+    document.body.classList.toggle("theme-dim", mode === "dim");
+    document.documentElement.style.colorScheme = mode === "day" ? "light" : "dark";
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initThemeSelect);
-  else initThemeSelect();
+
+  function setSettingsOpen(open) {
+    displayControls.hidden = !open;
+    displayButton.setAttribute("aria-expanded", String(open));
+  }
+
+  theme.addEventListener("input", event => event.stopPropagation());
+  theme.addEventListener("change", event => {
+    event.stopPropagation();
+    applyTheme();
+  });
+  systemTheme.addEventListener("change", applyTheme);
+  applyTheme();
+
+  displayButton.addEventListener("click", () => setSettingsOpen(displayControls.hidden));
+  displayButton.closest(".pageHeader").addEventListener("keydown", event => {
+    if (event.key !== "Escape" || displayControls.hidden) return;
+    event.preventDefault();
+    setSettingsOpen(false);
+    displayButton.focus();
+  });
+
+  clockButton.addEventListener("click", () => {
+    // Klokkemodulen håndterer hendelsen med preventDefault() når den er tilgjengelig.
+    const request = new CustomEvent("opsix:open-clock-tools", {
+      bubbles: true,
+      cancelable: true
+    });
+    const handled = !clockButton.dispatchEvent(request);
+    clockStatus.textContent = handled ? "" : "Klokkeverktøyet er ikke koblet til ennå.";
+  });
 })();
 
 /* OPSIX – tekststørrelse for denne siden */
