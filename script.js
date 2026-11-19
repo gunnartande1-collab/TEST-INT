@@ -2836,14 +2836,12 @@ function buildFollowNeedLine() {
   }
 })();
 
-/* Visningsinnstillinger og tilkobling for klokkeverktøy. */
+/* Visningsinnstillinger. */
 (() => {
   const theme = $("opsixThemeSelect");
   const displayButton = $("opsixDisplayButton");
   const displayControls = $("opsixDisplayControls");
-  const clockButton = $("opsixClockButton");
-  const clockStatus = $("opsixClockStatus");
-  if (!theme || !displayButton || !displayControls || !clockButton || !clockStatus) return;
+  if (!theme || !displayButton || !displayControls) return;
 
   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -2873,16 +2871,6 @@ function buildFollowNeedLine() {
     event.preventDefault();
     setSettingsOpen(false);
     displayButton.focus();
-  });
-
-  clockButton.addEventListener("click", () => {
-    // Klokkemodulen håndterer hendelsen med preventDefault() når den er tilgjengelig.
-    const request = new CustomEvent("opsix:open-clock-tools", {
-      bubbles: true,
-      cancelable: true
-    });
-    const handled = !clockButton.dispatchEvent(request);
-    clockStatus.textContent = handled ? "" : "Klokkeverktøyet er ikke koblet til ennå.";
   });
 })();
 
