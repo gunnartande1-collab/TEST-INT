@@ -9,8 +9,6 @@
 
     <title>Intensiv- og helikoptertransport</title>
     <link rel="stylesheet" href="./style.css?v=20261119-1">
-    <link rel="stylesheet" href="./klokker-panel.css?v=20261119-20">
-    <script src="./klokker-panel.js?v=20261119-20" defer></script>
   </head>
 
   <body>
@@ -24,15 +22,6 @@
           </h1>
 
           <div class="opsix-header-actions">
-            <button id="opsixClockButton" class="opsix-header-button" type="button"
-              aria-label="Åpne klokkeverktøy" title="Åpne klokkeverktøy"
-              aria-controls="opsixToolsPanel" aria-expanded="false">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none"
-                stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
-                <circle cx="12" cy="12" r="9"/>
-                <path d="M12 7v5l3 2"/>
-              </svg>
-            </button>
             <button id="opsixDisplayButton" class="opsix-header-button" type="button"
               aria-label="Visningsinnstillinger" title="Visningsinnstillinger"
               aria-controls="opsixDisplayControls" aria-expanded="false">
@@ -63,7 +52,6 @@
               </select>
             </label>
           </div>
-          <p id="opsixClockStatus" class="opsix-clock-status" role="status"></p>
 
         </div>
         <div class="hasteLabel">Rekvirert hastegrad</div>
@@ -1248,20 +1236,6 @@
 
     </dialog>
 
-    <script src="./script.js?v=20261119-1"></script>
-
-    <div id="opsixToolsBackdrop" hidden></div>
-
-    <aside id="opsixToolsPanel" aria-label="Klokkeverktøy"
-           aria-hidden="true" inert>
-      <div class="opsix-tools-header">
-        <a id="opsixToolsPopout" href="./klokker/" target="_blank"
-           rel="noopener">Åpne i egen fane ↗</a>
-        <button type="button" id="opsixToolsClose">Lukk</button>
-      </div>
-
-      <iframe id="opsixToolsFrame" src="./klokker/"
-              title="OPSIX klokkeverktøy" loading="lazy"></iframe>
-    </aside>
+    <script src="./script.js?v=20261119-uten-klokke"></script>
   </body>
 </html>
