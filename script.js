@@ -615,13 +615,7 @@ const opsixTransportPerKategori = new Map();
 let opsixForrigeTransportKategori = "";
 function setWeightUnit(unit) {
   const input = $("vekt");
-  const previousUnit = input.dataset.unit || "kg";
-  if (previousUnit !== unit && input.validity.badInput) return;
-  if (previousUnit !== unit && input.value !== "") {
-    const value = input.valueAsNumber;
-    const factor = unit === "g" ? 1000 : 0.001;
-    if (Number.isFinite(value)) input.value = String(Number((value * factor).toPrecision(15)));
-  }
+  // Bytte av enhet endrer bare enhetsmerking, aldri innskrevet vekt.
   input.dataset.unit = unit;
   input.inputMode = unit === "g" ? "numeric" : "decimal";
   input.setAttribute("aria-label", unit === "g" ? "Vekt i gram" : "Vekt i kilogram");
@@ -669,7 +663,11 @@ function updateSpedbarnUI() {
   setHidden(transportWrap, !viserTransportform);
   // Ingen transportform får endret betydning ved bytte av pasientkategori.
 
-  setWeightUnit(brukerGram ? "g" : "kg");
+  // Velg standardenhet for pasientkategori kun når vektfeltet er tomt.
+  // Registrert vekt og manuelt valgt enhet skal ikke endres ved kategoribytte.
+  if (!clean($("vekt").value) && $("vekt").dataset.unitManual !== "true") {
+    setWeightUnit(brukerGram ? "g" : "kg");
+  }
 
   /* ==========================================
      FJERN UAKTUELL TRANSPORTFORM
@@ -1647,6 +1645,7 @@ function bindEvents() {
   document.querySelectorAll("[data-weight-unit]").forEach(button => {
     button.addEventListener("click", () => {
       setWeightUnit(button.dataset.weightUnit);
+      $("vekt").dataset.unitManual = "true";
       lagRapport();
     });
   });
@@ -2250,7 +2249,7 @@ function addMedicationSections(lines) {
     lines.push("Pressor: " + meds.pressor.join(", "));
   }
   if (meds.andre.length) {
-    lines.push("Andre medikamenter/infusjoner: " + meds.andre.join(", "));
+    lines.push("Andre medikamenter: " + meds.andre.join(", "));
   }
 }
 
@@ -2397,8 +2396,9 @@ function nullstillSkjema() {
     autoGrowTextarea(el);
   });
 
-  // Nullstill manuell MAP-status
+  // Nullstill manuell MAP-status og manuelt vekt-enhetsvalg.
   $("map").dataset.auto = "";
+  delete $("vekt").dataset.unitManual;
 
   // Nullstill alle nedtrekksmenyer
   document.querySelectorAll('select:not(#opsixThemeSelect, #opsixTextSize)').forEach(el => {
@@ -2511,7 +2511,7 @@ function bindSmartChipLogic() {
     extraCheckSelector: ".pressorDynChk"
   });
 
-  // Andre medikamenter: Nei slår av Ringer/NaCl/Blod/Plasma/annet
+  // Andre medikamenter: Nei slår av Ringer/NaCl/Blod/Plasma/Glukose/annet
   bindExclusiveChipGroup({
     noneSelector: 'input[name="medicationOther"][value="Nei"]',
     otherSelector: 'input[name="medicationOther"]:not([value="Nei"])',
@@ -2981,8 +2981,10 @@ function buildFollowNeedLine() {
 
   // Flytt eksisterende DOM-noder. IKKE klon dem: registreringer,
   // valgte verdier, ID-er og JS-hendelser må følge de samme nodene.
-  append(left, refs.hasteLabel, refs.hasteGrid, refs.child, refs.weight,
-    refs.followTitle, refs.followRow, refs.special);
+  // Tidlig operativ vurdering: hastegrad, følgebehov, spesialtransport,
+  // deretter pasientkategori, vekt og eventuell transportform.
+  append(left, refs.hasteLabel, refs.hasteGrid,
+    refs.followTitle, refs.followRow, refs.special, refs.child, refs.weight);
   // Transportform er en del av barneseksjonen, men vises under Vekt.
   const transportNode = document.getElementById("transportWrap");
   if (transportNode) refs.weight.insertAdjacentElement("afterend", transportNode);
