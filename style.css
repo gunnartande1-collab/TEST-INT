@@ -4726,5 +4726,22 @@ body.opsix-test-mode .pageHeader #pageTitle {
 .unitInputWrap > input:focus-visible + .pressureTooltip::after {
   content: attr(data-tooltip);
 }
-/* Kun visuell avstand ved samordning av overskrifter. */
-.opsix-heading-spacer { display: block; width: 100%; height: 0; margin: 0; padding: 0; border: 0; pointer-events: none; }
+
+/* Samme startpunkt i alle kolonner, uavhengig av hastegrad.
+   Ã˜vrige seksjoner fÃ¸lger naturlig dokumentflyt. */
+body.opsix-test-mode .opsix-operativ > .hasteLabel,
+body.opsix-test-mode .opsix-medisinsk :is(#bevar-full-aktuelt, #bevar-acute-aktuelt) > .bigSection,
+body.opsix-test-mode .opsix-andre #bevar-full-tilganger .accessGroup > .minorTitle,
+body.opsix-test-mode .opsix-andre #bevar-full-tilganger > .opsix-acute-heading {
+  margin-top: 0 !important;
+}
+body.opsix-test-mode .opsix-andre #bevar-full-tilganger .accessGroup,
+body.opsix-test-mode .opsix-medisinsk #fullTop > .formGroup {
+  margin-top: 0 !important;
+}
+/* Behold Akutt-rammen, men unngÃ¥ at innvendig topp-padding
+   forskyver fÃ¸rste overskrift i hÃ¸yre kolonne. */
+body.opsix-test-mode .opsix-andre #bevar-full-tilganger.opsix-acute-collapsible > .opsix-acute-heading {
+  padding-top: 0;
+  padding-bottom: 0;
+}
