@@ -8,7 +8,7 @@
     <meta name="robots" content="noindex, nofollow, nosnippet, noarchive">
 
     <title>Intensiv- og helikoptertransport</title>
-    <link rel="stylesheet" href="./style.css?v=20261119-1">
+    <link rel="stylesheet" href="./style.css?v=20261125-align-2">
   </head>
 
   <body>
@@ -68,13 +68,13 @@
             <span class="hasteCardText">Vurdering for intervensjon. Transport så raskt som mulig.</span>
           </button>
 
-          <button type="button" class="hasteCard haste-samme" data-haste="Vanlig (V1)">
-            <span class="hasteCardTitle">Vanlig (V1)</span>
+          <button type="button" class="hasteCard haste-samme" data-haste="Vanlig 1">
+            <span class="hasteCardTitle">Vanlig 1</span>
             <span class="hasteCardText">Transport bør gjennomføres samme dag.</span>
           </button>
 
-          <button type="button" class="hasteCard haste-planlagt" data-haste="Planlagt (V2)">
-            <span class="hasteCardTitle">Planlagt (V2)</span>
+          <button type="button" class="hasteCard haste-planlagt" data-haste="Vanlig 2 (planlagt)">
+            <span class="hasteCardTitle">Vanlig 2</span>
             <span class="hasteCardText">Transport som kan planlegges frem i tid.</span>
           </button>
 
@@ -85,11 +85,6 @@
           <label class="minorTitle">Anbefalt følgebehov fra rekvirent</label>
 
           <div class="followRow">
-
-            <label class="followChip">
-              <input type="checkbox" name="followNeed" id="follow_none" value="Ikke behov">
-              <span>Ikke behov</span>
-            </label>
 
             <label class="followChip">
               <input
@@ -796,18 +791,28 @@
               </label>
 
               <label class="medChip">
-                <input type="checkbox" name="medicationOther" value="Blod">
-                <span>Blod</span>
+                <input type="checkbox" name="medicationOther" value="Glukose">
+                <span>Glukose</span>
               </label>
 
-              <label class="medChip">
+              <label class="medChip" title="Røde blodceller, plasma, trombocytter og koagulasjonsfaktorer">
+                <input type="checkbox" name="medicationOther" value="Fullblod">
+                <span>Fullblod</span>
+              </label>
+
+              <label class="medChip" title="Røde blodceller">
+                <input type="checkbox" name="medicationOther" value="SAG">
+                <span>SAG</span>
+              </label>
+
+              <label class="medChip" title="Koagulasjonsfaktorer og plasmaproteiner">
                 <input type="checkbox" name="medicationOther" value="Plasma">
                 <span>Plasma</span>
               </label>
 
-              <label class="medChip">
-                <input type="checkbox" name="medicationOther" value="Glukose">
-                <span>Glukose</span>
+              <label class="medChip" title="Blodplater">
+                <input type="checkbox" name="medicationOther" value="Trombocyttkonsentrat">
+                <span>Trombocyttkonsentrat</span>
               </label>
             </div>
 
@@ -1241,6 +1246,6 @@
 
     </dialog>
 
-    <script src="./script.js?v=20261119-tannhjul-1"></script>
+    <script src="./script.js?v=20261125-align-2"></script>
   </body>
 </html>

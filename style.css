@@ -4726,3 +4726,5 @@ body.opsix-test-mode .pageHeader #pageTitle {
 .unitInputWrap > input:focus-visible + .pressureTooltip::after {
   content: attr(data-tooltip);
 }
+/* Kun visuell avstand ved samordning av overskrifter. */
+.opsix-heading-spacer { display: block; width: 100%; height: 0; margin: 0; padding: 0; border: 0; pointer-events: none; }
